@@ -1,3 +1,0 @@
-#!/bin/bash
-# immorterm-managed: cline-PreToolUse
-exec "/Users/shaisnir/Development/builders-stack/.immorterm/hooks/lib/cline-adapter.sh" "PreToolUse" "$@"

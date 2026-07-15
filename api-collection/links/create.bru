@@ -1,0 +1,35 @@
+meta {
+  name: Create link
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/api/links
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "url": "https://x.com/nasa/status/123456789"
+  }
+}
+
+tests {
+  test("responds 201", function() {
+    expect(res.status).to.equal(201);
+  });
+  test("returns the platform deeplink key", function() {
+    expect(res.getBody().deeplink).to.equal("x");
+  });
+}
+
+script:post-response {
+  // Capture the generated slug so `get` can reuse it in one run.
+  bru.setVar("slug", res.body.slug);
+}

@@ -6,8 +6,8 @@ import oxlint from "eslint-plugin-oxlint";
 const oxlintConfigPath = fileURLToPath(new URL("./.oxlintrc.json", import.meta.url));
 
 /**
- * Root ESLint flat config — this is where the two laws from docs/stack/architecture.md
- * get TEETH. `@nx/enforce-module-boundaries` turns "no upward import" from a review
+ * Root ESLint flat config — this is where the boundary laws get TEETH.
+ * `@nx/enforce-module-boundaries` turns "no upward import" from a review
  * convention into a lint error, using each project's `type:*` tag.
  *
  *   type:lib     → may depend on:  lib
@@ -35,7 +35,14 @@ export default [
   ...nx.configs["flat/typescript"],
   ...nx.configs["flat/javascript"],
   {
-    ignores: ["**/dist", "**/.next", "**/build", "**/storybook-static", "**/node_modules"],
+    ignores: [
+      "**/dist",
+      "**/.next",
+      "**/build",
+      "**/storybook-static",
+      "**/node_modules",
+      "**/.wrangler",
+    ],
   },
   {
     files: ["**/*.ts", "**/*.tsx", "**/*.cts", "**/*.mts", "**/*.js", "**/*.jsx"],

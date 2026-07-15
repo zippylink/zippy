@@ -73,7 +73,11 @@ describe("POST /api/links", () => {
 
   it("creates a link with a random slug + reports the deeplink platform", async () => {
     const res = await worker.fetch(
-      req("/api/links", { method: "POST", headers: auth, body: JSON.stringify({ url: "https://x.com/nasa" }) }),
+      req("/api/links", {
+        method: "POST",
+        headers: auth,
+        body: JSON.stringify({ url: "https://x.com/nasa" }),
+      }),
       env(),
     );
     expect(res.status).toBe(201);
@@ -85,7 +89,11 @@ describe("POST /api/links", () => {
 
   it("honors a valid custom slug and returns null deeplink for a plain URL", async () => {
     const res = await worker.fetch(
-      req("/api/links", { method: "POST", headers: auth, body: JSON.stringify({ url: "https://example.com", slug: "my_link-1" }) }),
+      req("/api/links", {
+        method: "POST",
+        headers: auth,
+        body: JSON.stringify({ url: "https://example.com", slug: "my_link-1" }),
+      }),
       env(),
     );
     expect(res.status).toBe(201);
@@ -96,7 +104,11 @@ describe("POST /api/links", () => {
 
   it("rejects an invalid slug", async () => {
     const res = await worker.fetch(
-      req("/api/links", { method: "POST", headers: auth, body: JSON.stringify({ url: "https://example.com", slug: "bad slug!" }) }),
+      req("/api/links", {
+        method: "POST",
+        headers: auth,
+        body: JSON.stringify({ url: "https://example.com", slug: "bad slug!" }),
+      }),
       env(),
     );
     expect(res.status).toBe(400);
@@ -104,7 +116,11 @@ describe("POST /api/links", () => {
 
   it("rejects a non-http url", async () => {
     const res = await worker.fetch(
-      req("/api/links", { method: "POST", headers: auth, body: JSON.stringify({ url: "javascript:alert(1)" }) }),
+      req("/api/links", {
+        method: "POST",
+        headers: auth,
+        body: JSON.stringify({ url: "javascript:alert(1)" }),
+      }),
       env(),
     );
     expect(res.status).toBe(400);
@@ -112,7 +128,11 @@ describe("POST /api/links", () => {
 
   it("409s on a slug collision", async () => {
     const res = await worker.fetch(
-      req("/api/links", { method: "POST", headers: auth, body: JSON.stringify({ url: "https://example.com", slug: "taken" }) }),
+      req("/api/links", {
+        method: "POST",
+        headers: auth,
+        body: JSON.stringify({ url: "https://example.com", slug: "taken" }),
+      }),
       env({ taken: "https://already.here" }),
     );
     expect(res.status).toBe(409);

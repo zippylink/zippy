@@ -129,7 +129,8 @@ export default {
       return json({ error: "Method not allowed" }, 405);
     }
     if (pathname.startsWith("/api/links/")) {
-      if (req.method === "GET") return getLinkInfo(decodeURIComponent(pathname.slice(11)), req, env);
+      if (req.method === "GET")
+        return getLinkInfo(decodeURIComponent(pathname.slice(11)), req, env);
       return json({ error: "Method not allowed" }, 405);
     }
 

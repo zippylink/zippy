@@ -1,3 +1,0 @@
-#!/bin/bash
-# immorterm-managed: cline-TaskEnd
-exec "/Users/shaisnir/Development/builders-stack/.immorterm/hooks/lib/cline-adapter.sh" "TaskEnd" "$@"

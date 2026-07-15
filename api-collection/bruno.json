@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "builders-stack",
+  "name": "zippy",
   "type": "collection",
   "ignore": ["node_modules", ".git"]
 }

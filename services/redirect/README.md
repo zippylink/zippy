@@ -11,11 +11,11 @@ bun --filter @zippy/redirect typecheck
 
 ## Routes
 
-| Method | Path              | Auth   | Notes                                                          |
-| ------ | ----------------- | ------ | ------------------------------------------------------------- |
-| GET    | `/:slug`          | —      | KV lookup. Known platform + mobile → interstitial; else `301` |
-| POST   | `/api/links`      | Bearer | Create a link. Body `{ url, slug? }` → `201 {slug, shortUrl, deeplink}` |
-| GET    | `/api/links/:slug`| Bearer | Link info                                                     |
+| Method | Path               | Auth   | Notes                                                                   |
+| ------ | ------------------ | ------ | ----------------------------------------------------------------------- |
+| GET    | `/:slug`           | —      | KV lookup. Known platform + mobile → interstitial; else `301`           |
+| POST   | `/api/links`       | Bearer | Create a link. Body `{ url, slug? }` → `201 {slug, shortUrl, deeplink}` |
+| GET    | `/api/links/:slug` | Bearer | Link info                                                               |
 
 Auth is `Authorization: Bearer <API_TOKEN>` against the `API_TOKEN` secret. With
 no token configured, writes return `401` (closed, never open).

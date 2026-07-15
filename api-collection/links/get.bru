@@ -1,0 +1,23 @@
+meta {
+  name: Get link
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/api/links/{{slug}}
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+tests {
+  test("responds 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("reports the destination url", function() {
+    expect(res.getBody().url).to.be.a("string");
+  });
+}

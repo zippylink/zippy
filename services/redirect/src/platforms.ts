@@ -36,10 +36,27 @@ type Platform = {
 };
 
 // Path segments that are NOT usernames on the profile-at-root platforms.
-const IG_RESERVED = new Set(["p", "reel", "reels", "tv", "explore", "stories", "accounts", "about"]);
+const IG_RESERVED = new Set([
+  "p",
+  "reel",
+  "reels",
+  "tv",
+  "explore",
+  "stories",
+  "accounts",
+  "about",
+]);
 const X_RESERVED = new Set([
-  "home", "search", "explore", "notifications", "messages", "i",
-  "settings", "compose", "hashtag", "intent",
+  "home",
+  "search",
+  "explore",
+  "notifications",
+  "messages",
+  "i",
+  "settings",
+  "compose",
+  "hashtag",
+  "intent",
 ]);
 
 const seg = (url: URL): string[] => url.pathname.split("/").filter(Boolean);
@@ -77,7 +94,8 @@ export const PLATFORMS: Platform[] = [
     hosts: ["wa.me", "api.whatsapp.com"],
     path: (url) => {
       // wa.me/<phone>  |  api.whatsapp.com/send?phone=<phone>&text=<text>
-      const phone = seg(url)[0] ?? url.searchParams.get("phone") ?? "";
+      const host = url.hostname.replace(/^www\./, "");
+      const phone = (host === "wa.me" ? seg(url)[0] : url.searchParams.get("phone")) ?? "";
       const text = url.searchParams.get("text");
       if (!phone) return text ? `send?text=${encodeURIComponent(text)}` : "";
       return `send?phone=${phone}` + (text ? `&text=${encodeURIComponent(text)}` : "");
