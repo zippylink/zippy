@@ -71,6 +71,26 @@ async function resolveKey(hostname: string, slug: string, env: Env): Promise<str
   }
 }
 
+type LinkValue = { url: string; branded: boolean };
+
+/**
+ * Parse a KV link value. Back-compat: a plain string IS the destination URL. A value
+ * starting with "{" is JSON `{ url, branded? }` — unknown extra fields are ignored
+ * (forward-compat), missing `branded` behaves like today, malformed JSON → null (404).
+ * The cloud denormalizes entitlement effects (e.g. branding) into the record; the engine
+ * never reads subscription state.
+ */
+function parseLinkValue(raw: string): LinkValue | null {
+  if (raw[0] !== "{") return { url: raw, branded: false };
+  try {
+    const o = JSON.parse(raw) as { url?: unknown; branded?: unknown };
+    if (typeof o.url !== "string") return null;
+    return { url: o.url, branded: o.branded === true };
+  } catch {
+    return null; // malformed record → unroutable, never 500 a visitor
+  }
+}
+
 async function handleRedirect(
   slug: string,
   hostname: string,
@@ -79,13 +99,15 @@ async function handleRedirect(
 ): Promise<Response> {
   const key = await resolveKey(hostname, slug, env);
   if (key === null) return html(render404(), 404);
-  const dest = await env.LINKS.get(key);
-  if (!dest) return html(render404(), 404);
-  const match = matchPlatform(dest);
+  const raw = await env.LINKS.get(key);
+  if (!raw) return html(render404(), 404);
+  const link = parseLinkValue(raw);
+  if (!link) return html(render404(), 404);
+  const match = matchPlatform(link.url);
   if (match && isMobile(req.headers.get("user-agent") ?? "")) {
-    return html(renderInterstitial(match), 200);
+    return html(renderInterstitial(match, { branded: link.branded, homeUrl: env.BASE_URL }), 200);
   }
-  return Response.redirect(dest, 301);
+  return Response.redirect(link.url, 301);
 }
 
 async function createLink(req: Request, env: Env): Promise<Response> {
@@ -123,9 +145,11 @@ async function getLinkInfo(slug: string, req: Request, env: Env): Promise<Respon
   if (!tokenOk(req.headers.get("authorization"), env.API_TOKEN)) {
     return json({ error: "Unauthorized" }, 401);
   }
-  const dest = await env.LINKS.get(slug);
-  if (!dest) return json({ error: "Not found" }, 404);
-  return json(linkInfo(slug, dest, env), 200);
+  const raw = await env.LINKS.get(slug);
+  if (!raw) return json({ error: "Not found" }, 404);
+  const link = parseLinkValue(raw);
+  if (!link) return json({ error: "Not found" }, 404);
+  return json(linkInfo(slug, link.url, env), 200);
 }
 
 function isHttpUrl(value: string): boolean {

@@ -57,11 +57,11 @@ The Worker resolves a slug's KV key from the request's `Host`, so one deployment
 serve many custom domains (the hosted cloud fronts them with Cloudflare for SaaS). The
 redirect path is **tier-blind** — it reads only routing data, never subscription state.
 
-| Key                   | Value                      | Written by             | Read on                                  |
-| --------------------- | -------------------------- | ---------------------- | ---------------------------------------- |
-| `<slug>`              | destination URL (string)   | OSS `POST /api/links`  | requests on the **default host**         |
+| Key                   | Value                      | Written by              | Read on                                  |
+| --------------------- | -------------------------- | ----------------------- | ---------------------------------------- |
+| `<slug>`              | destination URL (string)   | OSS `POST /api/links`   | requests on the **default host**         |
 | `host:<hostname>`     | `{"tenantId":"<id>"}` JSON | the cloud (routing map) | first lookup on any **non-default** host |
-| `t:<tenantId>:<slug>` | destination URL (string)   | the cloud's own API    | requests on a **mapped** host            |
+| `t:<tenantId>:<slug>` | destination URL (string)   | the cloud's own API     | requests on a **mapped** host            |
 
 Resolution for `GET /:slug`:
 
@@ -69,6 +69,21 @@ Resolution for `GET /:slug`:
    `<slug>`. Existing single-tenant records are untouched — full back-compat.
 2. **Any other hostname** → read `host:<hostname>`. Miss (or malformed JSON) → `404`,
    never a `500`. Hit → parse `{ tenantId }`, then the key is `t:<tenantId>:<slug>`.
+
+### Link value shape
+
+A link value (the `<slug>` and `t:<tenantId>:<slug>` records) is **either**:
+
+- a **plain destination URL string** (what `POST /api/links` writes — full back-compat), or
+- a **JSON object** `{ "url": "https://…", "branded"?: boolean }`. A value is treated as
+  JSON only when its first character is `{`. Unknown extra fields are **ignored**
+  (forward-compat); missing `branded` behaves exactly like a plain string; **malformed
+  JSON → `404`** (never `500`). `"branded": true` shows a small "⚡ zipped with Zippy"
+  footer on the interstitial (linking to `BASE_URL`); `false`/absent shows no branding.
+
+The cloud denormalizes resolved entitlement effects (like `branded`) into the record so the
+engine stays tier-blind — it never reads subscription state at request time. The OSS
+`POST /api/links` keeps writing plain URL strings; only the cloud writes the JSON shape.
 
 `<hostname>` is the exact lowercased Host with no port and no `www.` normalization —
 write the mapping under the same host Cloudflare for SaaS routes to the Worker. Tenant

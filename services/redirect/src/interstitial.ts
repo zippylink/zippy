@@ -17,7 +17,14 @@ const FALLBACK_MS = 1500;
 const esc = (s: string): string =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-export function renderInterstitial(match: PlatformMatch): string {
+export function renderInterstitial(
+  match: PlatformMatch,
+  opts?: { branded?: boolean; homeUrl?: string },
+): string {
+  // Branding footer only when the record says so (the cloud bakes in this effect).
+  const footer = opts?.branded
+    ? `<p style="margin-top:1.5rem;font-size:.7rem;opacity:.55"><a href="${esc(opts.homeUrl ?? "")}">⚡ zipped with Zippy</a></p>`
+    : "";
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -39,6 +46,7 @@ export function renderInterstitial(match: PlatformMatch): string {
 <main>
   <p>Opening the ${esc(match.key)} app<span class="dot"></span><span class="dot"></span><span class="dot"></span></p>
   <p><a id="fallback" href="${esc(match.web)}">Continue in browser</a></p>
+  ${footer}
 </main>
 <script>
 (function(){

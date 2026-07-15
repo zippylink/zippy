@@ -102,6 +102,68 @@ describe("multi-host resolution", () => {
   });
 });
 
+describe("JSON link values", () => {
+  const TOKEN_H = { authorization: `Bearer ${TOKEN}` };
+
+  it("plain string value is unchanged (back-compat)", async () => {
+    const res = await worker.fetch(req("/abc"), env({ abc: "https://example.com/page" }));
+    expect(res.status).toBe(301);
+    expect(res.headers.get("location")).toBe("https://example.com/page");
+  });
+
+  it("JSON value resolves the url and redirects", async () => {
+    const res = await worker.fetch(
+      req("/j"),
+      env({ j: JSON.stringify({ url: "https://example.com/deep" }) }),
+    );
+    expect(res.status).toBe(301);
+    expect(res.headers.get("location")).toBe("https://example.com/deep");
+  });
+
+  it("ignores unknown extra fields (forward-compat)", async () => {
+    const res = await worker.fetch(
+      req("/j"),
+      env({ j: JSON.stringify({ url: "https://example.com/x", plan: "pro", future: 1 }) }),
+    );
+    expect(res.status).toBe(301);
+    expect(res.headers.get("location")).toBe("https://example.com/x");
+  });
+
+  it("branded:true renders the Zippy footer on the interstitial", async () => {
+    const res = await worker.fetch(
+      req("/j", { headers: { "user-agent": IPHONE } }),
+      env({ j: JSON.stringify({ url: "https://x.com/nasa/status/999", branded: true }) }),
+    );
+    expect(res.status).toBe(200);
+    expect(await res.text()).toContain("zipped with Zippy");
+  });
+
+  it("branded absent/false shows no branding chrome", async () => {
+    const res = await worker.fetch(
+      req("/j", { headers: { "user-agent": IPHONE } }),
+      env({ j: JSON.stringify({ url: "https://x.com/nasa/status/999" }) }),
+    );
+    expect(res.status).toBe(200);
+    expect(await res.text()).not.toContain("zipped with Zippy");
+  });
+
+  it("malformed JSON value → 404 (never 500)", async () => {
+    const res = await worker.fetch(req("/bad"), env({ bad: "{not valid json" }));
+    expect(res.status).toBe(404);
+  });
+
+  it("GET /api/links/:slug resolves a JSON value's url", async () => {
+    const res = await worker.fetch(
+      req("/api/links/j", { headers: TOKEN_H }),
+      env({ j: JSON.stringify({ url: "https://x.com/nasa", branded: true }) }),
+    );
+    expect(res.status).toBe(200);
+    const info = (await res.json()) as { url: string; deeplink: string | null };
+    expect(info.url).toBe("https://x.com/nasa");
+    expect(info.deeplink).toBe("x");
+  });
+});
+
 describe("POST /api/links auth", () => {
   const body = JSON.stringify({ url: "https://example.com" });
 
