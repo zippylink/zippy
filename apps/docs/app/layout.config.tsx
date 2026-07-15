@@ -1,13 +1,12 @@
 import type { BaseLayoutProps } from "fumadocs-ui/layouts/shared";
+import { ZippyBolt } from "./zippy-bolt";
 
 // Shared nav config (title, links) for the docs + home layouts.
 export const baseOptions: BaseLayoutProps = {
   nav: {
     title: (
       <>
-        <span aria-hidden style={{ fontSize: "1.15em" }}>
-          ⚡
-        </span>
+        <ZippyBolt size={20} />
         <span style={{ fontFamily: "var(--font-display)", letterSpacing: "0.01em" }}>ZIPPY</span>
       </>
     ),

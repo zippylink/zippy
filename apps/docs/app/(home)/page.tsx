@@ -15,6 +15,14 @@ export default function HomePage() {
         padding: "2rem",
       }}
     >
+      {/* eslint-disable-next-line @next/next/no-img-element -- static export, no loader */}
+      <img
+        src="/zippy-avatar.png"
+        alt="Zippy, the lightning-bolt mascot"
+        width={180}
+        height={180}
+        style={{ width: "clamp(140px, 34vw, 200px)", height: "auto" }}
+      />
       <p data-eyebrow>self-host docs</p>
       <h1
         style={{
