@@ -2,6 +2,14 @@
   <img src="./docs/assets/zippy-hero.png" alt="Zippy" width="100%">
 </p>
 
+<p align="center">
+  <img src="./docs/assets/zippy-sticker-happy.png" alt="" width="92">
+  &nbsp;
+  <img src="./docs/assets/zippy-sticker-chill.png" alt="" width="92">
+  &nbsp;
+  <img src="./docs/assets/zippy-sticker-zoom.png" alt="" width="92">
+</p>
+
 <h1 align="center">Zippy</h1>
 
 <p align="center">
@@ -62,7 +70,7 @@ product grows on top.
 ```
 services/redirect/   the Worker — routing, KV, deeplink table, interstitial, tests
 api-collection/      Bruno requests for the API (links create / get)
-docs/assets/         brand art (README hero)
+docs/assets/         brand art (README hero + mascot stickers)
 ```
 
 Zippy is AGPL-3.0 — a paid cloud product is planned on top, open-core style. If you
