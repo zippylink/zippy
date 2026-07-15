@@ -1,0 +1,117 @@
+---
+title: API reference
+description: create and read links over HTTP — request/response shapes, auth, and error codes, straight from the Worker source.
+---
+
+# API reference
+
+The OSS engine exposes three routes. Two are the Bearer-authenticated management API
+(`/api/links`); the third is the public redirect (`/:slug`). Everything is served by the
+single Worker in `services/redirect`.
+
+| Method | Path               | Auth   | Purpose                 |
+| ------ | ------------------ | ------ | ----------------------- |
+| `POST` | `/api/links`       | Bearer | create a link           |
+| `GET`  | `/api/links/:slug` | Bearer | read a link             |
+| `GET`  | `/:slug`           | —      | redirect / interstitial |
+
+## Authentication
+
+The two `/api/links` routes require:
+
+```http
+Authorization: Bearer <API_TOKEN>
+```
+
+`API_TOKEN` is a Worker secret (see [quickstart](/docs/quickstart)). The token is compared
+in constant time. With **no token configured**, every API request returns `401` — the API
+is closed, never open. A missing or wrong token is always `401`.
+
+## `POST /api/links`
+
+Create a short link.
+
+**Request body** (`application/json`):
+
+| Field  | Type   | Required | Notes                                                                           |
+| ------ | ------ | -------- | ------------------------------------------------------------------------------- |
+| `url`  | string | yes      | The destination. Must be a valid `http:` or `https:` URL.                       |
+| `slug` | string | no       | A custom slug matching `[a-zA-Z0-9-_]{1,32}`. Omit to get a random 6-char slug. |
+
+**Example**
+
+```sh
+curl -X POST https://your-worker.example/api/links \
+  -H "authorization: Bearer $API_TOKEN" \
+  -H "content-type: application/json" \
+  -d '{ "url": "https://x.com/nasa", "slug": "nasa" }'
+```
+
+**`201 Created`**
+
+```json
+{
+  "slug": "nasa",
+  "url": "https://x.com/nasa",
+  "shortUrl": "https://your-worker.example/nasa",
+  "deeplink": "x"
+}
+```
+
+- `shortUrl` is built from the `BASE_URL` var, not the request host.
+- `deeplink` is the matched platform key (e.g. `"x"`, `"instagram"`) or `null` when no
+  platform owns the destination — a plain link that will always `301`.
+
+**Errors**
+
+| Status | Body                                                     | When                                          |
+| ------ | -------------------------------------------------------- | --------------------------------------------- |
+| `400`  | `{ "error": "Invalid JSON body" }`                       | Body isn't valid JSON.                        |
+| `400`  | ``{ "error": "`url` must be a valid http(s) URL" }``     | `url` missing or not `http(s)`.               |
+| `400`  | ``{ "error": "`slug` must match [a-zA-Z0-9-_]{1,32}" }`` | Custom `slug` fails the pattern.              |
+| `401`  | `{ "error": "Unauthorized" }`                            | Missing / wrong Bearer token.                 |
+| `409`  | `{ "error": "Slug already taken" }`                      | The custom `slug` already exists.             |
+| `405`  | `{ "error": "Method not allowed" }`                      | Any method other than `POST` on `/api/links`. |
+
+## `GET /api/links/:slug`
+
+Read a link's info.
+
+```sh
+curl https://your-worker.example/api/links/nasa \
+  -H "authorization: Bearer $API_TOKEN"
+```
+
+**`200 OK`** — same shape as the create response:
+
+```json
+{
+  "slug": "nasa",
+  "url": "https://x.com/nasa",
+  "shortUrl": "https://your-worker.example/nasa",
+  "deeplink": "x"
+}
+```
+
+**Errors**
+
+| Status | Body                                | When                          |
+| ------ | ----------------------------------- | ----------------------------- |
+| `401`  | `{ "error": "Unauthorized" }`       | Missing / wrong Bearer token. |
+| `404`  | `{ "error": "Not found" }`          | No link with that slug.       |
+| `405`  | `{ "error": "Method not allowed" }` | Any method other than `GET`.  |
+
+## `GET /:slug`
+
+The public redirect — **no auth**. Looks the slug up in KV and:
+
+- **miss** → a `404` HTML page;
+- **hit, known platform, mobile user-agent** → a `200` HTML interstitial that opens the
+  native app (see [how deeplinks work](/docs/concepts/how-deeplinks-work));
+- **otherwise** → a `301` redirect to the destination.
+
+<Callout title="Keep the collection in sync">
+  Any change to these routes (a new endpoint, a changed shape, a new error code, an auth change)
+  must be mirrored in the Bruno request under `api-collection/links/` in the same change — the
+  collection is the executable contract.
+</Callout>

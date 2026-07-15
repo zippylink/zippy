@@ -1,0 +1,100 @@
+---
+title: quickstart
+description: clone, create a KV namespace, set the API token, deploy the Worker — live in a few minutes.
+---
+
+# quickstart
+
+You'll need [Bun](https://bun.com) and a Cloudflare account (the free plan is enough —
+Workers + KV). Auth for deploys is either `wrangler login` or a `CLOUDFLARE_API_TOKEN` in
+your environment.
+
+## 1. clone and install
+
+```sh
+git clone https://github.com/zippy-org/zippy
+cd zippy
+bun install
+```
+
+## 2. run it locally
+
+```sh
+bun --filter @zippy/redirect dev        # wrangler dev → http://localhost:8787
+bun --filter @zippy/redirect test       # the vitest suite (the contract)
+```
+
+`wrangler dev` serves the Worker at `http://localhost:8787` and hot-reloads on save. The
+local `API_TOKEN` for the API comes from `services/redirect/.dev.vars`.
+
+## 3. create the KV namespace
+
+Zippy stores `slug → destination` in a single KV namespace bound as `LINKS`:
+
+```sh
+bunx wrangler kv namespace create LINKS            # prints an `id`
+bunx wrangler kv namespace create LINKS --preview  # prints a `preview_id`
+```
+
+Paste both ids into `services/redirect/wrangler.toml`:
+
+```toml
+[[kv_namespaces]]
+binding = "LINKS"
+id = "PASTE_THE_ID_HERE"
+preview_id = "PASTE_THE_PREVIEW_ID_HERE"
+```
+
+## 4. set the API token
+
+The write/read API is gated by a Bearer token stored as a Worker **secret** (never a
+`[vars]` value, never committed):
+
+```sh
+bunx wrangler secret put API_TOKEN
+```
+
+<Callout type="warn" title="Closed by default">
+  With no `API_TOKEN` configured, the API returns `401` for every request — writes are **closed,
+  never open**. Set the secret before you expect the API to work.
+</Callout>
+
+## 5. deploy
+
+```sh
+./scripts/deploy.sh                # deploy to the default environment
+./scripts/deploy.sh --production   # deploy the `production` env (custom domain)
+```
+
+The script refuses to deploy while `wrangler.toml` still holds a `REPLACE_WITH_KV`
+placeholder, typechecks first, then runs `wrangler deploy`.
+
+## 6. create your first link
+
+```sh
+curl -X POST https://YOUR-WORKER-URL/api/links \
+  -H "authorization: Bearer $API_TOKEN" \
+  -H "content-type: application/json" \
+  -d '{ "url": "https://x.com/nasa/status/12345" }'
+```
+
+```json
+{
+  "slug": "aB3xY9",
+  "url": "https://x.com/nasa/status/12345",
+  "shortUrl": "https://YOUR-WORKER-URL/aB3xY9",
+  "deeplink": "x"
+}
+```
+
+Open `shortUrl` on a phone and — because the destination is a known platform — Zippy tries
+to open the X app, falling back to the web URL if it isn't installed. On desktop it's a
+plain `301`. See the [API reference](/docs/reference/api) for the full request/response
+shapes and the [platforms](/docs/reference/platforms) list.
+
+## 7. (optional) put it on a custom domain
+
+`BASE_URL` (a `[vars]` value in `wrangler.toml`) builds the `shortUrl` in API responses —
+set it to your domain's https origin so short links are correct. The custom-domain route
+is commented in `wrangler.toml`; the full walkthrough is in
+[self-host on Cloudflare](/docs/guides/self-host-on-cloudflare).

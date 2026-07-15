@@ -38,6 +38,8 @@ export default [
     ignores: [
       "**/dist",
       "**/.next",
+      "**/out", // Next static export (minified bundles) — a build artifact, not source
+      "**/.source", // fumadocs-mdx generated content map — regenerated, not source
       "**/build",
       "**/storybook-static",
       "**/node_modules",

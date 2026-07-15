@@ -1,0 +1,148 @@
+---
+title: self-host on Cloudflare
+description: the full walkthrough — KV, secret, wrangler.toml, deploy, and a custom domain, end to end.
+---
+
+# self-host on Cloudflare
+
+Zippy runs entirely on Cloudflare's free tier: one Worker plus one KV namespace. This
+guide takes you from a fresh clone to a live short-link domain. If you just want the
+fastest path, the [quickstart](/docs/quickstart) is the condensed version.
+
+## Prerequisites
+
+- [Bun](https://bun.com) installed.
+- A Cloudflare account (free plan is fine).
+- Deploy auth: either `wrangler login`, or a `CLOUDFLARE_API_TOKEN` in your environment
+  with Workers + KV edit permission.
+
+## 1. Clone and install
+
+```sh
+git clone https://github.com/zippy-org/zippy
+cd zippy
+bun install
+```
+
+The Worker lives in `services/redirect`. You can run and test it before touching
+Cloudflare:
+
+```sh
+bun --filter @zippy/redirect dev     # http://localhost:8787
+bun --filter @zippy/redirect test    # vitest
+```
+
+## 2. Create the KV namespace
+
+Zippy keeps `slug → destination` in a KV namespace bound as `LINKS`. Create the production
+and preview namespaces:
+
+```sh
+bunx wrangler kv namespace create LINKS
+bunx wrangler kv namespace create LINKS --preview
+```
+
+Each command prints an id. Paste them into `services/redirect/wrangler.toml`:
+
+```toml
+[[kv_namespaces]]
+binding = "LINKS"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"      # ← from `create LINKS`
+preview_id = "REPLACE_WITH_KV_PREVIEW_ID" # ← from `create LINKS --preview`
+```
+
+<Callout type="warn">
+  `scripts/deploy.sh` refuses to deploy while a `REPLACE_WITH_KV` placeholder is still in
+  `wrangler.toml`. Fill both ids in first.
+</Callout>
+
+## 3. Set the API token secret
+
+The `/api/links` API is gated by a Bearer token, stored as a Worker **secret** (not a var,
+never committed):
+
+```sh
+bunx wrangler secret put API_TOKEN
+```
+
+Pick a long random value. With no token set, the API returns `401` for everything — it's
+closed by default. For **local** dev, the token is read from
+`services/redirect/.dev.vars` instead (a git-ignored file):
+
+```sh
+# services/redirect/.dev.vars
+API_TOKEN="some-long-local-token"
+```
+
+## 4. Set `BASE_URL`
+
+`BASE_URL` is a `[vars]` value that builds the `shortUrl` in API responses. The code never
+hardcodes a domain — set it per environment. For local dev it points at the wrangler dev
+URL:
+
+```toml
+[vars]
+BASE_URL = "http://localhost:8787"
+```
+
+You'll set the production value in the next step.
+
+## 5. Deploy
+
+```sh
+./scripts/deploy.sh                # default environment
+./scripts/deploy.sh --production   # the `production` env (see below)
+```
+
+The script `cd`s into `services/redirect`, checks the KV placeholder is gone, typechecks,
+then runs `wrangler deploy`. On success you get your Worker URL
+(`https://zippy-redirect.<subdomain>.workers.dev`). Test it:
+
+```sh
+curl -X POST https://zippy-redirect.<subdomain>.workers.dev/api/links \
+  -H "authorization: Bearer $API_TOKEN" \
+  -H "content-type: application/json" \
+  -d '{ "url": "https://instagram.com/nasa" }'
+```
+
+## 6. Put it on a custom domain
+
+To serve short links from your own domain (say `go.example.com`), first add the zone to
+this Cloudflare account. Then uncomment the `production` block in `wrangler.toml` and set
+the route + `BASE_URL` to your origin:
+
+```toml
+routes = [
+  { pattern = "go.example.com", custom_domain = true }
+]
+
+[env.production.vars]
+BASE_URL = "https://go.example.com"
+```
+
+Deploy the production environment:
+
+```sh
+./scripts/deploy.sh --production
+```
+
+Now `POST /api/links` returns `shortUrl`s on `https://go.example.com`, and tapping one on
+mobile opens the native app for a known platform.
+
+<Callout title="One domain, single-tenant">
+  The OSS engine is single-tenant: one domain, one KV namespace, keys stored under the bare
+  `<slug>`. Serving **many** customer domains from one deployment (Cloudflare for SaaS) is
+  what the hosted Zippy Cloud adds on top — the engine already resolves the KV key from the
+  request Host, but writing the host → tenant routing records is the cloud's job. The key
+  schema is documented in `services/redirect/README.md`.
+</Callout>
+
+## What you end up with
+
+- A single Worker, hot-reloadable locally, deployed with one script.
+- A KV namespace holding your links — no database to run.
+- A Bearer-token API to create and read links.
+- Native-app opens on mobile for eight platforms out of the box, extensible via
+  [the platform table](/docs/reference/platforms).
+
+Total running cost on typical volumes: about $0.

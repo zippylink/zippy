@@ -1,0 +1,96 @@
+/* Zippy docs theme — stupid-fun 80s, gen-z.
+ * Palette (brand tokens):
+ *   paper #FAF7F2 · ink #1A1033 · volt #EEFF00 · magenta #FF3E8A · cyan #22D8FF
+ * Look: fat Bungee display, Space Mono micro-labels, volt highlights, hard offset
+ * shadows on CTAs. ⚡ is the mascot. Light only — the brand is a light system.
+ */
+@import "fumadocs-ui/style.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fumadocs reads HSL triplets for its design tokens. Map them onto the Zippy palette. */
+:root,
+.light,
+[data-theme="light"] {
+  --color-paper: #faf7f2;
+  --color-ink: #1a1033;
+  --color-volt: #eeff00;
+  --color-magenta: #ff3e8a;
+  --color-cyan: #22d8ff;
+
+  --background: 40 33% 96%; /* paper */
+  --foreground: 257 52% 13%; /* ink */
+  --card: 40 33% 98%;
+  --card-foreground: 257 52% 13%;
+  --popover: 40 33% 98%;
+  --popover-foreground: 257 52% 13%;
+  --primary: 336 100% 62%; /* magenta */
+  --primary-foreground: 40 33% 96%;
+  --secondary: 255 30% 92%;
+  --secondary-foreground: 257 52% 13%;
+  --muted: 255 30% 93%;
+  --muted-foreground: 257 20% 38%;
+  --accent: 191 100% 90%; /* pale cyan */
+  --accent-foreground: 257 52% 13%;
+  --border: 255 25% 88%;
+  --input: 255 25% 88%;
+  --ring: 336 100% 62%;
+  --radius: 0.35rem;
+
+  --font-sans: var(--font-body), system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+/* Headings wear the display face. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), var(--font-body), sans-serif;
+  letter-spacing: 0.005em;
+}
+
+/* Volt text selection — the one loud accent. */
+::selection {
+  background: var(--color-volt);
+  color: var(--color-ink);
+}
+
+/* Micro-labels: mono, uppercase, tracked — the arcade ticket look. */
+[data-eyebrow] {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+  color: hsl(var(--muted-foreground));
+}
+
+/* Zippy CTA — volt fill, ink hard offset shadow (no blur). */
+.zippy-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-volt);
+  color: var(--color-ink);
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius);
+  padding: 0.65rem 1.2rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.85rem;
+  box-shadow: 4px 4px 0 0 var(--color-ink);
+  transition:
+    transform 80ms ease,
+    box-shadow 80ms ease;
+}
+.zippy-cta:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 0 var(--color-ink);
+}
+.zippy-cta:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 0 var(--color-ink);
+}

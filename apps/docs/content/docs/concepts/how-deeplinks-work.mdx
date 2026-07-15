@@ -1,0 +1,92 @@
+---
+title: how deeplinks work
+description: schemes, intent:// URLs, and the interstitial — how a tap resolves to a native app, and why it never breaks.
+---
+
+# how deeplinks work
+
+A Zippy short link resolves in two moves: look the slug up in KV, then decide _how_ to
+send the visitor to the destination. On desktop that's a plain `301`. On mobile, for a
+**known platform**, Zippy serves a tiny interstitial page that tries to open the native
+app first. This page explains exactly what that involves.
+
+## The three link forms
+
+Every platform in the [deep-link table](/docs/reference/platforms) gives Zippy three
+things: a **custom URL scheme** (e.g. `instagram`), an **Android package id** (e.g.
+`com.instagram.android`), and a `path(url)` function that returns the scheme-specific
+suffix (or `""` to just open the app home). From those, Zippy derives all three link forms
+uniformly:
+
+| Form        | Shape                                                                  | Used on                    |
+| ----------- | ---------------------------------------------------------------------- | -------------------------- |
+| **iOS**     | `scheme://path`                                                        | iPhone / iPad              |
+| **Android** | `intent://path#Intent;scheme=…;package=…;S.browser_fallback_url=…;end` | Android                    |
+| **web**     | the original `https://…` destination                                   | everywhere as the fallback |
+
+For example, `https://x.com/nasa/status/999` becomes:
+
+```text
+iOS      twitter://status?id=999
+Android  intent://status?id=999#Intent;scheme=twitter;package=com.twitter.android;S.browser_fallback_url=https%3A%2F%2Fx.com%2Fnasa%2Fstatus%2F999;end
+web      https://x.com/nasa/status/999
+```
+
+## iOS: custom scheme + a timed fallback
+
+iOS has no native "try the app, else the web" primitive, so the interstitial does it in
+JavaScript:
+
+1. Set `location` to the custom scheme (`twitter://status?id=999`). If the app is
+   installed, iOS switches to it and **hides the page**.
+2. A `visibilitychange` listener watches for that hide — it's the honest signal the app
+   launched. When the page goes hidden, the fallback is cancelled.
+3. A `~1.5s` backstop timer (`FALLBACK_MS`) fires only if the page is _still visible_ —
+   i.e. nothing took over — and sends the browser to the plain web URL.
+
+So an installed app wins immediately; a missing app lands on the web page a beat later.
+
+## Android: `intent://` falls back natively
+
+Android is simpler because the `intent://` URL scheme has fallback built in. The
+interstitial hands Chrome the `intent://…` string and Chrome does the rest: if the named
+`package` is installed it opens the app at `path`; if not, it navigates to
+`S.browser_fallback_url` (the web URL) **natively — no JS timer involved**.
+
+## The interstitial page
+
+The page Zippy serves for a mobile + known-platform hit is intentionally minimal: inline
+HTML and CSS, no external assets, so it renders instantly on a cold mobile connection. It
+shows a short "Opening the … app" message with a manual "Continue in browser" link, and
+runs the small script above. Android replaces `location` with the `intent://` URL and
+returns; iOS runs the scheme-then-fallback dance.
+
+<Callout title="Who gets the interstitial">
+  Only a **mobile user-agent** landing on a **known platform** sees it. A desktop visitor, or any
+  destination no platform owns, gets a plain `301` straight to the URL — no interstitial, no
+  JavaScript.
+</Callout>
+
+## Why it never breaks
+
+Schemes drift. Apps rename their custom scheme between versions, some schemes are
+undocumented, and a `path` heuristic can guess wrong for an exotic URL shape. Zippy is
+built so none of that can produce a broken link:
+
+- **The web URL is always the fallback.** A wrong or unrecognized scheme means the app
+  simply doesn't open, and the visitor degrades to _"opens in the browser"_ — exactly the
+  behavior of the original link.
+- **`path` is best-effort by design.** When Zippy can't confidently map a URL to an
+  in-app location, `path` returns `""`, which opens the app's home screen while the web
+  fallback still lands the exact content. Posts and reels with no reliable shortcode
+  scheme take this route.
+
+The worst case is a normal web redirect. The best case is a clean native-app open. There
+is no failure case that leaves the visitor stranded.
+
+## Adding or fixing a platform
+
+All of this behavior is derived from one data object per platform in
+`services/redirect/src/platforms.ts`. To add a platform or fix a scheme, you edit that
+table and add a test row — nothing else in the Worker changes. See the
+[platforms reference](/docs/reference/platforms) for the PR guide.

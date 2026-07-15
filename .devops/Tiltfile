@@ -27,6 +27,14 @@ local_resource(
     labels=['services'],
 )
 
+# docs — the Fumadocs site. `next dev` serves http://localhost:3000 and hot-reloads.
+local_resource(
+    'docs',
+    serve_cmd='cd ' + REPO_ROOT + ' && ' + BUN + ' --filter @zippy/docs dev',
+    links=['http://localhost:3000'],
+    labels=['apps'],
+)
+
 # One-off flows (click-to-run in the Tilt UI; auto_init=False = don't run on boot).
 local_resource(
     'test',
@@ -42,13 +50,21 @@ local_resource(
     trigger_mode=TRIGGER_MODE_MANUAL,
     labels=['flows'],
 )
+local_resource(
+    'deploy-docs',
+    cmd='cd ' + REPO_ROOT + ' && ./scripts/deploy.sh docs',
+    auto_init=False,
+    trigger_mode=TRIGGER_MODE_MANUAL,
+    labels=['flows'],
+)
 
 print("""
 ================================================================================
                             ZIPPY — LOCAL DEV
 ================================================================================
   Redirect Worker:  http://localhost:8787   (GET /:slug · POST /api/links)
+  Docs site:        http://localhost:3000   (Fumadocs)
 
-  Flows (click in the Tilt UI): test · deploy
+  Flows (click in the Tilt UI): test · deploy · deploy-docs
 ================================================================================
 """)

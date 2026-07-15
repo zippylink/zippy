@@ -1,0 +1,63 @@
+---
+title: what is Zippy
+description: an open-source URL shortener whose links open the native app instead of a walled-in in-app browser.
+---
+
+# Zippy ⚡
+
+Zippy is an open-source URL shortener with one trick: on mobile, its links open the
+**native app** for a known platform — LinkedIn, Instagram, WhatsApp, Reddit, Product Hunt,
+YouTube, TikTok, X — instead of the in-app browser you were tapping from.
+
+It's a single Cloudflare Worker backed by KV. No database, no Durable Objects, no
+analytics pipeline. Serverless, roughly $0 to run.
+
+## The in-app-browser problem
+
+When someone taps a link inside the LinkedIn, Instagram, or TikTok app, it doesn't hand
+off to Safari or Chrome — it opens a **stripped-down in-app browser (a webview)** owned by
+that app. For a link that points _back_ at a native app (an Instagram profile, a YouTube
+video, a WhatsApp chat), that webview is a dead end:
+
+- the visitor isn't logged into the webview the way they are in the real app;
+- "open in app" banners are unreliable and easy to dismiss;
+- follow / subscribe / message actions bounce them through login walls;
+- the polished native experience the destination was built for never loads.
+
+Zippy sits in the middle. A tap on a Zippy short link runs a tiny redirect that tries the
+destination app's **deep link** first, and falls back to the plain web URL if the app
+isn't installed. The visitor lands where the native app would put them — or, worst case,
+exactly where the normal link would have. It never breaks; it only upgrades.
+
+<Callout title="The safety net">
+  A deep-link scheme can drift (apps rename schemes between versions). Zippy's web URL is always the
+  fallback, so a wrong or missing scheme **degrades to "opens in the browser"**, never to a broken
+  link. See [how deeplinks work](/docs/concepts/how-deeplinks-work).
+</Callout>
+
+## What's in this repo (OSS) vs the hosted cloud
+
+This repository is the **thin OSS engine** — the part that does the redirecting. It is
+licensed **AGPL-3.0**.
+
+|                                                                         | OSS engine (this repo) | Zippy Cloud (hosted) |
+| ----------------------------------------------------------------------- | ---------------------- | -------------------- |
+| The redirect Worker + deep-link table                                   | ✅                     | ✅ (builds on this)  |
+| KV slug → destination storage                                           | ✅                     | ✅                   |
+| Mobile interstitial + native-app open                                   | ✅                     | ✅                   |
+| Minimal Bearer-token API                                                | ✅                     | ✅                   |
+| Self-host on your own Cloudflare account                                | ✅                     | —                    |
+| Multi-tenant custom domains, dashboard, billing, click analytics, teams | —                      | ✅                   |
+
+The engine is deliberately single-tenant and dependency-light so you can read the whole
+thing in one sitting and run it yourself. The hosted product layers accounts, custom
+domains, and analytics on top — but the open-source core is fully functional on its own.
+
+## Where to go next
+
+- **[Quickstart](/docs/quickstart)** — clone, create a KV namespace, deploy, done.
+- **[How deeplinks work](/docs/concepts/how-deeplinks-work)** — schemes, `intent://`, and
+  the interstitial, explained.
+- **[API reference](/docs/reference/api)** — create and read links over HTTP.
+- **[Platforms](/docs/reference/platforms)** — the 8 built-in platforms, and how to add one.
+- **[Self-host on Cloudflare](/docs/guides/self-host-on-cloudflare)** — the full walkthrough.

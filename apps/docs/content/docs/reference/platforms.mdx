@@ -1,0 +1,111 @@
+---
+title: platforms
+description: the 8 built-in platforms and what each URL shape opens — plus how to add a platform in one PR.
+---
+
+# platforms
+
+The deep-link table (`services/redirect/src/platforms.ts`) is the core of Zippy. Each
+platform is one data object; from it Zippy derives the iOS, Android, and web link forms
+uniformly. Zippy ships with these eight:
+
+| Platform     | Key           | Scheme        | Android package              | Hosts                                                   |
+| ------------ | ------------- | ------------- | ---------------------------- | ------------------------------------------------------- |
+| LinkedIn     | `linkedin`    | `linkedin`    | `com.linkedin.android`       | linkedin.com                                            |
+| Instagram    | `instagram`   | `instagram`   | `com.instagram.android`      | instagram.com                                           |
+| WhatsApp     | `whatsapp`    | `whatsapp`    | `com.whatsapp`               | wa.me, api.whatsapp.com                                 |
+| Reddit       | `reddit`      | `reddit`      | `com.reddit.frontpage`       | reddit.com, old.reddit.com                              |
+| Product Hunt | `producthunt` | `producthunt` | `com.producthunt.hunt`       | producthunt.com                                         |
+| YouTube      | `youtube`     | `youtube`     | `com.google.android.youtube` | youtube.com, m.youtube.com, youtu.be, music.youtube.com |
+| TikTok       | `tiktok`      | `tiktok`      | `com.zhiliaoapp.musically`   | tiktok.com, vm.tiktok.com, m.tiktok.com                 |
+| X (Twitter)  | `x`           | `twitter`     | `com.twitter.android`        | x.com, twitter.com, mobile.twitter.com                  |
+
+Host matching strips a leading `www.` and is case-insensitive. A destination whose host no
+platform owns is never matched — it simply `301`s.
+
+## What each URL shape opens
+
+| Platform     | URL you shorten                                                          | Opens in-app                              |
+| ------------ | ------------------------------------------------------------------------ | ----------------------------------------- |
+| LinkedIn     | `linkedin.com/in/<user>`                                                 | that profile                              |
+|              | `linkedin.com/company/<name>`                                            | that company page                         |
+|              | anything else on linkedin.com                                            | the app (web fallback lands the page)     |
+| Instagram    | `instagram.com/<user>`                                                   | that profile                              |
+|              | `instagram.com/p/…`, `/reel/…`                                           | the app; web fallback lands the post/reel |
+| WhatsApp     | `wa.me/<phone>`                                                          | a chat with that number                   |
+|              | `api.whatsapp.com/send?phone=<phone>&text=<text>`                        | a chat, prefilled with `text`             |
+| Reddit       | `reddit.com/r/<sub>`, `/u/<user>`, `/user/<user>` (and posts under them) | that subreddit / user / post              |
+| Product Hunt | `producthunt.com/posts/<slug>`, `/products/<slug>`                       | that post / product                       |
+| YouTube      | `youtu.be/<id>`, `youtube.com/watch?v=<id>`, `youtube.com/shorts/<id>`   | that video                                |
+|              | `youtube.com/channel/<id>`, `/c/<id>`                                    | that channel                              |
+| TikTok       | `tiktok.com/@<user>`                                                     | that profile                              |
+|              | `tiktok.com/@<user>/video/<id>`, `vm.tiktok.com/<code>`                  | the app; web fallback lands the video     |
+| X (Twitter)  | `x.com/<user>/status/<id>`                                               | that tweet                                |
+|              | `x.com/<user>`                                                           | that profile                              |
+
+<Callout title="Best-effort by design">
+  Where a platform has no reliable in-app scheme for a given content type (Instagram posts, TikTok
+  videos, vm.* shortlinks), `path` returns `""` — the app opens to its home screen and the **web
+  fallback lands the exact content**. Nothing breaks; see [how deeplinks
+  work](/docs/concepts/how-deeplinks-work).
+</Callout>
+
+## Add a platform (PR guide)
+
+Adding a platform is a small, self-contained PR against `services/redirect`. You touch two
+files: the table and its test.
+
+### 1. Add one object to `PLATFORMS`
+
+In `services/redirect/src/platforms.ts`, append a `Platform`:
+
+```ts
+type Platform = {
+  key: string; // stable id, also the `deeplink` value in API responses
+  scheme: string; // the app's custom URL scheme, e.g. "spotify"
+  androidPackage: string; // Play Store package id, e.g. "com.spotify.music"
+  hosts: string[]; // lowercased hostnames it owns, no leading "www."
+  path: (url: URL) => string; // scheme-specific suffix after "scheme://", or "" for app home
+};
+```
+
+Example:
+
+```ts
+{
+  key: "spotify",
+  scheme: "spotify",
+  androidPackage: "com.spotify.music",
+  hosts: ["open.spotify.com"],
+  path: (url) => {
+    const s = url.pathname.split("/").filter(Boolean);
+    // /track/<id> → spotify:track:<id>-style suffix the app understands, else app home
+    if ((s[0] === "track" || s[0] === "album" || s[0] === "playlist") && s[1]) {
+      return `${s[0]}/${s[1]}`;
+    }
+    return "";
+  },
+}
+```
+
+Zippy derives the iOS (`scheme://path`), Android (`intent://…`), and web-fallback forms
+from these fields — nothing else in the Worker changes.
+
+### 2. Add test rows to `test/platforms.test.ts`
+
+Cover each URL shape your `path` handles (profile, content, and the app-home fallback), and
+run the suite:
+
+```sh
+bun --filter @zippy/redirect test
+```
+
+### Tips
+
+- **Verify the scheme on a real device** if you can — schemes are undocumented and drift.
+  If you're unsure, leave a `// ponytail:`-style note; the web fallback keeps a wrong
+  scheme safe.
+- **Return `""` rather than guessing** when a content type has no dependable scheme. An
+  app-home open plus the web fallback beats a broken deep link.
+- **Keep hosts lowercase and without `www.`** — matching normalizes the request host the
+  same way.
