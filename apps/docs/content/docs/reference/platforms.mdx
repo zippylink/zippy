@@ -1,13 +1,13 @@
 ---
 title: platforms
-description: the 8 built-in platforms and what each URL shape opens — plus how to add a platform in one PR.
+description: the 9 built-in platforms and what each URL shape opens — plus how to add a platform in one PR.
 ---
 
 # platforms
 
 The deep-link table (`services/redirect/src/platforms.ts`) is the core of Zippy. Each
 platform is one data object; from it Zippy derives the iOS, Android, and web link forms
-uniformly. Zippy ships with these eight:
+uniformly. Zippy ships with these nine:
 
 | Platform     | Key           | Scheme        | Android package              | Hosts                                                   |
 | ------------ | ------------- | ------------- | ---------------------------- | ------------------------------------------------------- |
@@ -19,6 +19,11 @@ uniformly. Zippy ships with these eight:
 | YouTube      | `youtube`     | `youtube`     | `com.google.android.youtube` | youtube.com, m.youtube.com, youtu.be, music.youtube.com |
 | TikTok       | `tiktok`      | `tiktok`      | `com.zhiliaoapp.musically`   | tiktok.com, vm.tiktok.com, m.tiktok.com                 |
 | X (Twitter)  | `x`           | `twitter`     | `com.twitter.android`        | x.com, twitter.com, mobile.twitter.com                  |
+| GitHub       | `github`      | `https` †     | `com.github.android`         | github.com                                              |
+
+† GitHub registers **no custom URL scheme** — the app is reachable only via https App Links
+(Android) and Universal Links (iOS). So its "scheme" is `https` and Zippy hands the app the
+genuine URL. This means **Android gets a real native-open; iOS does not** — see the note below.
 
 Host matching strips a leading `www.` and is case-insensitive. A destination whose host no
 platform owns is never matched — it simply `301`s.
@@ -42,6 +47,20 @@ platform owns is never matched — it simply `301`s.
 |              | `tiktok.com/@<user>/video/<id>`, `vm.tiktok.com/<code>`                  | the app; web fallback lands the video     |
 | X (Twitter)  | `x.com/<user>/status/<id>`                                               | that tweet                                |
 |              | `x.com/<user>`                                                           | that profile                              |
+| GitHub       | `github.com/<owner>/<repo>`, `/<user>`, `…/issues/<n>`, `…/pull/<n>`     | **Android:** that page in the app         |
+|              | (same URLs)                                                              | **iOS:** the browser — no app open (see below) |
+
+<Callout title="GitHub: Android-only native open (honest limitation)">
+  GitHub's app has **no custom URL scheme** — only https App Links (Android) and Universal
+  Links (iOS). Zippy hands the app the real URL:
+  - **Android** → a package-targeted `intent://github.com/…;scheme=https;package=com.github.android`
+    opens the app on that repo / user / issue / PR, with the web URL as the native fallback. A real win.
+  - **iOS** → there is no custom scheme, and Universal Links **do not fire from inside in-app
+    webviews** (Instagram, LinkedIn, …) — which is the exact gap Zippy exists to close. So on iOS a
+    GitHub short link lands on `github.com` in the browser: no worse than a plain tap, but **no app
+    open either**. We deliberately do **not** invent a `github://` scheme (a wrong scheme would only
+    add a redirect hop). If GitHub ships a public custom scheme, iOS support is a one-line change.
+</Callout>
 
 <Callout title="Best-effort by design">
   Where a platform has no reliable in-app scheme for a given content type (Instagram posts, TikTok

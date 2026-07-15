@@ -36,7 +36,35 @@ one object: `scheme`, `androidPackage`, the `hosts` it owns, and a `path(url)`
 that returns the scheme-specific suffix (or `""` to just open the app). iOS,
 Android-intent, and web-fallback link forms are derived from those uniformly.
 Ships with LinkedIn, Instagram, WhatsApp, Reddit, Product Hunt, YouTube, TikTok,
-and X/Twitter.
+X/Twitter, and GitHub.
+
+### Platform notes — GitHub (verified 2026-07, Android-only benefit)
+
+GitHub is the first **schemeless** platform: the app registers **no custom URL
+scheme**, only https App Links (Android) and Universal Links (iOS). Findings, with
+sources, before we shipped it:
+
+1. **iOS custom scheme?** No. Not in GitHub's own deep-linking gist, not in curated
+   known-scheme lists, and GitHub's docs describe **only** Universal Links. The live
+   `github.com/apple-app-site-association` maps repo/user/issue/PR paths to app ID
+   `VEKTX9H2N7.com.github.stormbreaker.prod` — a Universal Link, not a scheme.
+2. **Android package + pattern?** `com.github.android` (Play Store, verified). A
+   package-targeted `intent://github.com/<path>#Intent;scheme=https;package=com.github.android;S.browser_fallback_url=<web>;end`
+   opens the app on that URL, and `browser_fallback_url` degrades to the browser
+   natively when the app is absent — the **same mechanism the other 8 platforms already
+   ship**, differing only in `scheme=https` (Chrome intent docs + Branch guide).
+3. **In-app-webview escape (Zippy's whole point)?** On iOS there is **none** for GitHub:
+   with no custom scheme and Universal Links that don't fire inside Instagram/LinkedIn
+   webviews, a GitHub short link on iOS just lands on `github.com` in the browser —
+   **no app open, no regression**. Android inherits the same intent:// behavior as every
+   other platform.
+
+**Verdict:** shipped as **Android-native-open, iOS-web-fallback**. Cost is one table
+entry; Android is a real win; iOS never does worse than a plain tap. We deliberately did
+**not** invent a `github://` scheme — a wrong scheme adds a redirect hop and buys nothing.
+`gist.github.com` was left out (no evidence the app handles gist links). If GitHub ships a
+public custom scheme, iOS becomes a one-line change. Confidence: iOS-limitation `high`,
+Android-benefit `moderate-high` (device-verify the intent:// open when you can).
 
 ## Setup (KV + secret + domain)
 

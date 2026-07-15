@@ -129,6 +129,43 @@ const cases: Array<{ name: string; url: string; key: string; ios: string; pkg: s
     ios: "twitter://user?screen_name=nasa",
     pkg: "com.twitter.android",
   },
+  // GitHub is schemeless: scheme=https, iOS "scheme" IS the web URL (no in-app-webview
+  // escape by design), Android intent:// package-targets com.github.android.
+  {
+    name: "github repo",
+    url: "https://github.com/vercel/next.js",
+    key: "github",
+    ios: "https://github.com/vercel/next.js",
+    pkg: "com.github.android",
+  },
+  {
+    name: "github user",
+    url: "https://github.com/torvalds",
+    key: "github",
+    ios: "https://github.com/torvalds",
+    pkg: "com.github.android",
+  },
+  {
+    name: "github issue",
+    url: "https://github.com/facebook/react/issues/123",
+    key: "github",
+    ios: "https://github.com/facebook/react/issues/123",
+    pkg: "com.github.android",
+  },
+  {
+    name: "github pull request",
+    url: "https://github.com/facebook/react/pull/456",
+    key: "github",
+    ios: "https://github.com/facebook/react/pull/456",
+    pkg: "com.github.android",
+  },
+  {
+    name: "github home (trailing slash stripped)",
+    url: "https://github.com/",
+    key: "github",
+    ios: "https://github.com",
+    pkg: "com.github.android",
+  },
 ];
 
 describe("matchPlatform", () => {
@@ -145,6 +182,14 @@ describe("matchPlatform", () => {
       expect(m!.web).toBe(new URL(c.url).toString());
     });
   }
+
+  it("github uses a schemeless (https) android intent, not a custom scheme", () => {
+    // The github app has no custom scheme; the intent must package-target it over https.
+    const m = matchPlatform("https://github.com/vercel/next.js");
+    expect(m!.android).toContain("scheme=https;");
+    expect(m!.android).toContain("intent://github.com/vercel/next.js#Intent;");
+    expect(m!.android).toContain(";package=com.github.android;");
+  });
 
   it("returns null for unknown hosts", () => {
     expect(matchPlatform("https://example.com/foo")).toBeNull();

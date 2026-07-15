@@ -169,6 +169,27 @@ export const PLATFORMS: Platform[] = [
       return "";
     },
   },
+  {
+    // ponytail: GitHub is SCHEMELESS — the app registers NO custom URL scheme, only
+    // https App Links (Android, com.github.android) + Universal Links (iOS,
+    // com.github.stormbreaker.prod, per github.com's live apple-app-site-association).
+    // So scheme="https" and path carries the FULL host: buildMatch then yields
+    //   android → intent://github.com/<p>#Intent;scheme=https;package=com.github.android;…
+    //             — package-targeted https VIEW intent opens the app; browser_fallback_url
+    //             degrades to the browser natively (same mechanism as the other 8).  REAL win.
+    //   ios     → https://github.com/<p> — i.e. the web URL. With no custom scheme there is
+    //             NOTHING that escapes an in-app webview (Instagram/LinkedIn); Universal Links
+    //             don't fire there. iOS therefore just lands on github.com = the web fallback.
+    //             NO iOS benefit over a plain tap, by design — do NOT invent a github:// scheme.
+    // We hand the app the genuine URL, so its own router decides correctness — no reserved-word
+    // guard needed (unlike custom-scheme platforms), and any page it can't open falls back to web.
+    // gist.github.com is intentionally OMITTED: no evidence the app handles gist links.
+    key: "github",
+    scheme: "https",
+    androidPackage: "com.github.android",
+    hosts: ["github.com"],
+    path: (url) => `github.com${url.pathname.replace(/\/+$/, "")}`,
+  },
 ];
 
 function buildMatch(p: Platform, url: URL): PlatformMatch {
