@@ -1,0 +1,21 @@
+node_modules
+dist
+.next
+build
+storybook-static
+
+# env / secrets
+.env.local
+.env.*.local
+services/**/.dev.vars
+
+# wrangler / cloudflare
+.wrangler
+
+# nx / tooling caches
+.nx/cache
+.nx/workspace-data
+
+# editor local history
+.vscode/local-history
+.history
