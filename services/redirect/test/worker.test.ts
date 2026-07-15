@@ -164,6 +164,32 @@ describe("JSON link values", () => {
   });
 });
 
+describe("Zippy mascot chrome", () => {
+  const bytes = (s: string) => new TextEncoder().encode(s).length;
+
+  it("interstitial carries the code-drawn Zippy bolt and stays under 6KB", async () => {
+    const res = await worker.fetch(
+      req("/tw", { headers: { "user-agent": IPHONE } }),
+      env({ tw: "https://x.com/nasa/status/999" }),
+    );
+    const body = await res.text();
+    expect(body).toContain('class="z"'); // the pulsing bolt SVG
+    expect(body).toContain("#EEFF00"); // volt body — inline, no external asset
+    expect(body).not.toContain("http://"); // no external requests
+    expect(bytes(body)).toBeLessThan(6144);
+  });
+
+  it("404 shows the sad bolt + a link home, under 6KB", async () => {
+    const res = await worker.fetch(req("/nope"), env());
+    expect(res.status).toBe(404);
+    const body = await res.text();
+    expect(body).toContain('class="z"');
+    expect(body).toContain("doesn't live here");
+    expect(body).toContain("https://zipthe.link"); // BASE_URL home link
+    expect(bytes(body)).toBeLessThan(6144);
+  });
+});
+
 describe("POST /api/links auth", () => {
   const body = JSON.stringify({ url: "https://example.com" });
 

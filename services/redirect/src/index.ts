@@ -98,11 +98,11 @@ async function handleRedirect(
   env: Env,
 ): Promise<Response> {
   const key = await resolveKey(hostname, slug, env);
-  if (key === null) return html(render404(), 404);
+  if (key === null) return html(render404(env.BASE_URL), 404);
   const raw = await env.LINKS.get(key);
-  if (!raw) return html(render404(), 404);
+  if (!raw) return html(render404(env.BASE_URL), 404);
   const link = parseLinkValue(raw);
-  if (!link) return html(render404(), 404);
+  if (!link) return html(render404(env.BASE_URL), 404);
   const match = matchPlatform(link.url);
   if (match && isMobile(req.headers.get("user-agent") ?? "")) {
     return html(renderInterstitial(match, { branded: link.branded, homeUrl: env.BASE_URL }), 200);
@@ -195,7 +195,7 @@ export default {
 
     if (req.method !== "GET") return json({ error: "Method not allowed" }, 405);
     const slug = decodeURIComponent(pathname.slice(1));
-    if (!slug) return html(render404(), 404); // root has no landing in the OSS core
+    if (!slug) return html(render404(env.BASE_URL), 404); // root has no landing in the OSS core
     return handleRedirect(slug, url.hostname, req, env);
   },
 };
