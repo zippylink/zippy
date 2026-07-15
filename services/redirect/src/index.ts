@@ -43,8 +43,43 @@ function tokenOk(header: string | null, expected?: string): boolean {
   return diff === 0;
 }
 
-async function handleRedirect(slug: string, req: Request, env: Env): Promise<Response> {
-  const dest = await env.LINKS.get(slug);
+/**
+ * Resolve the KV key for `slug` on this request's Host — pure routing, never reads
+ * tier/subscription state (the mapping record is routing data written by the cloud).
+ *
+ *   default host (BASE_URL's host)  → bare `<slug>`          (back-compat: existing single-tenant records)
+ *   any other host                  → `host:<hostname>` → { tenantId }, then `t:<tenantId>:<slug>`
+ *   unmapped / malformed host       → null (caller 404s)
+ */
+async function resolveKey(hostname: string, slug: string, env: Env): Promise<string | null> {
+  let defaultHost: string;
+  try {
+    defaultHost = new URL(env.BASE_URL).hostname;
+  } catch {
+    defaultHost = ""; // misconfigured BASE_URL → nothing is the default host; multi-host lookup still works
+  }
+  if (hostname === defaultHost) return slug;
+
+  const mapping = await env.LINKS.get(`host:${hostname}`);
+  if (!mapping) return null; // unknown host
+  try {
+    const { tenantId } = JSON.parse(mapping) as { tenantId?: unknown };
+    if (typeof tenantId !== "string" || !tenantId) return null;
+    return `t:${tenantId}:${slug}`;
+  } catch {
+    return null; // malformed mapping record → treat as unroutable, never 500 a visitor
+  }
+}
+
+async function handleRedirect(
+  slug: string,
+  hostname: string,
+  req: Request,
+  env: Env,
+): Promise<Response> {
+  const key = await resolveKey(hostname, slug, env);
+  if (key === null) return html(render404(), 404);
+  const dest = await env.LINKS.get(key);
   if (!dest) return html(render404(), 404);
   const match = matchPlatform(dest);
   if (match && isMobile(req.headers.get("user-agent") ?? "")) {
@@ -137,6 +172,6 @@ export default {
     if (req.method !== "GET") return json({ error: "Method not allowed" }, 405);
     const slug = decodeURIComponent(pathname.slice(1));
     if (!slug) return html(render404(), 404); // root has no landing in the OSS core
-    return handleRedirect(slug, req, env);
+    return handleRedirect(slug, url.hostname, req, env);
   },
 };

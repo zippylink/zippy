@@ -18,6 +18,8 @@ function env(init: Record<string, string> = {}): Env {
 }
 
 const req = (path: string, init?: RequestInit) => new Request(`https://zipthe.link${path}`, init);
+const reqOn = (host: string, path: string, init?: RequestInit) =>
+  new Request(`https://${host}${path}`, init);
 
 describe("redirect", () => {
   it("301s a plain (non-platform) destination", async () => {
@@ -47,6 +49,55 @@ describe("redirect", () => {
 
   it("404s an unknown slug", async () => {
     const res = await worker.fetch(req("/nope"), env());
+    expect(res.status).toBe(404);
+  });
+});
+
+describe("multi-host resolution", () => {
+  // Default host (BASE_URL's host = zipthe.link) reads the bare `<slug>` key — the
+  // existing single-tenant records are untouched by the tenant-prefix scheme.
+  it("default host resolves the bare slug key (back-compat)", async () => {
+    const res = await worker.fetch(req("/abc"), env({ abc: "https://example.com/page" }));
+    expect(res.status).toBe(301);
+    expect(res.headers.get("location")).toBe("https://example.com/page");
+  });
+
+  // A mapped custom domain: host:<hostname> → { tenantId } routes the slug into that
+  // tenant's namespace `t:<tenantId>:<slug>`.
+  it("mapped custom host resolves via host:<hostname> → t:<tenantId>:<slug>", async () => {
+    const res = await worker.fetch(
+      reqOn("acme.com", "/promo"),
+      env({
+        "host:acme.com": JSON.stringify({ tenantId: "t_123" }),
+        "t:t_123:promo": "https://example.com/acme-promo",
+      }),
+    );
+    expect(res.status).toBe(301);
+    expect(res.headers.get("location")).toBe("https://example.com/acme-promo");
+  });
+
+  // The tenant namespace is isolated: a bare `<slug>` record is NOT visible on a custom host.
+  it("does not fall back to the bare slug key on a custom host", async () => {
+    const res = await worker.fetch(
+      reqOn("acme.com", "/promo"),
+      env({
+        "host:acme.com": JSON.stringify({ tenantId: "t_123" }),
+        promo: "https://example.com/leaked",
+      }),
+    );
+    expect(res.status).toBe(404);
+  });
+
+  it("404s a host with no mapping record", async () => {
+    const res = await worker.fetch(reqOn("unknown.com", "/promo"), env({ promo: "https://x.com" }));
+    expect(res.status).toBe(404);
+  });
+
+  it("404s a host whose mapping record is malformed (never 500s)", async () => {
+    const res = await worker.fetch(
+      reqOn("acme.com", "/promo"),
+      env({ "host:acme.com": "not-json", "t::promo": "https://example.com" }),
+    );
     expect(res.status).toBe(404);
   });
 });

@@ -50,3 +50,28 @@ bunx wrangler secret put API_TOKEN                 # the create/read bearer toke
 `BASE_URL` (a `[vars]` value) builds the `shortUrl` in API responses — set it per
 environment; the code never hardcodes a domain. The custom-domain (`zipthe.link`)
 route is commented in `wrangler.toml`.
+
+## KV key schema (multi-host)
+
+The Worker resolves a slug's KV key from the request's `Host`, so one deployment can
+serve many custom domains (the hosted cloud fronts them with Cloudflare for SaaS). The
+redirect path is **tier-blind** — it reads only routing data, never subscription state.
+
+| Key                   | Value                      | Written by             | Read on                                  |
+| --------------------- | -------------------------- | ---------------------- | ---------------------------------------- |
+| `<slug>`              | destination URL (string)   | OSS `POST /api/links`  | requests on the **default host**         |
+| `host:<hostname>`     | `{"tenantId":"<id>"}` JSON | the cloud (routing map) | first lookup on any **non-default** host |
+| `t:<tenantId>:<slug>` | destination URL (string)   | the cloud's own API    | requests on a **mapped** host            |
+
+Resolution for `GET /:slug`:
+
+1. **`hostname === new URL(BASE_URL).hostname`** (the default host) → key is the bare
+   `<slug>`. Existing single-tenant records are untouched — full back-compat.
+2. **Any other hostname** → read `host:<hostname>`. Miss (or malformed JSON) → `404`,
+   never a `500`. Hit → parse `{ tenantId }`, then the key is `t:<tenantId>:<slug>`.
+
+`<hostname>` is the exact lowercased Host with no port and no `www.` normalization —
+write the mapping under the same host Cloudflare for SaaS routes to the Worker. Tenant
+namespaces are isolated: a bare `<slug>` is never visible on a custom host, and vice
+versa. The OSS `/api/links` endpoints stay single-tenant (they read/write bare `<slug>`
+keys on the default host); the cloud writes `host:*` and `t:*:*` with its own tooling.
