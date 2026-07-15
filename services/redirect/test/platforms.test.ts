@@ -1,5 +1,30 @@
 import { describe, it, expect } from "vitest";
 import { matchPlatform } from "../src/platforms.js";
+import { inAppWebview } from "../src/interstitial.js";
+
+describe("inAppWebview detection", () => {
+  const IG =
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) Mobile/15E148 Instagram 329.0.0.41.94";
+  const FB = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0) [FBAN/FBIOS;FBAV/450.0.0.0.0]";
+  const TIKTOK = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0) musical_ly_2023 BytedanceWebview/d8a21c";
+  const LINKEDIN = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0) Mobile/15E148 LinkedInApp";
+  const SAFARI = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4) Version/17.4 Mobile/15E148 Safari/604.1";
+  const CHROME_IOS =
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0) CriOS/124 Mobile/15E148 Safari/604.1";
+
+  it("detects each trapping webview", () => {
+    expect(inAppWebview(IG)).toBe("instagram");
+    expect(inAppWebview(FB)).toBe("facebook");
+    expect(inAppWebview(TIKTOK)).toBe("tiktok");
+    expect(inAppWebview(LINKEDIN)).toBe("linkedin");
+  });
+
+  it("returns null for real browsers (Safari, Chrome-iOS)", () => {
+    expect(inAppWebview(SAFARI)).toBeNull();
+    expect(inAppWebview(CHROME_IOS)).toBeNull();
+    expect(inAppWebview("")).toBeNull();
+  });
+});
 
 // URL in → expected iOS scheme + Android intent shape + web fallback, per platform.
 const cases: Array<{ name: string; url: string; key: string; ios: string; pkg: string }> = [

@@ -3,16 +3,40 @@ import type { PlatformMatch } from "./platforms.js";
 // Minimal, self-contained HTML. No external assets — it must render instantly on
 // a cold mobile connection, so everything is inline.
 //
-// Strategy:
-//   iOS      — set location to the custom scheme; if we're still visible after a
-//              short beat, the app didn't take over → go to the https fallback.
+// Strategy (see docs/ios-escape.md for the evidence behind it):
+//   iOS + custom scheme  — fire `scheme://…`; the scheme opens the app DIRECTLY even
+//              from inside an in-app webview (Instagram/TikTok/LinkedIn). This is exactly
+//              what URLgenius does — no Safari punt is needed when a scheme exists.
+//   iOS + schemeless (github, Universal-Links only) IN a webview — punt to real Safari
+//              via `x-safari-https://…` so the Universal Link can fire (a UL never fires
+//              inside a webview). Degraded (Instagram blocks the silent form), so a
+//              tap-target "Open in Safari ↗" is always shown as the user-gesture path.
+//   iOS — a visible tap target re-fires the escape on tap; some webviews only allow the
+//              escape on a user gesture, not the automatic one.
 //   Android  — hand the browser the intent:// URL. Chrome falls back to
-//              browser_fallback_url NATIVELY, so no JS timer is involved.
+//              browser_fallback_url NATIVELY (works inside Android webviews too).
 //
 // visibilitychange is the honest signal the app launched (the page is hidden while
 // iOS switches apps); we cancel the fallback when it fires. FALLBACK_MS is the
 // backstop for browsers that don't hide the page.
 const FALLBACK_MS = 1500;
+
+// In-app webviews that trap taps on iOS. Best-effort UA sniff — used only to pick the
+// iOS escape technique + button copy; a miss degrades to the plain web link, never a
+// dead end. Signatures per the Nov-2025 escape-library survey (see docs/ios-escape.md).
+const WEBVIEW_UA: Array<[string, RegExp]> = [
+  ["instagram", /Instagram/i],
+  ["facebook", /FBAN|FBAV|FB_IAB/],
+  ["tiktok", /musical_ly|BytedanceWebview|TikTok/i],
+  ["linkedin", /LinkedInApp/i],
+  ["snapchat", /Snapchat/i],
+];
+
+/** Name of the in-app webview this UA belongs to, or null for a real browser. */
+export function inAppWebview(ua: string): string | null {
+  for (const [name, re] of WEBVIEW_UA) if (re.test(ua)) return name;
+  return null;
+}
 
 const esc = (s: string): string =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -46,11 +70,33 @@ function zippyBolt(sad = false): string {
 
 export function renderInterstitial(
   match: PlatformMatch,
-  opts?: { branded?: boolean; homeUrl?: string },
+  opts?: { branded?: boolean; homeUrl?: string; ua?: string },
 ): string {
   // Branding footer only when the record says so (the cloud bakes in this effect).
   const footer = opts?.branded
     ? `<p style="margin-top:1.5rem;font-size:.7rem;opacity:.6"><a href="${esc(opts.homeUrl ?? "")}">⚡ zipped with Zippy</a></p>`
+    : "";
+
+  // Escape plan (iOS). The schemeless platforms encode `ios` as an https:// URL, so this
+  // one check separates github (Universal-Links only) from the eight scheme platforms —
+  // no new data model needed.
+  const ua = opts?.ua ?? "";
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+  const webview = inAppWebview(ua);
+  const hasScheme = !match.ios.startsWith("https://");
+  const safariPunt = "x-safari-" + match.web; // → x-safari-https://<dest>, punts to real Safari
+  // iOS auto-navigation target: the scheme, or (github-in-webview) the Safari punt, else web.
+  const iosPrimary = hasScheme ? match.ios : webview ? safariPunt : match.web;
+  // Visible tap target = the user-gesture path (some webviews only escape on a tap).
+  const escape = isIOS
+    ? hasScheme
+      ? { href: match.ios, label: `Open in the ${esc(match.key)} app` }
+      : webview
+        ? { href: safariPunt, label: "Open in Safari ↗" }
+        : null
+    : null;
+  const escapeBtn = escape
+    ? `<p><a id="escape" href="${esc(escape.href)}" style="display:inline-block;margin-bottom:.6rem;padding:.7rem 1.4rem;border-radius:12px;background:#1A1033;color:#EEFF00;text-decoration:none;font-weight:700">${escape.label}</a></p>`
     : "";
   return `<!doctype html>
 <html lang="en">
@@ -76,22 +122,23 @@ export function renderInterstitial(
 <main>
   ${zippyBolt()}
   <p>Opening the ${esc(match.key)} app<span class="dot"></span><span class="dot"></span><span class="dot"></span></p>
+  ${escapeBtn}
   <p><a id="fallback" href="${esc(match.web)}">Continue in browser</a></p>
   ${footer}
 </main>
 <script>
 (function(){
-  var ios = ${JSON.stringify(match.ios)};
+  var iosPrimary = ${JSON.stringify(iosPrimary)};
   var android = ${JSON.stringify(match.android)};
   var web = ${JSON.stringify(match.web)};
   var isAndroid = /Android/i.test(navigator.userAgent);
-  if (isAndroid) { window.location.replace(android); return; } // intent:// self-falls-back
+  if (isAndroid) { window.location.replace(android); return; } // intent:// self-falls-back (webviews too)
   var done = false;
   function bail(){ if(!done){ done = true; window.location.replace(web); } }
   document.addEventListener("visibilitychange", function(){ if(document.hidden){ done = true; } });
   var t = setTimeout(bail, ${FALLBACK_MS});
   window.addEventListener("pagehide", function(){ done = true; clearTimeout(t); });
-  window.location.replace(ios);
+  window.location.replace(iosPrimary); // scheme opens the app; x-safari punts github to Safari
 })();
 </script>
 </body>

@@ -1,0 +1,61 @@
+# Manual real-device checklist — iOS in-app-webview escape
+
+A webview escape **cannot** be verified with curl or a headless browser: curl only sees
+the served HTML (unit-tested in `worker.test.ts`), but only a real iPhone running the
+real Instagram/TikTok/LinkedIn webview exercises the OS scheme/Universal-Link handoff.
+This is the device procedure the deploy smoke test runs. Background: `docs/ios-escape.md`.
+
+## What IS driven locally (already green)
+
+- `inAppWebview()` UA detection matrix — `test/platforms.test.ts`.
+- Per-context primary action baked into the served HTML — `test/worker.test.ts`
+  ("iOS in-app-webview escape (technique matrix)"): scheme-fire vs `x-safari-` punt vs
+  plain-web vs Android `intent://`.
+- Served-HTML byte size per context (2.8–3.1 KB, all under 6 KB).
+
+Optional: assert the served HTML per UA against a deployed Worker with curl —
+
+```bash
+BASE=https://zipthe.link            # or the preview URL
+IG='Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 329.0.0.41.94 (iPhone14,5; iOS 17_4; en_US)'
+SAFARI='Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1'
+
+# github link inside the IG webview MUST contain the Safari punt:
+curl -s "$BASE/<github-slug>" -A "$IG" | grep -c 'x-safari-https://github.com'   # expect 1
+# same github link in real Safari MUST NOT punt (the UL fires natively):
+curl -s "$BASE/<github-slug>" -A "$SAFARI" | grep -c 'x-safari-'                 # expect 0
+```
+
+## Device procedure (the part only a phone can prove)
+
+Create two test links (needs `API_TOKEN`):
+
+```bash
+# 1) scheme platform (LinkedIn) — should open the LinkedIn app directly from a webview
+curl -s -XPOST "$BASE/api/links" -H "authorization: Bearer $API_TOKEN" \
+  -H 'content-type: application/json' \
+  -d '{"url":"https://www.linkedin.com/in/adimoyal"}'
+
+# 2) Universal-Links-only platform (GitHub) — should punt to Safari, then open the GitHub app
+curl -s -XPOST "$BASE/api/links" -H "authorization: Bearer $API_TOKEN" \
+  -H 'content-type: application/json' \
+  -d '{"url":"https://github.com/vercel/next.js"}'
+```
+
+Then, on a **real iPhone** with the LinkedIn app **and** the GitHub app installed:
+
+| # | Steps | Pass criterion |
+|---|---|---|
+| 1 | DM the **LinkedIn** short link to yourself in **Instagram**. Tap it (opens IG's webview). | The **LinkedIn app** opens on the profile (scheme fired in-webview). |
+| 2 | Same link, but tap **"Open in the linkedin app"** button instead of waiting. | LinkedIn app opens (gesture path works). |
+| 3 | DM the **GitHub** short link in **Instagram**. Tap it. | Page tries the Safari punt; **Safari** opens and the **GitHub app** takes over (Universal Link). If the silent punt is blocked, the **"Open in Safari ↗"** button must do it on tap. |
+| 4 | Repeat #1 and #3 inside **TikTok** and **LinkedIn** webviews. | Same outcomes. |
+| 5 | Open either link in **real Safari** (paste in address bar). | App opens (scheme / UL); no dead end. |
+| 6 | On any link, if no app is installed, wait ~1.5 s or tap **"Continue in browser"**. | Lands on the correct web page — never a dead end. |
+
+## Honest confidence
+
+- **Scheme platforms (#1, #2, #4-scheme): high** — mirrors URLgenius's measured behavior.
+- **GitHub Safari punt (#3): moderate** — `x-safari-https` is degraded (Instagram blocks
+  the *silent* form); the **"Open in Safari ↗"** tap target is the reliable path and is
+  always present, so the worst case is one extra tap, never a dead end.

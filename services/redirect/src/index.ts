@@ -103,9 +103,13 @@ async function handleRedirect(
   if (!raw) return html(render404(env.BASE_URL), 404);
   const link = parseLinkValue(raw);
   if (!link) return html(render404(env.BASE_URL), 404);
+  const ua = req.headers.get("user-agent") ?? "";
   const match = matchPlatform(link.url);
-  if (match && isMobile(req.headers.get("user-agent") ?? "")) {
-    return html(renderInterstitial(match, { branded: link.branded, homeUrl: env.BASE_URL }), 200);
+  if (match && isMobile(ua)) {
+    return html(
+      renderInterstitial(match, { branded: link.branded, homeUrl: env.BASE_URL, ua }),
+      200,
+    );
   }
   return Response.redirect(link.url, 301);
 }

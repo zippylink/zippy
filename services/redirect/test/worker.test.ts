@@ -2,6 +2,9 @@ import { describe, it, expect } from "vitest";
 import worker, { type Env } from "../src/index.js";
 
 const IPHONE = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15";
+const IPHONE_IG =
+  "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 329.0.0.41.94 (iPhone14,5; iOS 17_4; en_US)";
+const ANDROID = "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/124 Mobile";
 const DESKTOP = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36";
 const TOKEN = "test-secret-token";
 
@@ -187,6 +190,49 @@ describe("Zippy mascot chrome", () => {
     expect(body).toContain("doesn't live here");
     expect(body).toContain("https://zipthe.link"); // BASE_URL home link
     expect(bytes(body)).toBeLessThan(6144);
+  });
+});
+
+// The iOS in-app-webview escape: per-context primary action baked into the served HTML.
+// A webview escape can't be verified headless (see docs/ios-escape.md) — these assert the
+// server hands the RIGHT technique to each context; the real handoff needs a device.
+describe("iOS in-app-webview escape (technique matrix)", () => {
+  const serve = (ua: string, url: string) =>
+    worker
+      .fetch(req("/e", { headers: { "user-agent": ua } }), env({ e: url }))
+      .then((r) => r.text());
+
+  it("scheme platform on iOS Safari → fires the custom scheme + Open-in-App tap target", async () => {
+    const body = await serve(IPHONE, "https://instagram.com/nasa");
+    expect(body).toContain("instagram://user?username=nasa"); // auto-fire
+    expect(body).toContain('id="escape"'); // manual gesture path (URLgenius's #app-button)
+    expect(body).not.toContain("x-safari-"); // scheme needs no Safari punt
+  });
+
+  it("scheme platform inside Instagram webview → same scheme fire (scheme escapes in-webview)", async () => {
+    const body = await serve(IPHONE_IG, "https://x.com/nasa/status/1");
+    expect(body).toContain("twitter://status?id=1");
+    expect(body).toContain('id="escape"');
+    expect(body).not.toContain("x-safari-");
+  });
+
+  it("github (schemeless) inside a webview → punts to real Safari via x-safari-https + tap target", async () => {
+    const body = await serve(IPHONE_IG, "https://github.com/vercel/next.js");
+    expect(body).toContain("x-safari-https://github.com/vercel/next.js"); // the punt
+    expect(body).toContain("Open in Safari"); // gesture path label
+  });
+
+  it("github (schemeless) on real iOS Safari → no punt, just the UL-firing https URL", async () => {
+    const body = await serve(IPHONE, "https://github.com/vercel/next.js");
+    expect(body).not.toContain("x-safari-"); // UL fires natively in Safari
+    expect(body).toContain("https://github.com/vercel/next.js");
+  });
+
+  it("Android webview → intent:// (self-falls-back), no iOS escape chrome", async () => {
+    const body = await serve(ANDROID, "https://github.com/vercel/next.js");
+    expect(body).toContain("intent://github.com/vercel/next.js");
+    expect(body).not.toContain("x-safari-");
+    expect(body).not.toContain('id="escape"'); // escape button is iOS-only
   });
 });
 
