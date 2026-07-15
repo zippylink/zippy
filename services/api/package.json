@@ -1,0 +1,31 @@
+{
+  "name": "@stack/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@hono/swagger-ui": "^0.6.1",
+    "@hono/zod-openapi": "^1.4.0",
+    "@stack/analytics": "workspace:*",
+    "@stack/api-types": "workspace:*",
+    "@stack/config": "workspace:*",
+    "@stack/observability": "workspace:*",
+    "hono": "^4.6.0",
+    "posthog-node": "^5.39.2",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "typescript": "^6.0.3"
+  },
+  "nx": {
+    "tags": [
+      "type:service"
+    ]
+  }
+}

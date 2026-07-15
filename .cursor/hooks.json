@@ -1,0 +1,10 @@
+{
+  "_immortermManaged": true,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": "/Users/shaisnir/Development/builders-stack/.immorterm/hooks/lib/cursor-adapter.sh"
+      }
+    ]
+  }
+}
