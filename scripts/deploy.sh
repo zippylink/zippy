@@ -1,35 +1,28 @@
 #!/usr/bin/env bash
-# Deploy the stack to an environment. Usage:  ./scripts/deploy.sh <staging|prod>
-# This is a scaffold that ECHOES the steps — wire in your registry + cluster to make it real.
+# Deploy the Zippy redirect Worker to Cloudflare. Usage:  ./scripts/deploy.sh [--production]
+#
+# Prereqs (one-time): create the KV namespace + set the API_TOKEN secret, and paste
+# the namespace id into services/redirect/wrangler.toml — see services/redirect/README.md.
+# Auth: `wrangler login`, or CLOUDFLARE_API_TOKEN in the environment.
 set -euo pipefail
 
-ENV="${1:-}"
-if [[ "$ENV" != "staging" && "$ENV" != "prod" ]]; then
-  echo "usage: $0 <staging|prod>" >&2
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT/services/redirect"
+
+if grep -q "REPLACE_WITH_KV" wrangler.toml; then
+  echo "✗ wrangler.toml still has a placeholder KV id. Create the namespace and paste it first:" >&2
+  echo "    bunx wrangler kv namespace create LINKS" >&2
   exit 1
 fi
 
-# ponytail: echo-only scaffold. Replace the echoes with your real registry/cluster commands.
-REGISTRY="${REGISTRY:-ghcr.io/OWNER}"
-SERVICES=(api ai-worker payment)
-TAG="$(git rev-parse --short HEAD 2>/dev/null || echo latest)"
+echo "→ Typecheck"
+bun run typecheck
 
-echo "→ Deploying builders-stack to '$ENV' (tag: $TAG)"
+echo "→ Deploy zippy-redirect"
+if [[ "${1:-}" == "--production" ]]; then
+  bunx wrangler deploy --env production
+else
+  bunx wrangler deploy
+fi
 
-echo "1. Typecheck the workspace"
-echo "   bun run typecheck"
-
-for svc in "${SERVICES[@]}"; do
-  echo "2. Build + push $svc"
-  echo "   docker build -f infra/${svc}.Dockerfile -t ${REGISTRY}/stack-${svc}:${TAG} ."
-  echo "   docker push ${REGISTRY}/stack-${svc}:${TAG}"
-done
-
-echo "3. Run DB migrations"
-echo "   bun --filter @stack/db migrate"
-
-echo "4. Roll out to Kubernetes ($ENV context)"
-echo "   kubectl --context $ENV set image deployment/stack-api api=${REGISTRY}/stack-api:${TAG}"
-echo "   kubectl --context $ENV rollout status deployment/stack-api"
-
-echo "✓ (dry run) — replace the echoes above with real commands to ship."
+echo "✓ Deployed."

@@ -6,17 +6,17 @@ You are working in **builders-stack**, a bun-workspace monorepo. Before writing 
 
 ## The three folders (role = is it served, and to whom?)
 
-- `apps/` — public UI humans see (`@stack/web`, `@stack/mobile`).
-- `services/` — anything with a URL / its own deploy (`@stack/api`, `@stack/ai-worker`, `@stack/payment`).
-- `libs/` — shared code, **never served**, consumed only (`@stack/ui`, `@stack/auth`, `@stack/db`, `@stack/ai`, `@stack/analytics`, `@stack/email`, `@stack/config`, `@stack/api-types`).
+- `apps/` — public UI humans see (`@zippy/web`, `@zippy/mobile`).
+- `services/` — anything with a URL / its own deploy (`@zippy/api`, `@zippy/ai-worker`, `@zippy/payment`).
+- `libs/` — shared code, **never served**, consumed only (`@zippy/ui`, `@zippy/auth`, `@zippy/db`, `@zippy/ai`, `@zippy/analytics`, `@zippy/email`, `@zippy/config`, `@zippy/api-types`).
 
 ## Laws (do not break)
 
 1. **No upward import** — `libs` never import from `apps`/`services`. Dependencies point down.
-2. **One public door** — import a lib by package name (`@stack/db`), never a deep path.
+2. **One public door** — import a lib by package name (`@zippy/db`), never a deep path.
 3. **By feature, not by layer** inside each app/service (`billing/`, not `controllers/`).
-4. **One ORM: Drizzle** — all DB access via `@stack/db`.
-5. **Payments via the `@stack/payment` adapter** — never call Creem directly from an app.
+4. **One ORM: Drizzle** — all DB access via `@zippy/db`.
+5. **Payments via the `@zippy/payment` adapter** — never call Creem directly from an app.
 6. Every workspace extends root `tsconfig.base.json`. No hardcoded URLs/ports/secrets — use env.
 
 ## Run

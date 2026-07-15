@@ -22,7 +22,7 @@
 - [ ] No upward import (`libs` don't import from `apps`/`services`)
 - [ ] No deep imports into a lib's internals (imported by package name only)
 - [ ] Organized by feature, not by layer
-- [ ] DB access via `@stack/db`; payments via `@stack/payment` adapter
+- [ ] DB access via `@zippy/db`; payments via `@zippy/payment` adapter
 - [ ] New service is in the `Tiltfile`
 - [ ] New env vars added to `.env.example` (no real secrets)
 - [ ] New/changed API route reflected in `api-collection/` (Bruno)

@@ -47,9 +47,9 @@ Full detail lives in [`docs/stack/architecture.md`](./docs/stack/architecture.md
 ### The two laws (do not break)
 
 1. **No upward import** — `libs` never import from `apps`/`services`. Dependencies point down.
-2. **One public door** — each lib exposes a single `src/index.ts`; import by package name (`@stack/db`), never a deep path.
+2. **One public door** — each lib exposes a single `src/index.ts`; import by package name (`@zippy/db`), never a deep path.
 
-Plus: **by feature, not by layer** inside each package · **one ORM (Drizzle) via `@stack/db`** · **payments via the `@stack/payment` adapter** · every workspace extends `tsconfig.base.json` · **no hardcoded URLs/ports/secrets** (use env; add new vars to `.env.example`).
+Plus: **by feature, not by layer** inside each package · **one ORM (Drizzle) via `@zippy/db`** · **payments via the `@zippy/payment` adapter** · every workspace extends `tsconfig.base.json` · **no hardcoded URLs/ports/secrets** (use env; add new vars to `.env.example`).
 
 ## Adding a lib / service / app
 

@@ -1,0 +1,29 @@
+name = "zippy-redirect"
+main = "src/index.ts"
+compatibility_date = "2025-06-01"
+
+# BASE_URL builds the shortUrl in API responses. Override per environment; the code
+# NEVER hardcodes a domain. Local dev uses the wrangler dev URL below.
+[vars]
+BASE_URL = "http://localhost:8787"
+
+# KV holds slug → destination. Create the namespace once, then paste the id here:
+#   bunx wrangler kv namespace create LINKS
+#   bunx wrangler kv namespace create LINKS --preview
+# The command prints an `id` (and a `preview_id`) — fill them in below.
+[[kv_namespaces]]
+binding = "LINKS"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+preview_id = "REPLACE_WITH_KV_PREVIEW_ID"
+
+# API_TOKEN gates POST/GET /api/links. It is a SECRET, not a var — set it with:
+#   bunx wrangler secret put API_TOKEN
+# (Never put it in [vars] or commit it.) With no token set, writes return 401.
+
+# Custom domain (zipthe.link) — uncomment after adding the zone to this Cloudflare
+# account, then set BASE_URL below to the https origin so shortUrls are correct.
+# routes = [
+#   { pattern = "zipthe.link", custom_domain = true }
+# ]
+# [env.production.vars]
+# BASE_URL = "https://zipthe.link"

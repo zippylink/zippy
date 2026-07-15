@@ -21,7 +21,7 @@ const oxlintConfigPath = fileURLToPath(new URL("./.oxlintrc.json", import.meta.u
  * so nothing internal can import a package. Shipped out, not consumed within.
  *
  * Tags live in each package.json under `nx.tags`. Deep imports past a lib's public
- * door (`@stack/db/src/...`) are also blocked here (banTransitiveDependencies keeps
+ * door (`@zippy/db/src/...`) are also blocked here (banTransitiveDependencies keeps
  * the barrel file the contract).
  *
  * DIVISION OF LABOR (see docs/linting.md): Oxlint does the bulk of linting (fast, Rust).
@@ -44,10 +44,10 @@ export default [
         "error",
         {
           // Off: this repo bundles lib SOURCE at the consumer (Next.js/esbuild inline
-          // @stack/ui etc.) — no lib is independently built to `dist`, so the
+          // @zippy/ui etc.) — no lib is independently built to `dist`, so the
           // "buildable lib must not import a non-buildable lib" guard is inapplicable.
           // It was a false positive on the first buildable consumer, `packages/widget`
-          // (a type:package that bundles @stack/ui/tokens source into its embed). The
+          // (a type:package that bundles @zippy/ui/tokens source into its embed). The
           // boundary LAWS below (the tag matrix) are what's enforced.
           enforceBuildableLibDependency: false,
           allow: [],

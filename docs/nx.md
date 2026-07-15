@@ -43,7 +43,7 @@ drift out of), so they get their own sections.
   a root config changes.
 
 Targets themselves are **inferred from each project's `package.json` scripts** — no
-per-project target duplication. `nx run @stack/api:typecheck` runs that package's
+per-project target duplication. `nx run @zippy/api:typecheck` runs that package's
 `typecheck` script, cached.
 
 ## The two laws, enforced (`eslint.config.mjs`)
@@ -64,13 +64,13 @@ import is a relative/absolute path — which the same rule also blocks (`Project
 imported by a relative or absolute path`). Deep imports past a lib's barrel are caught too.
 
 ```bash
-nx lint @stack/db          # lints one project against the boundary rules
+nx lint @zippy/db          # lints one project against the boundary rules
 nx run-many -t lint        # all projects
 ```
 
 ## Contracts — one API shape, both sides typed
 
-`@stack/api-types` is a `type:lib` holding the API's Zod request/response schemas and their
+`@zippy/api-types` is a `type:lib` holding the API's Zod request/response schemas and their
 inferred types. It's the textbook payoff of the boundary rules: **a lib that a service and
 an app both depend on** — a downward dependency for each, never an upward import.
 
@@ -87,17 +87,17 @@ no codegen:
 ```ts
 // apps/web
 import { hc } from "hono/client";
-import type { AppType } from "@stack/api"; // type-only — no runtime dep on the service
+import type { AppType } from "@zippy/api"; // type-only — no runtime dep on the service
 const api = hc<AppType>(process.env.NEXT_PUBLIC_API_URL!);
 const res = await api.posts.$get(); // typed route + typed response
 ```
 
-Use `@stack/api-types` for plain typed `fetch` (the default here); reach for `hc<AppType>()`
+Use `@zippy/api-types` for plain typed `fetch` (the default here); reach for `hc<AppType>()`
 when you want the whole surface typed through one client.
 
 ## Generators — scaffold in-convention
 
-Generators create a new workspace member that already has the right tag, `@stack/*` import
+Generators create a new workspace member that already has the right tag, `@zippy/*` import
 path, `src/index.ts` barrel, and a `project.json` — so a new lib can't be born breaking
 the boundary rules.
 
@@ -105,7 +105,7 @@ the boundary rules.
 # A new lib  (type:lib, single public door)
 nx g @nx/js:lib payments-core \
   --directory=libs/payments-core \
-  --importPath=@stack/payments-core \
+  --importPath=@zippy/payments-core \
   --tags=type:lib --bundler=none --unitTestRunner=none
 
 # A new service  (type:service — has a URL / own deploy)
@@ -137,7 +137,7 @@ owns running it.
 | `bun run typecheck` / `lint` / `build` / `test` | run that target across all projects                       |
 | `bun run affected`                              | `nx affected -t lint typecheck build` — only what changed |
 | `nx show projects`                              | list all projects                                         |
-| `nx run @stack/api:typecheck`                   | one target, one project                                   |
+| `nx run @zippy/api:typecheck`                   | one target, one project                                   |
 | `nx reset`                                      | clear the local cache                                     |
 
 ## CI

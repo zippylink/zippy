@@ -112,7 +112,7 @@ The rest of the top level is **non-code siblings** — real folders, but not buc
 Two rules keep it honest (borrowed from Nx):
 
 - **No upward import** — `libs` never import from `apps` or `services`. Dependencies point _down_.
-- **One public door per lib** — each lib exposes a single `src/index.ts`; import from the package name (`@stack/ui`), never deep paths.
+- **One public door per lib** — each lib exposes a single `src/index.ts`; import from the package name (`@zippy/ui`), never deep paths.
 
 Inside each app/service, organize **by feature** (`billing/`, `users/`), not by layer (`controllers/`, `models/`). Folders should tell you what the thing _does_.
 
@@ -132,7 +132,7 @@ What it buys you ([monorepo.tools](https://monorepo.tools) framing):
 - **Affected** — `bun run affected` (`nx affected`) runs tasks _only_ for the projects a change touched. PR CI runs what changed, nothing else.
 - **`nx graph`** — the interactive dependency graph of the whole repo (`bun run graph`).
 - **Enforced boundaries** — the two laws below become **lint errors**. Every project is tagged `type:app` / `type:service` / `type:lib`, and `@nx/enforce-module-boundaries` rejects a `lib` that imports an app, an app that imports another app, and deep imports past a lib's barrel. "Enforce it in review" → enforced in `lint`.
-- **Generators** — `nx g @nx/js:lib …` scaffolds a new lib/service/app that's _already_ tagged, named `@stack/*`, and has its single `src/index.ts` door — it can't be born breaking the rules.
+- **Generators** — `nx g @nx/js:lib …` scaffolds a new lib/service/app that's _already_ tagged, named `@zippy/*`, and has its single `src/index.ts` door — it can't be born breaking the rules.
 
 ```bash
 bun run check      # nx run-many -t typecheck lint — the pre-push gate
@@ -171,11 +171,11 @@ Almost all of it is real — it boots and proves the pattern end to end. Only a 
 
 **Real (boots, proves the pattern):**
 
-- `apps/web` — Next.js, renders `@stack/ui`, live Better Auth login, type-safe calls to the API.
-- `apps/landing` — public marketing site: `@stack/ui` hero + sections, shared `<Analytics/>`, links to the app.
-- `apps/mobile` — real Expo/React Native starter rendering the shared `@stack/ui` tokens on native.
+- `apps/web` — Next.js, renders `@zippy/ui`, live Better Auth login, type-safe calls to the API.
+- `apps/landing` — public marketing site: `@zippy/ui` hero + sections, shared `<Analytics/>`, links to the app.
+- `apps/mobile` — real Expo/React Native starter rendering the shared `@zippy/ui` tokens on native.
 - `apps/blog` — static MDX blog, the GEO showcase; passes the `check:seo` gate.
-- `services/api` — Hono + OpenAPI; validates against `@stack/api-types`, mounts Better Auth, ships server analytics.
+- `services/api` — Hono + OpenAPI; validates against `@zippy/api-types`, mounts Better Auth, ships server analytics.
 - `services/payment` — Creem + Dodo adapters (`PaymentProvider` + `resolveProvider`) + Mock provider + tests; boots keyless.
 - `services/ai-worker` — background worker (no URL).
 - `libs/ui` — shadcn components + shared tokens + Storybook.
@@ -197,19 +197,19 @@ Everything above is **env-gated**: no keys → silent no-op, apps still boot.
 
 Batteries-included, all **env-gated** (no keys → silent no-op, apps still boot):
 
-- **Analytics** — PostHog (product analytics + session replay + error tracking, client _and_ server) and Microsoft Clarity. Client init is a single shared `@stack/analytics` `<Analytics/>` provider every app reuses; server capture is `posthog-node` in `services/api`. Cross-subdomain identity ties marketing-site visitors to signed-up users. See [`docs/stack/analytics.md`](./docs/stack/analytics.md).
-- **Email** — Resend + React Email (`@stack/email`): typed, previewable templates and a `sendEmail()` sender. On sign-up, Better Auth fires a `user_signed_up` event + a welcome email — the seed for a PostHog-driven drip. See [`docs/stack/email.md`](./docs/stack/email.md).
+- **Analytics** — PostHog (product analytics + session replay + error tracking, client _and_ server) and Microsoft Clarity. Client init is a single shared `@zippy/analytics` `<Analytics/>` provider every app reuses; server capture is `posthog-node` in `services/api`. Cross-subdomain identity ties marketing-site visitors to signed-up users. See [`docs/stack/analytics.md`](./docs/stack/analytics.md).
+- **Email** — Resend + React Email (`@zippy/email`): typed, previewable templates and a `sendEmail()` sender. On sign-up, Better Auth fires a `user_signed_up` event + a welcome email — the seed for a PostHog-driven drip. See [`docs/stack/email.md`](./docs/stack/email.md).
 
 ## Guardrails — enforced, not suggested
 
 The parts most starters punt on with _"we'll add it later"_ ship here as **gates that fail the build**, not docs that rot:
 
-- **SEO/GEO enforced** — `@stack/seo` is the one door for page metadata; `check:seo` (in `bun run check` + CI) fails the build the moment a public page ships without metadata (or a public root goes `"use client"`), and the robots allow-list keeps AI crawlers welcome. → [`docs/writing-for-ai-search.md`](./docs/writing-for-ai-search.md)
+- **SEO/GEO enforced** — `@zippy/seo` is the one door for page metadata; `check:seo` (in `bun run check` + CI) fails the build the moment a public page ships without metadata (or a public root goes `"use client"`), and the robots allow-list keeps AI crawlers welcome. → [`docs/writing-for-ai-search.md`](./docs/writing-for-ai-search.md)
 - **Accessibility enforced** — Oxlint `jsx-a11y` (`correctness: error`) turns an a11y regression into a lint/CI failure, not a review nit.
 - **Security / supply-chain** — secret scan (gitleaks) + dependency scan (Dependabot + osv-scanner) run in CI; third-party skills/MCPs go through the **vet-before-install** law + [`scripts/scan-skill.sh`](./scripts/scan-skill.sh) first-gate check before they touch your agent. → [`docs/stack/agent-skills.md`](./docs/stack/agent-skills.md)
-- **Compliance-ready** — analytics stay dormant behind `<ConsentBanner/>` (`@stack/analytics`, GDPR default-off), with `/privacy` + data-rights endpoints wired. Readiness maps, not a report: SOC 2 Trust Service Criteria + a GDPR checklist. → [`docs/soc2-readiness.md`](./docs/soc2-readiness.md), [`docs/gdpr.md`](./docs/gdpr.md)
+- **Compliance-ready** — analytics stay dormant behind `<ConsentBanner/>` (`@zippy/analytics`, GDPR default-off), with `/privacy` + data-rights endpoints wired. Readiness maps, not a report: SOC 2 Trust Service Criteria + a GDPR checklist. → [`docs/soc2-readiness.md`](./docs/soc2-readiness.md), [`docs/gdpr.md`](./docs/gdpr.md)
 - **Swappable payments** — one `PaymentProvider` interface, Creem **and** Dodo adapters behind `resolveProvider`; changing provider is a one-file swap, not a rewrite. → [`docs/stack/payments.md`](./docs/stack/payments.md)
-- **Monitoring** — Better Stack uptime checks point at the services' existing `/health` (no code), plus a public status page + on-call alerting; an env-gated in-app log drain (`@stack/observability`) ships uncaught errors to Better Stack Logs. → [`docs/monitoring.md`](./docs/monitoring.md)
+- **Monitoring** — Better Stack uptime checks point at the services' existing `/health` (no code), plus a public status page + on-call alerting; an env-gated in-app log drain (`@zippy/observability`) ships uncaught errors to Better Stack Logs. → [`docs/monitoring.md`](./docs/monitoring.md)
 - **A blog that's the GEO engine** — `apps/blog`, static MDX, is the worked showcase for writing pages an AI search index actually cites. → [`docs/writing-for-ai-search.md`](./docs/writing-for-ai-search.md)
 
 ## For your AI agent

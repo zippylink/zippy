@@ -22,7 +22,7 @@ assignees: ""
 
 ## Which part
 
-<!-- Package/area: e.g. @stack/api, @stack/db, Tiltfile, infra, docs -->
+<!-- Package/area: e.g. @zippy/api, @zippy/db, Tiltfile, infra, docs -->
 
 ## Environment
 
