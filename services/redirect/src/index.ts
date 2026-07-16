@@ -7,11 +7,15 @@
 // KV-only. No D1, no Durable Objects, no analytics. Serverless, ~$0 to run.
 import { matchPlatform } from "./platforms.js";
 import { renderInterstitial, render404 } from "./interstitial.js";
+import { renderOgPage, type OgMeta } from "./og.js";
 
 export interface Env {
   LINKS: KVNamespace;
   BASE_URL: string;
   API_TOKEN?: string;
+  /** Outcome telemetry sink (Analytics Engine). Optional — unbound in local dev /
+   *  self-host, in which case /t is a silent no-op and the cloud shows no data. */
+  CLICKS?: AnalyticsEngineDataset;
 }
 
 const SLUG_RE = /^[a-zA-Z0-9-_]{1,32}$/;
@@ -24,6 +28,14 @@ const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
 
 const isMobile = (ua: string): boolean => /Android|iPhone|iPad|iPod/i.test(ua);
+
+// Social crawlers that fetch a link to build an unfurl/preview card. A hit from one
+// of these gets the OG page (see og.ts); everyone else redirects normally. Maintained
+// set — add a signature here as platforms appear (the whole feature is this list + og.ts).
+// Sources: each platform's published crawler UA (facebookexternalhit, Twitterbot, etc.).
+const CRAWLER_RE =
+  /facebookexternalhit|facebot|Twitterbot|LinkedInBot|Slackbot|Slack-ImgProxy|Discordbot|WhatsApp|TelegramBot|Pinterest(?:bot)?|redditbot|Applebot|SkypeUriPreview|vkShare|W3C_Validator|Embedly|Iframely|nuzzel|Google-InspectionTool|BingPreview|Mastodon|Bluesky|flipboard/i;
+const isSocialCrawler = (ua: string): boolean => CRAWLER_RE.test(ua);
 
 /** 6-char url-safe id from CSPRNG — no dependency. */
 function randomSlug(): string {
@@ -71,21 +83,32 @@ async function resolveKey(hostname: string, slug: string, env: Env): Promise<str
   }
 }
 
-type LinkValue = { url: string; branded: boolean };
+type LinkValue = { url: string; branded: boolean; og?: OgMeta };
+
+/** Keep only the string OG fields the cloud denormalized — defends the crawler path. */
+function parseOg(raw: unknown): OgMeta | undefined {
+  if (!raw || typeof raw !== "object") return undefined;
+  const o = raw as Record<string, unknown>;
+  const og: OgMeta = {};
+  if (typeof o.title === "string") og.title = o.title;
+  if (typeof o.description === "string") og.description = o.description;
+  if (typeof o.image === "string") og.image = o.image;
+  return Object.keys(og).length ? og : undefined;
+}
 
 /**
  * Parse a KV link value. Back-compat: a plain string IS the destination URL. A value
- * starting with "{" is JSON `{ url, branded? }` — unknown extra fields are ignored
+ * starting with "{" is JSON `{ url, branded?, og? }` — unknown extra fields are ignored
  * (forward-compat), missing `branded` behaves like today, malformed JSON → null (404).
- * The cloud denormalizes entitlement effects (e.g. branding) into the record; the engine
- * never reads subscription state.
+ * The cloud denormalizes entitlement effects (branding) and the social OG preview into
+ * the record; the engine never reads subscription state or the destination's markup.
  */
 function parseLinkValue(raw: string): LinkValue | null {
   if (raw[0] !== "{") return { url: raw, branded: false };
   try {
-    const o = JSON.parse(raw) as { url?: unknown; branded?: unknown };
+    const o = JSON.parse(raw) as { url?: unknown; branded?: unknown; og?: unknown };
     if (typeof o.url !== "string") return null;
-    return { url: o.url, branded: o.branded === true };
+    return { url: o.url, branded: o.branded === true, og: parseOg(o.og) };
   } catch {
     return null; // malformed record → unroutable, never 500 a visitor
   }
@@ -104,14 +127,86 @@ async function handleRedirect(
   const link = parseLinkValue(raw);
   if (!link) return html(render404(env.BASE_URL), 404);
   const ua = req.headers.get("user-agent") ?? "";
+
+  // Social crawler → serve the unfurl card instead of redirecting. Humans fall
+  // through to the normal interstitial/301 below (link preview never breaks the
+  // real click). Cache briefly so a platform's repeat crawls are cheap.
+  if (isSocialCrawler(ua)) {
+    const shortUrl = `${env.BASE_URL.replace(/\/$/, "")}/${slug}`;
+    return new Response(renderOgPage(shortUrl, link.url, link.og ?? {}), {
+      status: 200,
+      headers: {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=300",
+      },
+    });
+  }
+
   const match = matchPlatform(link.url);
   if (match && isMobile(ua)) {
     return html(
-      renderInterstitial(match, { branded: link.branded, homeUrl: env.BASE_URL, ua }),
+      renderInterstitial(match, {
+        branded: link.branded,
+        homeUrl: env.BASE_URL,
+        ua,
+        slug,
+        host: hostname,
+      }),
       200,
     );
   }
   return Response.redirect(link.url, 301);
+}
+
+const OUTCOMES = new Set(["opened", "browser", "broken"]);
+
+/**
+ * POST /t — outcome telemetry beacon (navigator.sendBeacon from the interstitial).
+ * Body: {slug, host, outcome, platformKey, sourceApp, ts}. Geo + device are derived
+ * SERVER-side (from CF geo + UA) — never trusted from the client. No PII: coarse
+ * country/city + device bucket + the in-app-webview name only, no IP, no identifiers.
+ * Writes one Analytics Engine data point the cloud reads for per-link app-open stats;
+ * it's a rate/trend signal (AE is sampled), not per-click truth. Always 204 — a beacon
+ * must never error (there's no client to see it), and a bad body is silently dropped.
+ */
+async function handleBeacon(req: Request, env: Env): Promise<Response> {
+  const noContent = new Response(null, { status: 204 });
+  let body: Record<string, unknown>;
+  try {
+    body = (await req.json()) as Record<string, unknown>;
+  } catch {
+    return noContent;
+  }
+  const str = (v: unknown, max: number) => (typeof v === "string" ? v.slice(0, max) : "");
+  const slug = str(body.slug, 32);
+  const outcome = OUTCOMES.has(body.outcome as string) ? (body.outcome as string) : "";
+  if (!slug || !outcome) return noContent; // nothing worth recording
+
+  const ua = req.headers.get("user-agent") ?? "";
+  const device = /iPad|Tablet/i.test(ua)
+    ? "tablet"
+    : /Android|iPhone|iPod|Mobile/i.test(ua)
+      ? "mobile"
+      : "desktop";
+  const cf = (req as unknown as { cf?: Record<string, unknown> }).cf ?? {};
+  const country = typeof cf.country === "string" ? cf.country : "";
+  const city = typeof cf.city === "string" ? cf.city : "";
+
+  env.CLICKS?.writeDataPoint({
+    indexes: [slug],
+    blobs: [
+      slug,
+      str(body.host, 255),
+      outcome,
+      str(body.sourceApp, 64),
+      str(body.platformKey, 32),
+      country,
+      city,
+      device,
+    ],
+    doubles: [1],
+  });
+  return noContent;
 }
 
 async function createLink(req: Request, env: Env): Promise<Response> {
@@ -187,6 +282,10 @@ export default {
     const url = new URL(req.url);
     const { pathname } = url;
 
+    if (pathname === "/t") {
+      if (req.method === "POST") return handleBeacon(req, env);
+      return json({ error: "Method not allowed" }, 405);
+    }
     if (pathname === "/api/links") {
       if (req.method === "POST") return createLink(req, env);
       return json({ error: "Method not allowed" }, 405);

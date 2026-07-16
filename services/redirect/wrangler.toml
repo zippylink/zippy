@@ -16,6 +16,14 @@ binding = "LINKS"
 id = "REPLACE_WITH_KV_NAMESPACE_ID"
 preview_id = "REPLACE_WITH_KV_PREVIEW_ID"
 
+# Outcome telemetry sink — the interstitial's /t beacon writes one data point per
+# app-open/browser outcome here; the cloud reads it for per-link app-open stats.
+# Analytics Engine has no setup command (the dataset is created on first write).
+# Omit this binding to run without telemetry (self-host / local dev) — /t no-ops.
+[[analytics_engine_datasets]]
+binding = "CLICKS"
+dataset = "zippy_outcomes"
+
 # API_TOKEN gates POST/GET /api/links. It is a SECRET, not a var — set it with:
 #   bunx wrangler secret put API_TOKEN
 # (Never put it in [vars] or commit it.) With no token set, writes return 401.

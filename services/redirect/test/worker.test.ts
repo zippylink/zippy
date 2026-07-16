@@ -368,3 +368,141 @@ describe("GET /api/links/:slug", () => {
     expect(res.status).toBe(404);
   });
 });
+
+// A social crawler hitting a short link gets an OG/Twitter-card unfurl page instead
+// of a redirect; every human UA still redirects. The OG fields are denormalized onto
+// the KV value by the cloud (never scraped at request time).
+describe("crawler-OG unfurl", () => {
+  const FBBOT = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)";
+  const TWBOT = "Twitterbot/1.0";
+  const withOg = (url: string) =>
+    JSON.stringify({
+      url,
+      og: {
+        title: "Zippy",
+        description: "Deeplinks that open the real app",
+        image: "https://cdn/x.png",
+      },
+    });
+
+  it("serves OG + Twitter meta to a crawler (no redirect)", async () => {
+    const res = await worker.fetch(
+      req("/p", { headers: { "user-agent": FBBOT } }),
+      env({ p: withOg("https://x.com/nasa/status/1") }),
+    );
+    expect(res.status).toBe(200);
+    const body = await res.text();
+    expect(body).toContain('property="og:title" content="Zippy"');
+    expect(body).toContain('property="og:image" content="https://cdn/x.png"');
+    expect(body).toContain('name="twitter:card" content="summary_large_image"');
+    expect(body).toContain('<link rel="canonical" href="https://x.com/nasa/status/1">');
+  });
+
+  it("falls back to the destination hostname as title when no OG stored", async () => {
+    const res = await worker.fetch(
+      req("/p", { headers: { "user-agent": TWBOT } }),
+      env({ p: "https://example.com/page" }),
+    );
+    expect(res.status).toBe(200);
+    const body = await res.text();
+    expect(body).toContain('content="example.com"');
+    expect(body).toContain('name="twitter:card" content="summary"'); // no image → small card
+  });
+
+  it("a human UA still redirects (crawler path never breaks a real click)", async () => {
+    const res = await worker.fetch(
+      req("/p", { headers: { "user-agent": DESKTOP } }),
+      env({ p: withOg("https://example.com/page") }),
+    );
+    expect(res.status).toBe(301);
+    expect(res.headers.get("location")).toBe("https://example.com/page");
+  });
+});
+
+// POST /t — outcome telemetry beacon. Records one Analytics Engine data point per
+// app-open/browser outcome; always 204 (a beacon has no client to see an error).
+describe("outcome telemetry beacon (/t)", () => {
+  function capturingEnv(): { e: Env; points: AnalyticsEngineDataPoint[] } {
+    const points: AnalyticsEngineDataPoint[] = [];
+    const e = {
+      ...env(),
+      CLICKS: { writeDataPoint: (p: AnalyticsEngineDataPoint) => points.push(p) },
+    } as unknown as Env;
+    return { e, points };
+  }
+  const post = (body: string, headers: Record<string, string> = {}) =>
+    req("/t", { method: "POST", body, headers });
+
+  it("writes a data point with the outcome + server-derived device, returns 204", async () => {
+    const { e, points } = capturingEnv();
+    const res = await worker.fetch(
+      post(
+        JSON.stringify({
+          slug: "abc",
+          host: "zipthe.link",
+          outcome: "opened",
+          platformKey: "instagram",
+          sourceApp: "instagram",
+        }),
+        { "user-agent": IPHONE },
+      ),
+      e,
+    );
+    expect(res.status).toBe(204);
+    expect(points).toHaveLength(1);
+    const p = points[0]!;
+    expect(p.indexes).toEqual(["abc"]);
+    // blobs = [slug, host, outcome, sourceApp, platformKey, country, city, device]
+    expect(p.blobs?.slice(0, 5)).toEqual([
+      "abc",
+      "zipthe.link",
+      "opened",
+      "instagram",
+      "instagram",
+    ]);
+    expect(p.blobs?.[7]).toBe("mobile"); // derived from the iPhone UA, not the client
+  });
+
+  it("drops an unknown outcome without writing (204)", async () => {
+    const { e, points } = capturingEnv();
+    const res = await worker.fetch(post(JSON.stringify({ slug: "abc", outcome: "hacked" })), e);
+    expect(res.status).toBe(204);
+    expect(points).toHaveLength(0);
+  });
+
+  it("never throws on a malformed body (204)", async () => {
+    const { e, points } = capturingEnv();
+    const res = await worker.fetch(post("{not json"), e);
+    expect(res.status).toBe(204);
+    expect(points).toHaveLength(0);
+  });
+
+  it("no-ops silently when CLICKS is unbound (self-host / local dev)", async () => {
+    const res = await worker.fetch(
+      post(JSON.stringify({ slug: "abc", outcome: "browser" })),
+      env(),
+    );
+    expect(res.status).toBe(204);
+  });
+
+  it("405s a GET on /t", async () => {
+    const res = await worker.fetch(req("/t"), env());
+    expect(res.status).toBe(405);
+  });
+});
+
+// The interstitial wires the beacon: it POSTs to /t on visibility/pagehide outcomes.
+describe("interstitial telemetry wiring", () => {
+  it("embeds the /t beacon with the slug + platform", async () => {
+    const body = await worker
+      .fetch(
+        req("/tw", { headers: { "user-agent": IPHONE } }),
+        env({ tw: "https://x.com/nasa/status/9" }),
+      )
+      .then((r) => r.text());
+    expect(body).toContain('navigator.sendBeacon("/t"');
+    expect(body).toContain('beacon("opened")'); // app-launched signal
+    expect(body).toContain('beacon("browser")'); // stayed-in-browser signal
+    expect(body).toContain('"slug":"tw"');
+  });
+});

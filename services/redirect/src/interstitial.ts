@@ -70,7 +70,7 @@ function zippyBolt(sad = false): string {
 
 export function renderInterstitial(
   match: PlatformMatch,
-  opts?: { branded?: boolean; homeUrl?: string; ua?: string },
+  opts?: { branded?: boolean; homeUrl?: string; ua?: string; slug?: string; host?: string },
 ): string {
   // Branding footer only when the record says so (the cloud bakes in this effect).
   const footer = opts?.branded
@@ -131,11 +131,23 @@ export function renderInterstitial(
   var iosPrimary = ${JSON.stringify(iosPrimary)};
   var android = ${JSON.stringify(match.android)};
   var web = ${JSON.stringify(match.web)};
+  // Outcome telemetry (POST /t on this same short-domain origin). A rate/trend
+  // signal, not per-click truth: the page going hidden = the app launched ("opened");
+  // the fallback firing while still visible = stayed in the browser ("browser").
+  var beaconBody = ${JSON.stringify({ slug: opts?.slug ?? "", host: opts?.host ?? "", platformKey: match.key, sourceApp: webview ?? "" })};
+  function beacon(outcome){
+    try {
+      beaconBody.outcome = outcome; beaconBody.ts = Date.now();
+      navigator.sendBeacon("/t", JSON.stringify(beaconBody));
+    } catch(e){}
+  }
+  var done = false;
+  // Register the visibility listener BEFORE the Android branch so an Android app-open
+  // (intent:// hides the page) is captured as "opened" too.
+  document.addEventListener("visibilitychange", function(){ if(document.hidden){ done = true; beacon("opened"); } });
   var isAndroid = /Android/i.test(navigator.userAgent);
   if (isAndroid) { window.location.replace(android); return; } // intent:// self-falls-back (webviews too)
-  var done = false;
-  function bail(){ if(!done){ done = true; window.location.replace(web); } }
-  document.addEventListener("visibilitychange", function(){ if(document.hidden){ done = true; } });
+  function bail(){ if(!done){ done = true; beacon("browser"); window.location.replace(web); } }
   var t = setTimeout(bail, ${FALLBACK_MS});
   window.addEventListener("pagehide", function(){ done = true; clearTimeout(t); });
   window.location.replace(iosPrimary); // scheme opens the app; x-safari punts github to Safari
