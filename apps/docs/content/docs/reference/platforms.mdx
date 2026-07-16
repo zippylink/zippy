@@ -1,13 +1,13 @@
 ---
 title: platforms
-description: the 21 built-in platforms and what each URL shape opens — plus how to add a platform in one PR.
+description: the 22 built-in platforms and what each URL shape opens — plus how to add a platform in one PR.
 ---
 
 # platforms
 
 The deep-link table (`services/redirect/src/platforms.ts`) is the core of Zippy. Each
 platform is one data object; from it Zippy derives the iOS, Android, and web link forms
-uniformly. Zippy ships with these 21:
+uniformly. Zippy ships with these 22:
 
 | Platform     | Key           | Scheme                           | Android package                     | Hosts                                                   |
 | ------------ | ------------- | -------------------------------- | ----------------------------------- | ------------------------------------------------------- |
@@ -32,6 +32,7 @@ uniformly. Zippy ships with these 21:
 | App Store    | `app-store`   | `itms-apps`                      | `com.android.vending` ‡             | apps.apple.com, itunes.apple.com                        |
 | Play Store   | `play-store`  | `https` †                        | `com.android.vending`               | play.google.com                                         |
 | Snapchat     | `snapchat`    | `https` †                        | `com.snapchat.android`              | snapchat.com                                            |
+| Twitch       | `twitch`      | `twitch`                         | `tv.twitch.android.app`             | twitch.tv, m.twitch.tv                                  |
 
 † **Schemeless (Android-only native open).** GitHub, Play Store, and Snapchat register **no
 custom URL scheme** — their apps are reachable only via https App Links (Android) and Universal
@@ -88,6 +89,8 @@ platform owns is never matched — it simply `301`s.
 |              | (same URL)                                                             | **iOS:** the browser — no Play app        |
 | Snapchat     | `snapchat.com/add/<user>`                                              | **Android:** the add-friend screen in the app |
 |              | (same URL)                                                             | **iOS:** the browser — no app open (see below) |
+| Twitch       | `twitch.tv/<channel>`                                                  | that channel's stream                     |
+|              | `twitch.tv/videos/<id>`, `twitch.tv/directory/game/<name>`             | that VOD / that game directory            |
 
 <Callout title="GitHub / Play Store / Snapchat: Android-only native open (honest limitation)">
   These apps have **no custom URL scheme** — only https App Links (Android) and Universal

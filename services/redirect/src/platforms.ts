@@ -351,6 +351,20 @@ export const PLATFORMS: Platform[] = [
     hosts: ["snapchat.com"],
     path: (url) => `snapchat.com${url.pathname.replace(/\/+$/, "")}`,
   },
+  {
+    // Twitch: all path forms are first-party documented (dev.twitch.tv/docs/mobile-deeplinks).
+    key: "twitch",
+    scheme: "twitch",
+    androidPackage: "tv.twitch.android.app",
+    hosts: ["twitch.tv", "m.twitch.tv"],
+    path: (url) => {
+      const s = seg(url);
+      if (s[0] === "videos" && s[1]) return `video/${s[1]}`;
+      if (s[0] === "directory" && s[1] === "game" && s[2]) return `game/${s[2]}`;
+      if (s.length === 1 && s[0]) return `stream/${s[0]}`;
+      return "";
+    },
+  },
 ];
 
 function buildMatch(p: Platform, url: URL): PlatformMatch {

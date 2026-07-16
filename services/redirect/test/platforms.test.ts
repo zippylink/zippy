@@ -355,6 +355,27 @@ const cases: Array<{ name: string; url: string; key: string; ios: string; pkg: s
     ios: "https://snapchat.com/add/team.snapchat",
     pkg: "com.snapchat.android",
   },
+  {
+    name: "twitch channel",
+    url: "https://www.twitch.tv/shroud",
+    key: "twitch",
+    ios: "twitch://stream/shroud",
+    pkg: "tv.twitch.android.app",
+  },
+  {
+    name: "twitch video",
+    url: "https://www.twitch.tv/videos/123456789",
+    key: "twitch",
+    ios: "twitch://video/123456789",
+    pkg: "tv.twitch.android.app",
+  },
+  {
+    name: "twitch directory game",
+    url: "https://www.twitch.tv/directory/game/Chess",
+    key: "twitch",
+    ios: "twitch://game/Chess",
+    pkg: "tv.twitch.android.app",
+  },
 ];
 
 describe("matchPlatform", () => {

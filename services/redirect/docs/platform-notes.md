@@ -25,6 +25,7 @@ on web + the Safari punt), **SKIP** (no reliable app-open; documented so nobody 
 | app-store | SHIP | `itms-apps` | high | iOS system scheme (always installed). Apple host only; Google Play is the separate `play-store` row |
 | play-store | SHIP (Android) | `https` (schemeless) | high | github-pattern: `play.google.com` is an https App Link for `com.android.vending` |
 | snapchat | ANDROID_ONLY | `https` (schemeless) | moderate | `snapchat://` only opens the camera — **no** add-friend custom-scheme path exists; `snapchat.com/add/<user>` is a Universal Link, so iOS → web, Android intent opens the add-friend screen |
+| twitch | SHIP | `twitch` | high | all path forms first-party documented (dev.twitch.tv/docs/mobile-deeplinks): `stream/<channel>`, `video/<id>`, `game/<name>` |
 
 ### Notes on schemes that break the one-scheme-per-row model
 
@@ -51,8 +52,8 @@ research record; the load-bearing ones:
   (Tanaschita, bhagyas/app-urls, snarfed/open-in-app) + dated dev reports; each carries a
   "may change" disclaimer, hence moderate confidence — safe given the graceful web fallback.
 
-### twitch — deferred (not shipped)
+### twitch
 
-Twitch was in the batch but its research agent was blocked by a transient safety-classifier error,
-so it was **not** verified. Not shipped. Re-run the research for `twitch://` (twitch.tv/channel)
-before adding it.
+Initially deferred (its batch research agent hit a transient safety-classifier block), then
+verified against Twitch's own first-party deeplink docs (dev.twitch.tv/docs/mobile-deeplinks) —
+SHIP, high confidence. Path forms: `stream/<channel>`, `video/<id>`, `game/<name>`.
