@@ -24,8 +24,9 @@
 ---
 
 Zippy is a URL shortener whose links **open the native app** for platforms people
-actually share — LinkedIn, Instagram, WhatsApp, Reddit, Product Hunt, YouTube,
-TikTok, X/Twitter, and GitHub — instead of trapping the visitor in an in-app webview. Tap
+actually share — LinkedIn, Instagram, WhatsApp, YouTube, TikTok, X/Twitter,
+Spotify, Amazon, Facebook, Telegram, Discord, Pinterest, Apple Music, and more
+(21 built-in) — instead of trapping the visitor in an in-app webview. Tap
 a Zippy link on a phone and it deep-links straight into the real app (with a clean
 web fallback everywhere else); tap it on desktop and it's a plain fast redirect.
 It's a single Cloudflare Worker backed by KV — no server, no database — and an

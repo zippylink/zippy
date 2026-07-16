@@ -59,3 +59,24 @@ Then, on a **real iPhone** with the LinkedIn app **and** the GitHub app installe
 - **GitHub Safari punt (#3): moderate** — `x-safari-https` is degraded (Instagram blocks
   the *silent* form); the **"Open in Safari ↗"** tap target is the reliable path and is
   always present, so the worst case is one extra tap, never a dead end.
+
+## Batch 2 platforms (2026-07) — real-device spot checks
+
+Same webview + real-Safari matrix as above. Prioritise the moderate-confidence schemes.
+
+| # | Link to shorten | Device / context | Pass criterion |
+|---|---|---|---|
+| 7 | `https://open.spotify.com/track/4oktVvRuO1In9B7Hz0xm0a` | iPhone, Instagram webview | Spotify app opens the track (an "Open in Spotify?" prompt is acceptable) |
+| 8 | `https://www.amazon.com/dp/B01N05APQY?tag=YOURID-20` | iPhone, Instagram webview | Amazon app opens the product **and** `?tag=` is present. Then place a **test order** and confirm the tag in Associates reporting (attribution is Amazon's black box) |
+| 9 | `https://t.me/durov` | iPhone, TikTok webview | Telegram app opens the channel |
+| 10 | `https://threads.net/@zuck` | iPhone, Instagram webview | Threads app opens the profile (upgrades `barcelona://` from moderate → high once seen live) |
+| 11 | `https://discord.gg/<a-real-invite>` | iPhone, Instagram webview | Discord app opens the invite (the `-/invite/` route) |
+| 12 | `https://snapchat.com/add/<user>` | **Android**, Instagram webview | Snapchat opens the add-friend screen. On **iOS** it correctly lands on the web page (ANDROID_ONLY, like GitHub) |
+| 13 | `https://apps.apple.com/us/app/instagram/id389801252` | iPhone, any webview | App Store app opens the listing (`itms-apps` system scheme) |
+| 14 | `https://play.google.com/store/apps/details?id=com.spotify.music` | **Android**, any webview | Play Store app opens the listing; on **iOS** → web (no Play app) |
+
+### Facebook — verify the two lanes
+- `https://www.facebook.com/profile.php?id=<numeric>` → FB app opens that profile.
+- `https://www.facebook.com/<vanity-name>` → opens the page inside the FB app's own webview
+  (`facewebmodal`) — an in-app webview, not a fresh native screen, but it escapes the host social
+  webview, which is the win.

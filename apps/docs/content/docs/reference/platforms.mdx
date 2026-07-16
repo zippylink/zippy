@@ -1,29 +1,48 @@
 ---
 title: platforms
-description: the 9 built-in platforms and what each URL shape opens — plus how to add a platform in one PR.
+description: the 21 built-in platforms and what each URL shape opens — plus how to add a platform in one PR.
 ---
 
 # platforms
 
 The deep-link table (`services/redirect/src/platforms.ts`) is the core of Zippy. Each
 platform is one data object; from it Zippy derives the iOS, Android, and web link forms
-uniformly. Zippy ships with these nine:
+uniformly. Zippy ships with these 21:
 
-| Platform     | Key           | Scheme        | Android package              | Hosts                                                   |
-| ------------ | ------------- | ------------- | ---------------------------- | ------------------------------------------------------- |
-| LinkedIn     | `linkedin`    | `linkedin`    | `com.linkedin.android`       | linkedin.com                                            |
-| Instagram    | `instagram`   | `instagram`   | `com.instagram.android`      | instagram.com                                           |
-| WhatsApp     | `whatsapp`    | `whatsapp`    | `com.whatsapp`               | wa.me, api.whatsapp.com                                 |
-| Reddit       | `reddit`      | `reddit`      | `com.reddit.frontpage`       | reddit.com, old.reddit.com                              |
-| Product Hunt | `producthunt` | `producthunt` | `com.producthunt.hunt`       | producthunt.com                                         |
-| YouTube      | `youtube`     | `youtube`     | `com.google.android.youtube` | youtube.com, m.youtube.com, youtu.be, music.youtube.com |
-| TikTok       | `tiktok`      | `tiktok`      | `com.zhiliaoapp.musically`   | tiktok.com, vm.tiktok.com, m.tiktok.com                 |
-| X (Twitter)  | `x`           | `twitter`     | `com.twitter.android`        | x.com, twitter.com, mobile.twitter.com                  |
-| GitHub       | `github`      | `https` †     | `com.github.android`         | github.com                                              |
+| Platform     | Key           | Scheme                           | Android package                     | Hosts                                                   |
+| ------------ | ------------- | -------------------------------- | ----------------------------------- | ------------------------------------------------------- |
+| LinkedIn     | `linkedin`    | `linkedin`                       | `com.linkedin.android`              | linkedin.com                                            |
+| Instagram    | `instagram`   | `instagram`                      | `com.instagram.android`             | instagram.com                                           |
+| WhatsApp     | `whatsapp`    | `whatsapp`                       | `com.whatsapp`                      | wa.me, api.whatsapp.com                                 |
+| Reddit       | `reddit`      | `reddit`                         | `com.reddit.frontpage`              | reddit.com, old.reddit.com                              |
+| Product Hunt | `producthunt` | `producthunt`                    | `com.producthunt.hunt`              | producthunt.com                                         |
+| YouTube      | `youtube`     | `youtube`                        | `com.google.android.youtube`        | youtube.com, m.youtube.com, youtu.be, music.youtube.com |
+| TikTok       | `tiktok`      | `tiktok`                         | `com.zhiliaoapp.musically`          | tiktok.com, vm.tiktok.com, m.tiktok.com                 |
+| X (Twitter)  | `x`           | `twitter`                        | `com.twitter.android`               | x.com, twitter.com, mobile.twitter.com                  |
+| GitHub       | `github`      | `https` †                        | `com.github.android`                | github.com                                              |
+| Amazon       | `amazon`      | `com.amazon.mobile.shopping.web` | `com.amazon.mShop.android.shopping` | amazon.com, amzn.to, a.co, amzn.com                     |
+| Spotify      | `spotify`     | `spotify`                        | `com.spotify.music`                 | open.spotify.com, spotify.link                          |
+| Facebook     | `facebook`    | `fb`                             | `com.facebook.katana`               | facebook.com, m.facebook.com, fb.com, fb.me, fb.watch   |
+| Pinterest    | `pinterest`   | `pinterest`                      | `com.pinterest`                     | pinterest.com                                           |
+| Threads      | `threads`     | `barcelona`                      | `com.instagram.barcelona`           | threads.net, threads.com                                |
+| Telegram     | `telegram`    | `tg`                             | `org.telegram.messenger`            | t.me, telegram.me, telegram.dog                         |
+| Apple Music  | `apple-music` | `music`                          | `com.apple.android.music`           | music.apple.com                                         |
+| Discord      | `discord`     | `discord`                        | `com.discord`                       | discord.com, discord.gg, discordapp.com                 |
+| Google Maps  | `google-maps` | `comgooglemapsurl`               | `com.google.android.apps.maps`      | maps.google.com                                         |
+| App Store    | `app-store`   | `itms-apps`                      | `com.android.vending` ‡             | apps.apple.com, itunes.apple.com                        |
+| Play Store   | `play-store`  | `https` †                        | `com.android.vending`               | play.google.com                                         |
+| Snapchat     | `snapchat`    | `https` †                        | `com.snapchat.android`              | snapchat.com                                            |
 
-† GitHub registers **no custom URL scheme** — the app is reachable only via https App Links
-(Android) and Universal Links (iOS). So its "scheme" is `https` and Zippy hands the app the
-genuine URL. This means **Android gets a real native-open; iOS does not** — see the note below.
+† **Schemeless (Android-only native open).** GitHub, Play Store, and Snapchat register **no
+custom URL scheme** — their apps are reachable only via https App Links (Android) and Universal
+Links (iOS). So their "scheme" is `https` and Zippy hands the app the genuine URL: **Android gets
+a real native-open; iOS lands on the web page** (Universal Links don't fire inside in-app
+webviews — the exact gap Zippy exists to close). See the GitHub / Snapchat note below.
+
+‡ **App Store is iOS-native by design.** `itms-apps` is a built-in iOS system scheme, so
+`apps.apple.com` links open the App Store app straight from a webview. There is no Apple store on
+Android, so those links correctly serve web there (the package shown is inert on the Apple host).
+Google Play is the separate `play-store` row, which opens the Play Store app on Android.
 
 Host matching strips a leading `www.` and is case-insensitive. A destination whose host no
 platform owns is never matched — it simply `301`s.
@@ -49,17 +68,48 @@ platform owns is never matched — it simply `301`s.
 |              | `x.com/<user>`                                                           | that profile                              |
 | GitHub       | `github.com/<owner>/<repo>`, `/<user>`, `…/issues/<n>`, `…/pull/<n>`     | **Android:** that page in the app         |
 |              | (same URLs)                                                              | **iOS:** the browser — no app open (see below) |
+| Amazon       | `amazon.com/dp/<ASIN>?tag=<id>` (and any amazon URL)                     | that product in the app — the `?tag=` affiliate tag stays in the URL (see caveat) |
+| Spotify      | `open.spotify.com/track|album|artist|playlist/<id>`                      | that track / album / artist / playlist    |
+| Facebook     | `facebook.com/profile.php?id=<numeric>`                                  | that profile (numeric ids only)           |
+|              | `facebook.com/<anything-else>`                                          | that page inside the FB app's own webview |
+| Pinterest    | `pinterest.com/pin/<id>`                                                 | that pin                                  |
+|              | `pinterest.com/<user>`, `/<user>/<board>`                               | the app; web fallback lands the profile/board |
+| Threads      | `threads.net/@<user>`, `threads.com/@<user>`                            | that profile                              |
+|              | `…/@<user>/post/<code>`                                                 | the app; web fallback lands the post      |
+| Telegram     | `t.me/<user>`, `t.me/<user>/<post>`                                     | that channel/user (and post)              |
+|              | `t.me/+<hash>`, `t.me/joinchat/<hash>`, `t.me/addstickers/<set>`         | join invite / sticker set                 |
+| Apple Music  | `music.apple.com/<cc>/album|song|playlist/…`                            | that album / song / playlist              |
+| Discord      | `discord.gg/<code>`, `discord.com/invite/<code>`                        | that invite                               |
+|              | `discord.com/channels/<guild>[/<channel>]`                             | that channel                              |
+| Google Maps  | `maps.google.com/…`                                                     | that place / map in the app (iOS)         |
+| App Store    | `apps.apple.com/…/id<n>`                                                | **iOS:** that app in the App Store        |
+|              | (same URL)                                                             | **Android:** the browser — no Apple store |
+| Play Store   | `play.google.com/store/apps/details?id=<pkg>`                           | **Android:** that app in the Play Store   |
+|              | (same URL)                                                             | **iOS:** the browser — no Play app        |
+| Snapchat     | `snapchat.com/add/<user>`                                              | **Android:** the add-friend screen in the app |
+|              | (same URL)                                                             | **iOS:** the browser — no app open (see below) |
 
-<Callout title="GitHub: Android-only native open (honest limitation)">
-  GitHub's app has **no custom URL scheme** — only https App Links (Android) and Universal
+<Callout title="GitHub / Play Store / Snapchat: Android-only native open (honest limitation)">
+  These apps have **no custom URL scheme** — only https App Links (Android) and Universal
   Links (iOS). Zippy hands the app the real URL:
-  - **Android** → a package-targeted `intent://github.com/…;scheme=https;package=com.github.android`
-    opens the app on that repo / user / issue / PR, with the web URL as the native fallback. A real win.
+  - **Android** → a package-targeted `intent://…;scheme=https;package=<pkg>` opens the app on
+    that page (repo / PR, Play listing, or Snapchat add-friend screen), with the web URL as the
+    native fallback. A real win.
   - **iOS** → there is no custom scheme, and Universal Links **do not fire from inside in-app
-    webviews** (Instagram, LinkedIn, …) — which is the exact gap Zippy exists to close. So on iOS a
-    GitHub short link lands on `github.com` in the browser: no worse than a plain tap, but **no app
-    open either**. We deliberately do **not** invent a `github://` scheme (a wrong scheme would only
-    add a redirect hop). If GitHub ships a public custom scheme, iOS support is a one-line change.
+    webviews** (Instagram, LinkedIn, …) — which is the exact gap Zippy exists to close. So on iOS
+    these short links land on the web page in the browser: no worse than a plain tap, but **no app
+    open either**. We deliberately do **not** invent a fake scheme (a wrong scheme would only add a
+    redirect hop). For Snapchat specifically, `snapchat://` exists but only opens the camera — it
+    carries no add-friend username — so there is nothing honest to fire on iOS.
+</Callout>
+
+<Callout title="Amazon affiliate tag: opens the app, attribution is Amazon's black box">
+  Amazon's `com.amazon.mobile.shopping.web://` scheme loads the full web URL in the app, so a
+  shortened `amazon.com/dp/<ASIN>?tag=<your-id-20>` link **opens the product in the app with the
+  `?tag=` still in the URL**. What Zippy cannot promise: whether Amazon **attributes** that tag for
+  commission once inside the app — Amazon does not document this, and it's true of every deep-link
+  method, not just Zippy. If commission matters to you, **place a test order** through the link and
+  confirm it in your Associates reporting before relying on it.
 </Callout>
 
 <Callout title="Best-effort by design">

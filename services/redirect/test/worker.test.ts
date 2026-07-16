@@ -234,6 +234,25 @@ describe("iOS in-app-webview escape (technique matrix)", () => {
     expect(body).not.toContain("x-safari-");
     expect(body).not.toContain('id="escape"'); // escape button is iOS-only
   });
+
+  it("snapchat (ANDROID_ONLY) inside a webview → Safari punt + tap target, like github", async () => {
+    const body = await serve(IPHONE_IG, "https://snapchat.com/add/team.snapchat");
+    expect(body).toContain("x-safari-https://snapchat.com/add/team.snapchat"); // the punt
+    expect(body).toContain("Open in Safari"); // gesture path label
+  });
+
+  it("snapchat (ANDROID_ONLY) on Android → intent:// opens the app to add-friend", async () => {
+    const body = await serve(ANDROID, "https://snapchat.com/add/team.snapchat");
+    expect(body).toContain("intent://snapchat.com/add/team.snapchat");
+    expect(body).toContain(";package=com.snapchat.android;");
+    expect(body).not.toContain("x-safari-");
+  });
+
+  it("amazon (custom scheme) inside a webview → fires the scheme, no Safari punt", async () => {
+    const body = await serve(IPHONE_IG, "https://www.amazon.com/dp/B01N05APQY?tag=me-20");
+    expect(body).toContain("com.amazon.mobile.shopping.web://amazon.com/dp/B01N05APQY?tag=me-20");
+    expect(body).not.toContain("x-safari-");
+  });
 });
 
 describe("POST /api/links auth", () => {

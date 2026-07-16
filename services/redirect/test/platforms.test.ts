@@ -191,6 +191,170 @@ const cases: Array<{ name: string; url: string; key: string; ios: string; pkg: s
     ios: "https://github.com",
     pkg: "com.github.android",
   },
+  // ── Batch 2 ──
+  {
+    name: "amazon product keeps affiliate tag",
+    url: "https://www.amazon.com/dp/B01N05APQY?tag=me-20",
+    key: "amazon",
+    ios: "com.amazon.mobile.shopping.web://amazon.com/dp/B01N05APQY?tag=me-20",
+    pkg: "com.amazon.mShop.android.shopping",
+  },
+  {
+    name: "amazon short link (a.co) passthrough",
+    url: "https://a.co/d/abc123",
+    key: "amazon",
+    ios: "com.amazon.mobile.shopping.web://a.co/d/abc123",
+    pkg: "com.amazon.mShop.android.shopping",
+  },
+  {
+    name: "spotify track (si token dropped)",
+    url: "https://open.spotify.com/track/4oktVvRuO1In9B7Hz0xm0a?si=abc",
+    key: "spotify",
+    ios: "spotify://track:4oktVvRuO1In9B7Hz0xm0a",
+    pkg: "com.spotify.music",
+  },
+  {
+    name: "spotify playlist",
+    url: "https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M",
+    key: "spotify",
+    ios: "spotify://playlist:37i9dQZF1DXcBWIGoYBM5M",
+    pkg: "com.spotify.music",
+  },
+  {
+    name: "facebook numeric profile → fb://profile",
+    url: "https://www.facebook.com/profile.php?id=240995729348595",
+    key: "facebook",
+    ios: "fb://profile/240995729348595",
+    pkg: "com.facebook.katana",
+  },
+  {
+    name: "facebook vanity page → facewebmodal",
+    url: "https://www.facebook.com/SomePage",
+    key: "facebook",
+    ios: "fb://facewebmodal/f?href=https%3A%2F%2Fwww.facebook.com%2FSomePage",
+    pkg: "com.facebook.katana",
+  },
+  {
+    name: "pinterest pin (trailing slash)",
+    url: "https://www.pinterest.com/pin/285063851385287883/",
+    key: "pinterest",
+    ios: "pinterest://pin/285063851385287883/",
+    pkg: "com.pinterest",
+  },
+  {
+    name: "pinterest profile (app-open)",
+    url: "https://www.pinterest.com/nasa",
+    key: "pinterest",
+    ios: "pinterest://",
+    pkg: "com.pinterest",
+  },
+  {
+    name: "threads profile",
+    url: "https://www.threads.net/@zuck",
+    key: "threads",
+    ios: "barcelona://user?username=zuck",
+    pkg: "com.instagram.barcelona",
+  },
+  {
+    name: "threads post (app-open)",
+    url: "https://www.threads.com/@zuck/post/ABC123",
+    key: "threads",
+    ios: "barcelona://",
+    pkg: "com.instagram.barcelona",
+  },
+  {
+    name: "telegram username",
+    url: "https://t.me/durov",
+    key: "telegram",
+    ios: "tg://resolve?domain=durov",
+    pkg: "org.telegram.messenger",
+  },
+  {
+    name: "telegram channel post",
+    url: "https://t.me/durov/123",
+    key: "telegram",
+    ios: "tg://resolve?domain=durov&post=123",
+    pkg: "org.telegram.messenger",
+  },
+  {
+    name: "telegram joinchat invite",
+    url: "https://t.me/joinchat/AAAAAEraZ0",
+    key: "telegram",
+    ios: "tg://join?invite=AAAAAEraZ0",
+    pkg: "org.telegram.messenger",
+  },
+  {
+    name: "telegram +invite",
+    url: "https://t.me/+AbCdEf",
+    key: "telegram",
+    ios: "tg://join?invite=AbCdEf",
+    pkg: "org.telegram.messenger",
+  },
+  {
+    name: "apple music album",
+    url: "https://music.apple.com/us/album/thriller/269572838",
+    key: "apple-music",
+    ios: "music://music.apple.com/us/album/thriller/269572838",
+    pkg: "com.apple.android.music",
+  },
+  {
+    name: "apple music song highlight (?i preserved)",
+    url: "https://music.apple.com/us/album/thriller/269572838?i=269573364",
+    key: "apple-music",
+    ios: "music://music.apple.com/us/album/thriller/269572838?i=269573364",
+    pkg: "com.apple.android.music",
+  },
+  {
+    name: "discord gg invite",
+    url: "https://discord.gg/abc123",
+    key: "discord",
+    ios: "discord://-/invite/abc123",
+    pkg: "com.discord",
+  },
+  {
+    name: "discord.com invite",
+    url: "https://discord.com/invite/abc123",
+    key: "discord",
+    ios: "discord://-/invite/abc123",
+    pkg: "com.discord",
+  },
+  {
+    name: "discord channel",
+    url: "https://discord.com/channels/111/222",
+    key: "discord",
+    ios: "discord://-/channels/111/222",
+    pkg: "com.discord",
+  },
+  {
+    name: "google maps place",
+    url: "https://maps.google.com/maps/place/Eiffel+Tower",
+    key: "google-maps",
+    ios: "comgooglemapsurl://maps.google.com/maps/place/Eiffel+Tower",
+    pkg: "com.google.android.apps.maps",
+  },
+  {
+    name: "apple app store (https → itms-apps swap)",
+    url: "https://apps.apple.com/us/app/instagram/id389801252",
+    key: "app-store",
+    ios: "itms-apps://apps.apple.com/us/app/instagram/id389801252",
+    pkg: "com.android.vending",
+  },
+  // play-store is schemeless (github-style): iOS "scheme" IS the web URL.
+  {
+    name: "google play app (schemeless, https)",
+    url: "https://play.google.com/store/apps/details?id=com.spotify.music",
+    key: "play-store",
+    ios: "https://play.google.com/store/apps/details?id=com.spotify.music",
+    pkg: "com.android.vending",
+  },
+  // snapchat is ANDROID_ONLY (github pattern): iOS "scheme" IS the web URL, no escape.
+  {
+    name: "snapchat add-friend (schemeless, https)",
+    url: "https://www.snapchat.com/add/team.snapchat",
+    key: "snapchat",
+    ios: "https://snapchat.com/add/team.snapchat",
+    pkg: "com.snapchat.android",
+  },
 ];
 
 describe("matchPlatform", () => {
@@ -214,6 +378,28 @@ describe("matchPlatform", () => {
     expect(m!.android).toContain("scheme=https;");
     expect(m!.android).toContain("intent://github.com/vercel/next.js#Intent;");
     expect(m!.android).toContain(";package=com.github.android;");
+  });
+
+  it("snapchat is ANDROID_ONLY: schemeless https intent, iOS lands on web", () => {
+    // Like github — no add-friend custom scheme, so iOS "scheme" is the https URL and
+    // the android intent package-targets the app over https.
+    const m = matchPlatform("https://snapchat.com/add/team.snapchat");
+    expect(m!.ios.startsWith("https://")).toBe(true); // no custom scheme → web on iOS
+    expect(m!.android).toContain("scheme=https;");
+    expect(m!.android).toContain("intent://snapchat.com/add/team.snapchat#Intent;");
+    expect(m!.android).toContain(";package=com.snapchat.android;");
+  });
+
+  it("play-store is schemeless https (Play app opens via App Link intent)", () => {
+    const m = matchPlatform("https://play.google.com/store/apps/details?id=com.foo");
+    expect(m!.ios.startsWith("https://")).toBe(true); // no Play app on iOS → web
+    expect(m!.android).toContain("scheme=https;");
+    expect(m!.android).toContain(";package=com.android.vending;");
+  });
+
+  it("google.com (non-maps) is NOT hijacked by google-maps", () => {
+    // google-maps only claims maps.google.com; the shared google.com host stays unmatched.
+    expect(matchPlatform("https://www.google.com/search?q=hi")).toBeNull();
   });
 
   it("returns null for unknown hosts", () => {
