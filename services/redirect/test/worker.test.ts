@@ -105,6 +105,19 @@ describe("click data point (REDIRECTS binding)", () => {
     expect(points[0].blobs?.[4]).toBe("news.ycombinator.com"); // referrer host
   });
 
+  it("captures os (ios/android split) and campaign (?ref / ?utm_source)", async () => {
+    const { sink, points } = capturingSink();
+    const e = {
+      ...env({ drop: JSON.stringify({ url: "https://example.com/x", orgId: "org_2" }) }),
+      REDIRECTS: sink as unknown as AnalyticsEngineDataset,
+    };
+    const IPHONE = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15";
+    await worker.fetch(req("/drop?ref=Instagram", { headers: { "user-agent": IPHONE } }), e);
+    expect(points).toHaveLength(1);
+    expect(points[0].blobs?.[6]).toBe("ios"); // os bucket
+    expect(points[0].blobs?.[8]).toBe("instagram"); // campaign, lowercased from ?ref
+  });
+
   it("does not count crawlers and tolerates a missing binding", async () => {
     const { sink, points } = capturingSink();
     const e = {

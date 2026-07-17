@@ -37,6 +37,20 @@ const json = (data: unknown, status = 200) =>
 
 const isMobile = (ua: string): boolean => /Android|iPhone|iPad|iPod/i.test(ua);
 
+// OS bucket — the single most useful dimension for a DEEPLINK product (iOS vs Android
+// decide which scheme fires, which store, which app behaviour). Coarse on purpose: no
+// versions, no fingerprint. "" when it's neither (desktop/bot/unknown).
+const osOf = (ua: string): string =>
+  /iPhone|iPad|iPod/i.test(ua) ? "ios" : /Android/i.test(ua) ? "android" : "";
+
+// Campaign tag — a creator who appends ?ref= or ?utm_source= to their zip gets
+// attribution ("which post drove the taps") for free. Their own tagging, so no privacy
+// concern; capped + lowercased for clean grouping. "" when absent.
+const campaignOf = (url: URL): string =>
+  (url.searchParams.get("ref") ?? url.searchParams.get("utm_source") ?? "")
+    .slice(0, 64)
+    .toLowerCase();
+
 // Social crawlers that fetch a link to build an unfurl/preview card. A hit from one
 // of these gets the OG page (see og.ts); everyone else redirects normally. Maintained
 // set — add a signature here as platforms appear (the whole feature is this list + og.ts).
@@ -176,11 +190,12 @@ async function handleRedirect(
 
   const match = matchPlatform(link.url);
 
-  // Click data point — one row per HUMAN redirect (crawlers returned above). Geo and
-  // device derive server-side; nothing client-supplied. Dataset contract
-  // (docs/stack/kv-schema.md): index1=orgId (opaque tenant tag from the KV record,
-  // '' for self-host), blobs=[slug, country, device, platform, referrerHost, hostname].
-  // Optional binding — self-host / local dev without it skips analytics entirely.
+  // Click data point — one row per HUMAN redirect (crawlers returned above). Geo, device,
+  // os, campaign derive server-side; nothing client-supplied is trusted. Dataset contract
+  // (docs/stack/kv-schema.md): index1=orgId (opaque tenant tag from the KV record, '' for
+  // self-host), blobs=[slug, country, device, platform, referrerHost, hostname, os, city,
+  // campaign]. Append-only — the cloud reader is positional. Optional binding — self-host /
+  // local dev without it skips analytics entirely.
   if (env.REDIRECTS) {
     let referrerHost = "";
     try {
@@ -189,11 +204,24 @@ async function handleRedirect(
     } catch {
       /* malformed Referer → count the click, drop the referrer */
     }
-    const country = (req as { cf?: { country?: string } }).cf?.country ?? "";
+    const cf = (req as { cf?: { country?: string; city?: string } }).cf ?? {};
     const device = isMobile(ua) ? "mobile" : "desktop";
     env.REDIRECTS.writeDataPoint({
       indexes: [link.orgId ?? ""],
-      blobs: [slug, country, device, match?.key ?? "", referrerHost, hostname],
+      // Append-only: the cloud reader maps blob1..6 by position, so new dimensions go on
+      // the end. os(7)=ios/android split (the deeplink product's key metric), city(8)=
+      // finer "where are my fans" than country, campaign(9)=?ref/?utm_source attribution.
+      blobs: [
+        slug,
+        cf.country ?? "",
+        device,
+        match?.key ?? "",
+        referrerHost,
+        hostname,
+        osOf(ua),
+        cf.city ?? "",
+        campaignOf(new URL(req.url)),
+      ],
       doubles: [1],
     });
   }

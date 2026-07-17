@@ -23,14 +23,15 @@ binding = "LINKS"
 id = "649aee7fcd804124873bfe42c897d5ab"
 preview_id = "12f8279145d94197b8c1797267457626"
 
-# Outcome telemetry sink — the interstitial's /t beacon writes one data point per
-# app-open/browser outcome here; the cloud reads it for per-link app-open stats.
-# Analytics Engine has no setup command (the dataset is created on first write).
-# Omit this binding to run without telemetry (self-host / local dev) — /t no-ops.
-# TEMP disabled: Analytics Engine not yet enabled on the account (founder: one click at
-# dash.cloudflare.com → Workers → Analytics Engine). Re-enable BOTH + redeploy:
-# CLICKS = the /t beacon's outcome telemetry; REDIRECTS = one row per human redirect
-# (click analytics). Omitting either just turns that feature off — never breaks a link.
+# Analytics Engine sinks — the dataset is created on first write (no setup command).
+# CLICKS = the /t beacon's app-open/browser outcome telemetry; REDIRECTS = one row per
+# human redirect (click analytics: slug, geo, device, os, platform, referrer, campaign).
+# Omitting either just turns that feature off — it never breaks a link.
+#
+# GATED: Analytics Engine must be enabled ONCE on the account before these bindings can
+# deploy (else wrangler errors 10089). Enable it at
+#   dash.cloudflare.com/<account>/workers/analytics-engine
+# then UNCOMMENT both blocks and redeploy (`../zippy-cloud/deploy.sh engine production`).
 # [[analytics_engine_datasets]]
 # binding = "CLICKS"
 # dataset = "zippy_outcomes"
