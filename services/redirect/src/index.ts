@@ -12,13 +12,21 @@ import { renderOgPage, type OgMeta } from "./og.js";
 export interface Env {
   LINKS: KVNamespace;
   BASE_URL: string;
+  /** Marketing site origin. Optional — when set, GET / 301s there and the 404
+   *  page's "back to Zippy" points at it. Unset (self-host): / renders the 404. */
+  LANDING_URL?: string;
   API_TOKEN?: string;
   /** Outcome telemetry sink (Analytics Engine). Optional — unbound in local dev /
    *  self-host, in which case /t is a silent no-op and the cloud shows no data. */
   CLICKS?: AnalyticsEngineDataset;
+  /** Per-redirect click sink (Analytics Engine). Optional — unbound = no click stats. */
+  REDIRECTS?: AnalyticsEngineDataset;
 }
 
 const SLUG_RE = /^[a-zA-Z0-9-_]{1,32}$/;
+
+/** Where "back to Zippy" style links point — the marketing site if configured. */
+const homeUrl = (env: Env): string => env.LANDING_URL ?? env.BASE_URL;
 const NANOID_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 const NANOID_LEN = 6;
 
@@ -83,7 +91,7 @@ async function resolveKey(hostname: string, slug: string, env: Env): Promise<str
   }
 }
 
-type LinkValue = { url: string; branded: boolean; og?: OgMeta };
+type LinkValue = { url: string; branded: boolean; og?: OgMeta; orgId?: string };
 
 /** Keep only the string OG fields the cloud denormalized — defends the crawler path. */
 function parseOg(raw: unknown): OgMeta | undefined {
@@ -106,9 +114,21 @@ function parseOg(raw: unknown): OgMeta | undefined {
 function parseLinkValue(raw: string): LinkValue | null {
   if (raw[0] !== "{") return { url: raw, branded: false };
   try {
-    const o = JSON.parse(raw) as { url?: unknown; branded?: unknown; og?: unknown };
+    const o = JSON.parse(raw) as {
+      url?: unknown;
+      branded?: unknown;
+      og?: unknown;
+      orgId?: unknown;
+    };
     if (typeof o.url !== "string") return null;
-    return { url: o.url, branded: o.branded === true, og: parseOg(o.og) };
+    return {
+      url: o.url,
+      branded: o.branded === true,
+      og: parseOg(o.og),
+      // Opaque tenant tag the cloud denormalizes in — the engine never interprets it,
+      // only stamps it on the click data point so the cloud can roll up per-org.
+      orgId: typeof o.orgId === "string" ? o.orgId : undefined,
+    };
   } catch {
     return null; // malformed record → unroutable, never 500 a visitor
   }
@@ -121,18 +141,30 @@ async function handleRedirect(
   env: Env,
 ): Promise<Response> {
   const key = await resolveKey(hostname, slug, env);
-  if (key === null) return html(render404(env.BASE_URL), 404);
+  if (key === null) return html(render404(homeUrl(env)), 404);
   const raw = await env.LINKS.get(key);
-  if (!raw) return html(render404(env.BASE_URL), 404);
+  if (!raw) return html(render404(homeUrl(env)), 404);
   const link = parseLinkValue(raw);
-  if (!link) return html(render404(env.BASE_URL), 404);
+  if (!link) return html(render404(homeUrl(env)), 404);
   const ua = req.headers.get("user-agent") ?? "";
 
   // Social crawler → serve the unfurl card instead of redirecting. Humans fall
   // through to the normal interstitial/301 below (link preview never breaks the
   // real click). Cache briefly so a platform's repeat crawls are cheap.
   if (isSocialCrawler(ua)) {
-    const shortUrl = `${env.BASE_URL.replace(/\/$/, "")}/${slug}`;
+    // The card must advertise the URL the crawler actually fetched — on a tenant
+    // custom domain that's the tenant's host, not BASE_URL (whose bare-slug key
+    // wouldn't even resolve for a t:<tenantId>:<slug> record).
+    const defaultHost = (() => {
+      try {
+        return new URL(env.BASE_URL).hostname;
+      } catch {
+        return hostname;
+      }
+    })();
+    const origin =
+      hostname === defaultHost ? env.BASE_URL.replace(/\/$/, "") : `https://${hostname}`;
+    const shortUrl = `${origin}/${slug}`;
     return new Response(renderOgPage(shortUrl, link.url, link.og ?? {}), {
       status: 200,
       headers: {
@@ -143,11 +175,34 @@ async function handleRedirect(
   }
 
   const match = matchPlatform(link.url);
+
+  // Click data point — one row per HUMAN redirect (crawlers returned above). Geo and
+  // device derive server-side; nothing client-supplied. Dataset contract
+  // (docs/stack/kv-schema.md): index1=orgId (opaque tenant tag from the KV record,
+  // '' for self-host), blobs=[slug, country, device, platform, referrerHost, hostname].
+  // Optional binding — self-host / local dev without it skips analytics entirely.
+  if (env.REDIRECTS) {
+    let referrerHost = "";
+    try {
+      const ref = req.headers.get("referer");
+      if (ref) referrerHost = new URL(ref).hostname;
+    } catch {
+      /* malformed Referer → count the click, drop the referrer */
+    }
+    const country = (req as { cf?: { country?: string } }).cf?.country ?? "";
+    const device = isMobile(ua) ? "mobile" : "desktop";
+    env.REDIRECTS.writeDataPoint({
+      indexes: [link.orgId ?? ""],
+      blobs: [slug, country, device, match?.key ?? "", referrerHost, hostname],
+      doubles: [1],
+    });
+  }
+
   if (match && isMobile(ua)) {
     return html(
       renderInterstitial(match, {
         branded: link.branded,
-        homeUrl: env.BASE_URL,
+        homeUrl: homeUrl(env),
         ua,
         slug,
         host: hostname,
@@ -155,7 +210,12 @@ async function handleRedirect(
       200,
     );
   }
-  return Response.redirect(link.url, 301);
+  // Cloud-managed (JSON) records are LIVING links — the destination is editable
+  // after posting, so browsers must re-ask (302). A bare uncontrolled 301 is cached
+  // forever and would pin returning visitors to the old destination. Plain-string
+  // records (OSS API writes) stay 301: immutable by construction.
+  const editable = raw[0] === "{";
+  return Response.redirect(link.url, editable ? 302 : 301);
 }
 
 const OUTCOMES = new Set(["opened", "browser", "broken"]);
@@ -296,9 +356,18 @@ export default {
       return json({ error: "Method not allowed" }, 405);
     }
 
-    if (req.method !== "GET") return json({ error: "Method not allowed" }, 405);
+    // HEAD rides the GET path — link checkers, uptime monitors, and unfurl bots
+    // probe with HEAD; the runtime strips the body automatically.
+    if (req.method !== "GET" && req.method !== "HEAD")
+      return json({ error: "Method not allowed" }, 405);
     const slug = decodeURIComponent(pathname.slice(1));
-    if (!slug) return html(render404(env.BASE_URL), 404); // root has no landing in the OSS core
+    if (!slug) {
+      // Root: the OSS core has no landing page — send humans to the marketing
+      // site when one is configured, else the branded 404.
+      // new URL() so the location is normalized identically on every runtime
+      if (env.LANDING_URL) return Response.redirect(new URL(env.LANDING_URL).toString(), 301);
+      return html(render404(homeUrl(env)), 404);
+    }
     return handleRedirect(slug, url.hostname, req, env);
   },
 };

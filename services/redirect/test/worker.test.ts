@@ -54,6 +54,69 @@ describe("redirect", () => {
     const res = await worker.fetch(req("/nope"), env());
     expect(res.status).toBe(404);
   });
+
+  it("301s root to LANDING_URL when configured", async () => {
+    const res = await worker.fetch(req("/"), { ...env(), LANDING_URL: "https://www.zipthe.link" });
+    expect(res.status).toBe(301);
+    // Response.redirect normalizes the URL (adds the trailing slash)
+    expect(res.headers.get("location")).toBe("https://www.zipthe.link/");
+  });
+
+  it("404s root when LANDING_URL is unset (self-host default)", async () => {
+    const res = await worker.fetch(req("/"), env());
+    expect(res.status).toBe(404);
+  });
+
+  it("points the 404 home link at LANDING_URL when configured", async () => {
+    const res = await worker.fetch(req("/nope"), {
+      ...env(),
+      LANDING_URL: "https://www.zipthe.link",
+    });
+    expect(await res.text()).toContain('href="https://www.zipthe.link"');
+  });
+});
+
+describe("click data point (REDIRECTS binding)", () => {
+  function capturingSink() {
+    const points: Array<{ indexes?: string[]; blobs?: string[]; doubles?: number[] }> = [];
+    return {
+      sink: { writeDataPoint: (p: (typeof points)[number]) => void points.push(p) },
+      points,
+    };
+  }
+
+  it("writes one point per human redirect with the KV record's orgId", async () => {
+    const { sink, points } = capturingSink();
+    const e = {
+      ...env({ abc: JSON.stringify({ url: "https://x.com/nasa/status/9", orgId: "org_1" }) }),
+      REDIRECTS: sink as unknown as AnalyticsEngineDataset,
+    };
+    await worker.fetch(
+      req("/abc", {
+        headers: { "user-agent": DESKTOP, referer: "https://news.ycombinator.com/item" },
+      }),
+      e,
+    );
+    expect(points).toHaveLength(1);
+    expect(points[0].indexes).toEqual(["org_1"]);
+    expect(points[0].blobs?.[0]).toBe("abc"); // slug
+    expect(points[0].blobs?.[2]).toBe("desktop");
+    expect(points[0].blobs?.[3]).toBe("x"); // platform key
+    expect(points[0].blobs?.[4]).toBe("news.ycombinator.com"); // referrer host
+  });
+
+  it("does not count crawlers and tolerates a missing binding", async () => {
+    const { sink, points } = capturingSink();
+    const e = {
+      ...env({ abc: "https://example.com" }),
+      REDIRECTS: sink as unknown as AnalyticsEngineDataset,
+    };
+    await worker.fetch(req("/abc", { headers: { "user-agent": "Twitterbot/1.0" } }), e);
+    expect(points).toHaveLength(0);
+    // no binding at all → still redirects fine
+    const res = await worker.fetch(req("/abc"), env({ abc: "https://example.com" }));
+    expect(res.status).toBe(301);
+  });
 });
 
 describe("multi-host resolution", () => {
@@ -119,7 +182,8 @@ describe("JSON link values", () => {
       req("/j"),
       env({ j: JSON.stringify({ url: "https://example.com/deep" }) }),
     );
-    expect(res.status).toBe(301);
+    // JSON records are cloud-managed LIVING links → 302 so edits propagate (301 is cached forever)
+    expect(res.status).toBe(302);
     expect(res.headers.get("location")).toBe("https://example.com/deep");
   });
 
@@ -128,7 +192,7 @@ describe("JSON link values", () => {
       req("/j"),
       env({ j: JSON.stringify({ url: "https://example.com/x", plan: "pro", future: 1 }) }),
     );
-    expect(res.status).toBe(301);
+    expect(res.status).toBe(302); // JSON record = living link
     expect(res.headers.get("location")).toBe("https://example.com/x");
   });
 
@@ -414,7 +478,7 @@ describe("crawler-OG unfurl", () => {
       req("/p", { headers: { "user-agent": DESKTOP } }),
       env({ p: withOg("https://example.com/page") }),
     );
-    expect(res.status).toBe(301);
+    expect(res.status).toBe(302); // JSON record = living link
     expect(res.headers.get("location")).toBe("https://example.com/page");
   });
 });

@@ -70,7 +70,7 @@ platform owns is never matched — it simply `301`s.
 | GitHub       | `github.com/<owner>/<repo>`, `/<user>`, `…/issues/<n>`, `…/pull/<n>`     | **Android:** that page in the app         |
 |              | (same URLs)                                                              | **iOS:** the browser — no app open (see below) |
 | Amazon       | `amazon.com/dp/<ASIN>?tag=<id>` (and any amazon URL)                     | that product in the app — the `?tag=` affiliate tag stays in the URL (see caveat) |
-| Spotify      | `open.spotify.com/track|album|artist|playlist/<id>`                      | that track / album / artist / playlist    |
+| Spotify      | `open.spotify.com/track\|album\|artist\|playlist/<id>`                   | that track / album / artist / playlist    |
 | Facebook     | `facebook.com/profile.php?id=<numeric>`                                  | that profile (numeric ids only)           |
 |              | `facebook.com/<anything-else>`                                          | that page inside the FB app's own webview |
 | Pinterest    | `pinterest.com/pin/<id>`                                                 | that pin                                  |
@@ -79,7 +79,7 @@ platform owns is never matched — it simply `301`s.
 |              | `…/@<user>/post/<code>`                                                 | the app; web fallback lands the post      |
 | Telegram     | `t.me/<user>`, `t.me/<user>/<post>`                                     | that channel/user (and post)              |
 |              | `t.me/+<hash>`, `t.me/joinchat/<hash>`, `t.me/addstickers/<set>`         | join invite / sticker set                 |
-| Apple Music  | `music.apple.com/<cc>/album|song|playlist/…`                            | that album / song / playlist              |
+| Apple Music  | `music.apple.com/<cc>/album\|song\|playlist/…`                          | that album / song / playlist              |
 | Discord      | `discord.gg/<code>`, `discord.com/invite/<code>`                        | that invite                               |
 |              | `discord.com/channels/<guild>[/<channel>]`                             | that channel                              |
 | Google Maps  | `maps.google.com/…`                                                     | that place / map in the app (iOS)         |
