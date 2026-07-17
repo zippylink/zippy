@@ -1,4 +1,16 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+import { SITE_URL } from "@/lib/site";
+
+// Home inherits the title template from the root layout; it sets its own canonical
+// so the docs origin is unambiguous (the layout has no per-page canonical).
+export const metadata: Metadata = {
+  title: "Zippy — links that open the native app",
+  description:
+    "The open-source URL shortener whose links open the native app — Instagram, TikTok, YouTube, LinkedIn, WhatsApp, X and more — instead of a walled-in in-app browser. One Cloudflare Worker, KV-backed, ~$0 to run.",
+  alternates: { canonical: SITE_URL },
+};
 
 // Minimal landing — Zippy 80s. Sends people straight into the docs.
 export default function HomePage() {
