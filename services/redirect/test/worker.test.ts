@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { createHash } from "node:crypto";
 import worker, { type Env } from "../src/index.js";
 
 const IPHONE = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15";
@@ -634,5 +635,95 @@ describe("routing (geo + device/OS)", () => {
       routed({ ios: "https://ios.example.com", geo: { US: "https://us.example.com" } }),
     );
     expect(res.headers.get("location")).toBe("https://default.com");
+  });
+});
+
+describe("password gate", () => {
+  const sha = (s: string) => createHash("sha256").update(s).digest("hex");
+  const PW = "hunter2";
+  const HASH = sha(PW);
+  // Same derivation as the engine's gateToken — the cookie carries this, not the raw hash.
+  const cookieToken = (slug: string) => sha(`${HASH}:${slug}:zippy-gate`);
+  // A cloud-managed record gated by `pw` (the password HASH, never plaintext).
+  const gated = (extra: object = {}) =>
+    env({ p: JSON.stringify({ url: "https://secret.example.com", pw: HASH, ...extra }) });
+
+  it("shows the gate (no redirect, no destination) for a protected link", async () => {
+    const res = await worker.fetch(req("/p"), gated());
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toContain("text/html");
+    expect(res.headers.get("cache-control")).toBe("no-store");
+    const body = await res.text();
+    expect(body).toContain("This link is locked");
+    expect(body).toContain('name="password"');
+    expect(body).not.toContain("secret.example.com"); // destination never leaks
+  });
+
+  it("does NOT unfurl a protected link to social crawlers (no OG leak)", async () => {
+    const res = await worker.fetch(
+      req("/p", { headers: { "user-agent": "facebookexternalhit/1.1" } }),
+      gated({ og: { title: "Secret drop" } }),
+    );
+    expect(res.status).toBe(200);
+    const body = await res.text();
+    expect(body).toContain("This link is locked");
+    expect(body).not.toContain("Secret drop");
+    expect(body).not.toContain("secret.example.com");
+  });
+
+  it("re-renders the gate with an error on the wrong password", async () => {
+    const res = await worker.fetch(
+      req("/p", {
+        method: "POST",
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        body: "password=wrong",
+      }),
+      gated(),
+    );
+    expect(res.status).toBe(200);
+    const body = await res.text();
+    expect(body).toContain("wrong password");
+    expect(res.headers.get("set-cookie")).toBeNull();
+  });
+
+  it("302s back with a cookie on the correct password", async () => {
+    const res = await worker.fetch(
+      req("/p", {
+        method: "POST",
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        body: `password=${PW}`,
+      }),
+      gated(),
+    );
+    expect(res.status).toBe(302);
+    expect(res.headers.get("location")).toBe("/p");
+    const cookie = res.headers.get("set-cookie") ?? "";
+    expect(cookie).toContain(`zpw_p=${cookieToken("p")}`);
+    expect(cookie).toContain("HttpOnly");
+    expect(cookie).toContain("Secure"); // BASE_URL is https
+  });
+
+  it("proceeds to the redirect once the gate cookie is present", async () => {
+    const res = await worker.fetch(
+      req("/p", { headers: { cookie: `zpw_p=${cookieToken("p")}` } }),
+      gated(),
+    );
+    // A cloud-managed JSON record is a living link → 302 (editable), not a 301.
+    expect(res.status).toBe(302);
+    expect(res.headers.get("location")).toBe("https://secret.example.com/");
+  });
+
+  it("rejects a forged / mismatched gate cookie (still shows the gate)", async () => {
+    const res = await worker.fetch(req("/p", { headers: { cookie: "zpw_p=deadbeef" } }), gated());
+    expect(res.status).toBe(200);
+    expect(await res.text()).toContain("This link is locked");
+  });
+
+  it("404s a password POST to a non-gated slug (nothing to unlock)", async () => {
+    const res = await worker.fetch(
+      req("/plain", { method: "POST", body: "password=x" }),
+      env({ plain: "https://example.com" }),
+    );
+    expect(res.status).toBe(404);
   });
 });

@@ -6,7 +6,7 @@
 //
 // KV-only. No D1, no Durable Objects, no analytics. Serverless, ~$0 to run.
 import { matchPlatform } from "./platforms.js";
-import { renderInterstitial, render404 } from "./interstitial.js";
+import { renderInterstitial, render404, renderPasswordGate } from "./interstitial.js";
 import { renderOgPage, type OgMeta } from "./og.js";
 
 export interface Env {
@@ -67,14 +67,46 @@ function randomSlug(): string {
   return out;
 }
 
+/** Constant-time string compare — no early-out on the first mismatched char. */
+function constEq(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
 /** Constant-time-ish token compare (avoids leaking length-independent timing on the secret). */
 function tokenOk(header: string | null, expected?: string): boolean {
   if (!expected) return false; // no token configured → writes are closed, not open
   const provided = header?.startsWith("Bearer ") ? header.slice(7) : "";
-  if (provided.length !== expected.length) return false;
-  let diff = 0;
-  for (let i = 0; i < expected.length; i++) diff |= provided.charCodeAt(i) ^ expected.charCodeAt(i);
-  return diff === 0;
+  return constEq(provided, expected);
+}
+
+/** SHA-256 → lowercase hex, via WebCrypto (present on Workers). */
+async function sha256hex(s: string): Promise<string> {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
+  return Array.from(new Uint8Array(buf), (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+// Password gate — cookie name is namespaced per slug so multiple protected links don't
+// collide; the cookie value is a DERIVED token (hash of the stored hash + slug), so the
+// raw password hash never rides in a client cookie. A visitor who proves the password once
+// gets the cookie and isn't re-prompted for GATE_MAX_AGE seconds.
+const GATE_MAX_AGE = 43_200; // 12h
+const gateCookieName = (slug: string): string => `zpw_${slug}`;
+const gateToken = (storedHash: string, slug: string): Promise<string> =>
+  sha256hex(`${storedHash}:${slug}:zippy-gate`);
+
+/** Value of a named cookie on the request, or null. */
+function readCookie(req: Request, name: string): string | null {
+  const raw = req.headers.get("cookie");
+  if (!raw) return null;
+  for (const part of raw.split(";")) {
+    const eq = part.indexOf("=");
+    if (eq < 0) continue;
+    if (part.slice(0, eq).trim() === name) return part.slice(eq + 1).trim();
+  }
+  return null;
 }
 
 /**
@@ -121,6 +153,10 @@ type LinkValue = {
   og?: OgMeta;
   orgId?: string;
   routing?: RoutingRules;
+  /** SHA-256 hash of the link's password (the cloud denormalizes the HASH, never the
+   *  plaintext). Present = the link is gated: the engine shows a password form until the
+   *  visitor proves the password. The engine never sees or stores the plaintext. */
+  pw?: string;
 };
 
 /** Keep only the string routing fields the cloud denormalized — defends the redirect path. */
@@ -186,6 +222,7 @@ function parseLinkValue(raw: string): LinkValue | null {
       og?: unknown;
       orgId?: unknown;
       routing?: unknown;
+      pw?: unknown;
     };
     if (typeof o.url !== "string") return null;
     return {
@@ -196,6 +233,8 @@ function parseLinkValue(raw: string): LinkValue | null {
       // only stamps it on the click data point so the cloud can roll up per-org.
       orgId: typeof o.orgId === "string" ? o.orgId : undefined,
       routing: parseRouting(o.routing),
+      // Password hash (never plaintext) — a gate the engine enforces before any redirect.
+      pw: typeof o.pw === "string" && o.pw ? o.pw : undefined,
     };
   } catch {
     return null; // malformed record → unroutable, never 500 a visitor
@@ -215,6 +254,24 @@ async function handleRedirect(
   const link = parseLinkValue(raw);
   if (!link) return html(render404(homeUrl(env)), 404);
   const ua = req.headers.get("user-agent") ?? "";
+
+  // Password gate — a protected link reveals NOTHING (not the destination, not the OG
+  // card) until the visitor proves the password. Checked before the crawler branch on
+  // purpose: a locked link must not unfurl its destination preview either. The visitor
+  // proves it once (POST /:slug) and carries a per-slug derived-token cookie afterward.
+  if (link.pw) {
+    const token = readCookie(req, gateCookieName(slug));
+    const expected = await gateToken(link.pw, slug);
+    if (!token || !constEq(token, expected)) {
+      return new Response(
+        renderPasswordGate({ slug, branded: link.branded, homeUrl: homeUrl(env) }),
+        {
+          status: 200,
+          headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" },
+        },
+      );
+    }
+  }
 
   // Social crawler → serve the unfurl card instead of redirecting. Humans fall
   // through to the normal interstitial/301 below (link preview never breaks the
@@ -310,6 +367,54 @@ async function handleRedirect(
     return new Response(null, { status, headers: { location: dest, "cache-control": "no-store" } });
   }
   return Response.redirect(dest, status);
+}
+
+/**
+ * POST /:slug — password submission from the gate form. Verifies SHA-256(password) against
+ * the stored hash; on success sets the per-slug derived-token cookie and 302s back to the
+ * link (the follow-up GET carries the cookie and proceeds). On failure re-renders the gate.
+ * A non-gated (or unknown) slug 404s — there's nothing to unlock.
+ */
+async function handlePasswordSubmit(
+  slug: string,
+  hostname: string,
+  req: Request,
+  env: Env,
+): Promise<Response> {
+  const key = await resolveKey(hostname, slug, env);
+  if (key === null) return html(render404(homeUrl(env)), 404);
+  const raw = await env.LINKS.get(key);
+  if (!raw) return html(render404(homeUrl(env)), 404);
+  const link = parseLinkValue(raw);
+  if (!link || !link.pw) return html(render404(homeUrl(env)), 404); // nothing gated here
+
+  let password = "";
+  try {
+    const form = await req.formData();
+    const v = form.get("password");
+    password = typeof v === "string" ? v : "";
+  } catch {
+    /* malformed body → treat as an empty (wrong) password */
+  }
+
+  const gateHeaders = { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" };
+  if (!password || !constEq(await sha256hex(password), link.pw)) {
+    return new Response(
+      renderPasswordGate({ slug, error: true, branded: link.branded, homeUrl: homeUrl(env) }),
+      { status: 200, headers: gateHeaders },
+    );
+  }
+
+  const token = await gateToken(link.pw, slug);
+  const secure = env.BASE_URL.startsWith("https") ? "; Secure" : "";
+  return new Response(null, {
+    status: 302,
+    headers: {
+      location: `/${slug}`,
+      "set-cookie": `${gateCookieName(slug)}=${token}; Path=/; Max-Age=${GATE_MAX_AGE}; HttpOnly; SameSite=Lax${secure}`,
+      "cache-control": "no-store",
+    },
+  });
 }
 
 const OUTCOMES = new Set(["opened", "browser", "broken"]);
@@ -450,6 +555,13 @@ export default {
       return json({ error: "Method not allowed" }, 405);
     }
 
+    // POST /:slug is a password-gate submission (the gate form posts here). Any other
+    // slug POST target (/t, /api/links) was handled above.
+    if (req.method === "POST") {
+      const submitSlug = decodeURIComponent(pathname.slice(1));
+      if (submitSlug) return handlePasswordSubmit(submitSlug, url.hostname, req, env);
+      return json({ error: "Method not allowed" }, 405);
+    }
     // HEAD rides the GET path — link checkers, uptime monitors, and unfurl bots
     // probe with HEAD; the runtime strips the body automatically.
     if (req.method !== "GET" && req.method !== "HEAD")

@@ -157,6 +157,61 @@ export function renderInterstitial(
 </html>`;
 }
 
+/**
+ * Password gate — shown before a protected link's destination is ever revealed. The
+ * owner set a password in the cloud; the engine stores only its SHA-256 hash (never the
+ * plaintext) and compares here. Minimal, self-contained, on brand — a single form that
+ * POSTs the password back to this same short URL. `error` re-renders after a wrong try.
+ */
+export function renderPasswordGate(opts: {
+  slug: string;
+  error?: boolean;
+  branded?: boolean;
+  homeUrl?: string;
+}): string {
+  const err = opts.error
+    ? `<p style="margin:.25rem 0 0;color:#FF3E8A;font-weight:700">Nope — wrong password. Try again.</p>`
+    : "";
+  const footer = opts.branded
+    ? `<p style="margin-top:1.5rem;font-size:.7rem;opacity:.6"><a href="${esc(opts.homeUrl ?? "")}">⚡ zipped with Zippy</a></p>`
+    : "";
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Locked link</title>
+<style>
+  html,body{height:100%;margin:0}
+  body{display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#FAF7F2;color:#1A1033}
+  main{text-align:center;padding:2rem;max-width:22rem}
+  h1{margin:.5rem 0 .25rem;font-size:1.6rem}
+  p{margin:.25rem 0}
+  form{margin-top:1.25rem;display:flex;flex-direction:column;gap:.6rem}
+  input{padding:.75rem .9rem;border:3px solid #1A1033;border-radius:12px;font-size:1rem;background:#fff;color:#1A1033}
+  input:focus{outline:none;box-shadow:4px 4px 0 0 #22D8FF}
+  button{padding:.75rem 1.4rem;border:3px solid #1A1033;border-radius:12px;background:#EEFF00;color:#1A1033;font-weight:800;font-size:1rem;cursor:pointer;box-shadow:4px 4px 0 0 #1A1033}
+  button:active{transform:translate(2px,2px);box-shadow:2px 2px 0 0 #1A1033}
+  a{color:#FF3E8A}
+</style>
+</head>
+<body>
+<main>
+  ${zippyBolt()}
+  <h1>This link is locked</h1>
+  <p>Enter the password to keep going.</p>
+  <form method="POST" action="/${esc(opts.slug)}">
+    <input type="password" name="password" placeholder="Password" autofocus autocomplete="off" aria-label="Password" required>
+    <button type="submit">Unlock ⚡</button>
+    ${err}
+  </form>
+  ${footer}
+</main>
+</body>
+</html>`;
+}
+
 export function render404(homeUrl?: string): string {
   const home = homeUrl
     ? `<p style="margin-top:1.25rem;font-size:.8rem"><a href="${esc(homeUrl)}">← back to Zippy</a></p>`
