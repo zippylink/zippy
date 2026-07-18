@@ -82,10 +82,52 @@ function tokenOk(header: string | null, expected?: string): boolean {
   return constEq(provided, expected);
 }
 
-/** SHA-256 → lowercase hex, via WebCrypto (present on Workers). */
+/** SHA-256 → lowercase hex, via WebCrypto (present on Workers). Used for the derived gate
+ *  cookie token, NOT for password storage (passwords use PBKDF2 — see verifyPassword). */
 async function sha256hex(s: string): Promise<string> {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
   return Array.from(new Uint8Array(buf), (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+/** hex string → bytes (for the stored PBKDF2 salt). */
+function hexToBytes(hex: string): Uint8Array {
+  const out = new Uint8Array(Math.floor(hex.length / 2));
+  for (let i = 0; i < out.length; i++) out[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+  return out;
+}
+
+/** PBKDF2-HMAC-SHA256 → lowercase hex (32 bytes). Byte-identical to Node's
+ *  crypto.pbkdf2Sync(pw, salt, iters, 32, "sha256") the cloud hashes with, so the same
+ *  password verifies on both sides. */
+async function pbkdf2Hex(pw: string, salt: Uint8Array, iterations: number): Promise<string> {
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, [
+    "deriveBits",
+  ]);
+  const bits = await crypto.subtle.deriveBits(
+    { name: "PBKDF2", hash: "SHA-256", salt, iterations },
+    key,
+    256,
+  );
+  return Array.from(new Uint8Array(bits), (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+/**
+ * Verify a submitted password against the stored value. The cloud stores a slow, salted
+ * PBKDF2 hash as `pbkdf2$<iters>$<saltHex>$<hashHex>` — a plaintext leak of KV/DB can't be
+ * brute-forced back to the (often reused) password. Legacy bare-SHA-256 records still verify
+ * for back-compat; the cloud is the only KV writer and now always writes PBKDF2, so there's
+ * no downgrade path. Constant-time compare either way.
+ */
+async function verifyPassword(submitted: string, stored: string): Promise<boolean> {
+  if (stored.startsWith("pbkdf2$")) {
+    const parts = stored.split("$");
+    if (parts.length !== 4) return false;
+    const iterations = Number.parseInt(parts[1]!, 10);
+    if (!Number.isFinite(iterations) || iterations < 1) return false;
+    const actual = await pbkdf2Hex(submitted, hexToBytes(parts[2]!), iterations);
+    return constEq(actual, parts[3]!);
+  }
+  return constEq(await sha256hex(submitted), stored); // legacy bare-SHA-256 record
 }
 
 // Password gate — cookie name is namespaced per slug so multiple protected links don't
@@ -398,7 +440,7 @@ async function handlePasswordSubmit(
   }
 
   const gateHeaders = { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" };
-  if (!password || !constEq(await sha256hex(password), link.pw)) {
+  if (!password || !(await verifyPassword(password, link.pw))) {
     return new Response(
       renderPasswordGate({ slug, error: true, branded: link.branded, homeUrl: homeUrl(env) }),
       { status: 200, headers: gateHeaders },

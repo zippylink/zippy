@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { createHash } from "node:crypto";
+import { createHash, pbkdf2Sync, randomBytes } from "node:crypto";
 import worker, { type Env } from "../src/index.js";
 
 const IPHONE = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15";
@@ -725,5 +725,36 @@ describe("password gate", () => {
       env({ plain: "https://example.com" }),
     );
     expect(res.status).toBe(404);
+  });
+
+  // The cloud stores a slow, salted PBKDF2 hash; the engine (WebCrypto PBKDF2) must verify
+  // the same bytes Node's pbkdf2Sync produced. This proves cross-impl parity.
+  it("verifies a PBKDF2-hashed password (the format the cloud writes)", async () => {
+    const salt = randomBytes(16);
+    const iters = 100_000;
+    const dk = pbkdf2Sync(PW, salt, iters, 32, "sha256").toString("hex");
+    const stored = `pbkdf2$${iters}$${salt.toString("hex")}$${dk}`;
+    const e = env({ p: JSON.stringify({ url: "https://secret.example.com", pw: stored }) });
+    // wrong password → gate with error, no cookie
+    const wrong = await worker.fetch(
+      req("/p", {
+        method: "POST",
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        body: "password=nope",
+      }),
+      e,
+    );
+    expect(wrong.headers.get("set-cookie")).toBeNull();
+    // correct password → 302 + cookie
+    const ok = await worker.fetch(
+      req("/p", {
+        method: "POST",
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        body: `password=${PW}`,
+      }),
+      env({ p: JSON.stringify({ url: "https://secret.example.com", pw: stored }) }),
+    );
+    expect(ok.status).toBe(302);
+    expect(ok.headers.get("set-cookie") ?? "").toContain("zpw_p=");
   });
 });
