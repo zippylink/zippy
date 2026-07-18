@@ -28,16 +28,14 @@ preview_id = "12f8279145d94197b8c1797267457626"
 # human redirect (click analytics: slug, geo, device, os, platform, referrer, campaign).
 # Omitting either just turns that feature off — it never breaks a link.
 #
-# GATED: Analytics Engine must be enabled ONCE on the account before these bindings can
-# deploy (else wrangler errors 10089). Enable it at
-#   dash.cloudflare.com/<account>/workers/analytics-engine
-# then UNCOMMENT both blocks and redeploy (`../zippy-cloud/deploy.sh engine production`).
-# [[analytics_engine_datasets]]
-# binding = "CLICKS"
-# dataset = "zippy_outcomes"
-# [[analytics_engine_datasets]]
-# binding = "REDIRECTS"
-# dataset = "zippy_clicks"
+# Analytics Engine enabled on the account 2026-07-18 (dashboard toggle). Datasets
+# auto-create on first write. Self-hosters without AE: comment these two blocks out.
+[[analytics_engine_datasets]]
+binding = "CLICKS"
+dataset = "zippy_outcomes"
+[[analytics_engine_datasets]]
+binding = "REDIRECTS"
+dataset = "zippy_clicks"
 
 # API_TOKEN gates POST/GET /api/links. It is a SECRET, not a var — synced from
 # Infisical by zippy-cloud's ./deploy.sh engine <env> (never set by hand).
