@@ -105,7 +105,59 @@ async function resolveKey(hostname: string, slug: string, env: Env): Promise<str
   }
 }
 
-type LinkValue = { url: string; branded: boolean; og?: OgMeta; orgId?: string };
+// Per-link conditional routing (geo + device/OS → destination). Denormalized by the cloud;
+// the engine RESOLVES it at redirect time (device/OS first, then geo, then the default url).
+// Mirrors @zippy/shared's RoutingRules/resolveRoute in the cloud repo — keep the two in sync.
+type RoutingRules = {
+  ios?: string;
+  android?: string;
+  desktop?: string;
+  geo?: Record<string, string>;
+};
+
+type LinkValue = {
+  url: string;
+  branded: boolean;
+  og?: OgMeta;
+  orgId?: string;
+  routing?: RoutingRules;
+};
+
+/** Keep only the string routing fields the cloud denormalized — defends the redirect path. */
+function parseRouting(raw: unknown): RoutingRules | undefined {
+  if (!raw || typeof raw !== "object") return undefined;
+  const o = raw as Record<string, unknown>;
+  const r: RoutingRules = {};
+  if (typeof o.ios === "string") r.ios = o.ios;
+  if (typeof o.android === "string") r.android = o.android;
+  if (typeof o.desktop === "string") r.desktop = o.desktop;
+  if (o.geo && typeof o.geo === "object") {
+    const geo: Record<string, string> = {};
+    for (const [cc, v] of Object.entries(o.geo as Record<string, unknown>)) {
+      if (typeof v === "string") geo[cc.toUpperCase()] = v;
+    }
+    if (Object.keys(geo).length) r.geo = geo;
+  }
+  return Object.keys(r).length ? r : undefined;
+}
+
+/**
+ * Resolve the effective destination from routing rules. Order (first match wins): iOS →
+ * Android → desktop (device/OS is primary — the native-app-open wedge), then geo[country],
+ * then the default `url`. Country is the uppercased CF geo header. Same order as
+ * @zippy/shared's resolveRoute (separate repo) — keep in sync.
+ */
+function resolveDestination(link: LinkValue, ua: string, country: string): string {
+  const r = link.routing;
+  if (r) {
+    const os = osOf(ua);
+    if (os === "ios" && r.ios) return r.ios;
+    if (os === "android" && r.android) return r.android;
+    if (!isMobile(ua) && r.desktop) return r.desktop;
+    if (country && r.geo && typeof r.geo[country] === "string") return r.geo[country];
+  }
+  return link.url;
+}
 
 /** Keep only the string OG fields the cloud denormalized — defends the crawler path. */
 function parseOg(raw: unknown): OgMeta | undefined {
@@ -133,6 +185,7 @@ function parseLinkValue(raw: string): LinkValue | null {
       branded?: unknown;
       og?: unknown;
       orgId?: unknown;
+      routing?: unknown;
     };
     if (typeof o.url !== "string") return null;
     return {
@@ -142,6 +195,7 @@ function parseLinkValue(raw: string): LinkValue | null {
       // Opaque tenant tag the cloud denormalizes in — the engine never interprets it,
       // only stamps it on the click data point so the cloud can roll up per-org.
       orgId: typeof o.orgId === "string" ? o.orgId : undefined,
+      routing: parseRouting(o.routing),
     };
   } catch {
     return null; // malformed record → unroutable, never 500 a visitor
@@ -188,7 +242,14 @@ async function handleRedirect(
     });
   }
 
-  const match = matchPlatform(link.url);
+  // Resolve the effective destination — a cloud-managed link can route by device/OS + geo
+  // to different destinations. CF geo is server-derived; nothing client-supplied is trusted.
+  // The deeplink match runs on the RESOLVED destination, so routing + native-app spring
+  // compose (iOS → App Store URL → springs the App Store app).
+  const cf = (req as { cf?: { country?: string; city?: string } }).cf ?? {};
+  const country = typeof cf.country === "string" ? cf.country.toUpperCase() : "";
+  const dest = resolveDestination(link, ua, country);
+  const match = matchPlatform(dest);
 
   // Click data point — one row per HUMAN redirect (crawlers returned above). Geo, device,
   // os, campaign derive server-side; nothing client-supplied is trusted. Dataset contract
@@ -204,7 +265,6 @@ async function handleRedirect(
     } catch {
       /* malformed Referer → count the click, drop the referrer */
     }
-    const cf = (req as { cf?: { country?: string; city?: string } }).cf ?? {};
     const device = isMobile(ua) ? "mobile" : "desktop";
     env.REDIRECTS.writeDataPoint({
       indexes: [link.orgId ?? ""],
@@ -243,7 +303,13 @@ async function handleRedirect(
   // forever and would pin returning visitors to the old destination. Plain-string
   // records (OSS API writes) stay 301: immutable by construction.
   const editable = raw[0] === "{";
-  return Response.redirect(link.url, editable ? 302 : 301);
+  const status = editable ? 302 : 301;
+  // A ROUTED link returns different destinations per visitor (device/geo) — never let a
+  // shared cache pin one visitor's route onto the next. no-store only when routing is set.
+  if (link.routing) {
+    return new Response(null, { status, headers: { location: dest, "cache-control": "no-store" } });
+  }
+  return Response.redirect(dest, status);
 }
 
 const OUTCOMES = new Set(["opened", "browser", "broken"]);

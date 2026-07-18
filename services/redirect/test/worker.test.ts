@@ -23,6 +23,11 @@ function env(init: Record<string, string> = {}): Env {
 const req = (path: string, init?: RequestInit) => new Request(`https://zipthe.link${path}`, init);
 const reqOn = (host: string, path: string, init?: RequestInit) =>
   new Request(`https://${host}${path}`, init);
+/** Attach a Cloudflare geo (`cf.country`) to a request, like the CF runtime does. */
+const withCf = (request: Request, country: string): Request => {
+  (request as unknown as { cf: { country: string } }).cf = { country };
+  return request;
+};
 
 describe("redirect", () => {
   it("301s a plain (non-platform) destination", async () => {
@@ -581,5 +586,53 @@ describe("interstitial telemetry wiring", () => {
     expect(body).toContain('beacon("opened")'); // app-launched signal
     expect(body).toContain('beacon("browser")'); // stayed-in-browser signal
     expect(body).toContain('"slug":"tw"');
+  });
+});
+
+describe("routing (geo + device/OS)", () => {
+  // A cloud-managed JSON record with routing rules under slug `r`, default `https://default.com`.
+  const routed = (routing: object, url = "https://default.com") =>
+    env({ r: JSON.stringify({ url, routing }) });
+
+  it("routes iOS to the ios destination (302 + no-store)", async () => {
+    const res = await worker.fetch(
+      req("/r", { headers: { "user-agent": IPHONE } }),
+      routed({ ios: "https://ios.example.com", android: "https://play.example.com" }),
+    );
+    expect(res.status).toBe(302);
+    expect(res.headers.get("location")).toBe("https://ios.example.com");
+    expect(res.headers.get("cache-control")).toBe("no-store");
+  });
+
+  it("routes Android to the android destination", async () => {
+    const res = await worker.fetch(
+      req("/r", { headers: { "user-agent": ANDROID } }),
+      routed({ ios: "https://ios.example.com", android: "https://play.example.com" }),
+    );
+    expect(res.headers.get("location")).toBe("https://play.example.com");
+  });
+
+  it("routes by country when no device rule matches", async () => {
+    const res = await worker.fetch(
+      withCf(req("/r", { headers: { "user-agent": DESKTOP } }), "US"),
+      routed({ geo: { US: "https://us.example.com" } }),
+    );
+    expect(res.headers.get("location")).toBe("https://us.example.com");
+  });
+
+  it("device/OS beats geo (both set, iOS visitor from US → ios)", async () => {
+    const res = await worker.fetch(
+      withCf(req("/r", { headers: { "user-agent": IPHONE } }), "US"),
+      routed({ ios: "https://ios.example.com", geo: { US: "https://us.example.com" } }),
+    );
+    expect(res.headers.get("location")).toBe("https://ios.example.com");
+  });
+
+  it("falls back to the default url when nothing matches", async () => {
+    const res = await worker.fetch(
+      withCf(req("/r", { headers: { "user-agent": DESKTOP } }), "FR"),
+      routed({ ios: "https://ios.example.com", geo: { US: "https://us.example.com" } }),
+    );
+    expect(res.headers.get("location")).toBe("https://default.com");
   });
 });
