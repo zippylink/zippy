@@ -1089,8 +1089,8 @@ describe("scheduled destinations (sched)", () => {
       req("/s", { headers: { "user-agent": DESKTOP } }),
       sched(["junk", { from: -5, url: "https://bad.example.com" }]),
     );
-    // Response.redirect normalizes the URL (adds the trailing slash)
-    expect(res.headers.get("location")).toBe("https://default.com/");
+    // Emitted verbatim — the runtime no longer appends a trailing slash to a bare origin.
+    expect(res.headers.get("location")).toBe("https://default.com");
     expect(res.headers.get("cache-control")).toBeNull();
   });
 
@@ -1176,7 +1176,7 @@ describe("password gate", () => {
     );
     // A cloud-managed JSON record is a living link → 302 (editable), not a 301.
     expect(res.status).toBe(302);
-    expect(res.headers.get("location")).toBe("https://secret.example.com/");
+    expect(res.headers.get("location")).toBe("https://secret.example.com");
   });
 
   it("rejects a forged / mismatched gate cookie (still shows the gate)", async () => {
@@ -1418,8 +1418,8 @@ describe("A/B destination split (ab)", () => {
     ];
     for (const ab of bad) {
       const res = await worker.fetch(req("/ab", { headers: { "user-agent": DESKTOP } }), split(ab));
-      // no ab → plain living-link redirect; Response.redirect normalizes the bare origin
-      expect(res.headers.get("location")).toBe("https://default.com/");
+      // no ab → plain living-link redirect; the bare origin is emitted verbatim
+      expect(res.headers.get("location")).toBe("https://default.com");
     }
   });
 

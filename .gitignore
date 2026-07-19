@@ -19,3 +19,6 @@ services/**/.dev.vars
 # editor local history
 .vscode/local-history
 .history
+
+# TypeScript incremental build cache — machine-generated, churns on every build.
+*.tsbuildinfo
