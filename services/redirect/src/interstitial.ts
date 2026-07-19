@@ -41,8 +41,17 @@ export function inAppWebview(ua: string): string | null {
 const esc = (s: string): string =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-/** URL → safe JS string literal for an inline <script> ("</script>" can't break out). */
-const jsStr = (s: string): string => JSON.stringify(s).replace(/</g, "\\u003c");
+/**
+ * Any value → a JS literal safe to inline in a <script> block.
+ *
+ * SECURITY: bare JSON.stringify is NOT safe here. JSON is not a subset of HTML — a
+ * "</script>" inside any string value closes the tag early and everything after it is
+ * parsed as markup (XSS). Escaping "<" to < is inert in JS and can't break out.
+ * Applies to objects too, so every inline literal goes through this one door — the engine
+ * is self-hostable and self-hosters write KV records directly, so it must NOT rely on the
+ * cloud's slug/URL validation to stay safe.
+ */
+const jsLit = (v: unknown): string => JSON.stringify(v).replace(/</g, "\\u003c");
 
 // ---------------------------------------------------------------------------
 // Retargeting pixels (Wave 2.8). The cloud denormalizes `px` into the KV record;
@@ -92,7 +101,7 @@ ${pixelSnippets(px)}
   <p>zipping you along…</p>
   <p><a href="${esc(dest)}">Continue</a></p>
 </main>
-<script>setTimeout(function(){window.location.replace(${jsStr(dest)})},400)</script>
+<script>setTimeout(function(){window.location.replace(${jsLit(dest)})},400)</script>
 </body>
 </html>`;
 }
@@ -136,6 +145,10 @@ export function renderInterstitial(
     fbu?: string;
     /** Validated retargeting pixel tags — injected into the head, fire on the creator's behalf. */
     px?: PixelTag[];
+    /** Index of the A/B variant this visitor was routed to. Undefined on the overwhelming
+     *  majority of links (no split) — JSON.stringify then drops it and the beacon body is
+     *  byte-identical to a non-A/B link's. Re-validated server-side in handleBeacon. */
+    abVariant?: number;
   },
 ): string {
   // Branding footer only when the record says so (the cloud bakes in this effect).
@@ -195,13 +208,13 @@ ${pixelSnippets(opts?.px)}
 </main>
 <script>
 (function(){
-  var iosPrimary = ${JSON.stringify(iosPrimary)};
-  var android = ${JSON.stringify(match.android)};
-  var bailTo = ${JSON.stringify(opts?.fbu ?? match.web)}; // rich fallback page when entitled, else the web URL
+  var iosPrimary = ${jsLit(iosPrimary)};
+  var android = ${jsLit(match.android)};
+  var bailTo = ${jsLit(opts?.fbu ?? match.web)}; // rich fallback page when entitled, else the web URL
   // Outcome telemetry (POST /t on this same short-domain origin). A rate/trend
   // signal, not per-click truth: the page going hidden = the app launched ("opened");
   // the fallback firing while still visible = stayed in the browser ("browser").
-  var beaconBody = ${JSON.stringify({ slug: opts?.slug ?? "", host: opts?.host ?? "", platformKey: match.key, sourceApp: webview ?? "" })};
+  var beaconBody = ${jsLit({ slug: opts?.slug ?? "", host: opts?.host ?? "", platformKey: match.key, sourceApp: webview ?? "", abVariant: opts?.abVariant })};
   function beacon(outcome){
     try {
       beaconBody.outcome = outcome; beaconBody.ts = Date.now();

@@ -646,6 +646,62 @@ describe("beacon event forwarding (EVENTS_URL)", () => {
     }
   });
 
+  // A/B variant on the outcome beacon — the differentiator: per-variant APP-OPEN rate.
+  // Client-supplied (it round-trips through the interstitial), so it is re-validated here.
+  const beaconWith = (abVariant: unknown) =>
+    JSON.stringify({
+      slug: "abc",
+      host: "zipthe.link",
+      outcome: "opened",
+      platformKey: "instagram",
+      sourceApp: "instagram",
+      abVariant,
+      ts: 1234,
+    });
+
+  const forwardedBody = async (body: string) => {
+    const f = stubFetch();
+    try {
+      const { waits, ctx } = stubCtx();
+      const res = await worker.fetch(post(body, { "user-agent": IPHONE }), eventsEnv(), ctx);
+      expect(res.status).toBe(204); // a beacon NEVER errors, whatever the body says
+      await Promise.all(waits);
+      return f.calls[0]!.init?.body as string;
+    } finally {
+      f.restore();
+    }
+  };
+
+  it("forwards a valid variant index", async () => {
+    expect(JSON.parse(await forwardedBody(beaconWith(2))).abVariant).toBe(2);
+    expect(JSON.parse(await forwardedBody(beaconWith(0))).abVariant).toBe(0);
+  });
+
+  it("drops an out-of-range, non-integer, or non-number variant (rest still forwards)", async () => {
+    for (const bad of [4, 99, -1, 1.5, "1", null, {}, NaN]) {
+      const parsed = JSON.parse(await forwardedBody(beaconWith(bad)));
+      expect(parsed).not.toHaveProperty("abVariant");
+      expect(parsed.outcome).toBe("opened"); // the outcome still records
+    }
+  });
+
+  it("is byte-identical to the pre-A/B payload when the beacon carries no variant", async () => {
+    // The overwhelming majority of links have no split — those payloads must not change.
+    expect(await forwardedBody(validBeacon)).toBe(
+      JSON.stringify({
+        slug: "abc",
+        host: "zipthe.link",
+        outcome: "opened",
+        sourceApp: "instagram",
+        platformKey: "instagram",
+        country: "",
+        city: "",
+        device: "mobile",
+        ts: 1234,
+      }),
+    );
+  });
+
   it("does not forward when EVENTS_URL is unset (self-host / local)", async () => {
     const f = stubFetch();
     try {
@@ -730,6 +786,48 @@ describe("rich fallback (fbu)", () => {
       const body = await serve({ url: WEB, fbu });
       expect(body).toContain(`var bailTo = ${JSON.stringify(WEB)}`); // defensively dropped
     }
+  });
+});
+
+// Inline <script> injection: every value the interstitial bakes into a <script> block goes
+// through jsLit, which escapes "<" to <. Bare JSON.stringify is NOT enough — JSON is
+// not a subset of HTML, so a "</script>" inside a string closes the tag early and the rest
+// is parsed as markup. These records are what a SELF-HOSTER can write straight into KV,
+// bypassing every cloud-side validator — the engine has to be safe on its own.
+describe("inline-script injection (jsLit)", () => {
+  const BREAKOUT = "</script><script>alert(1)</script>";
+  const serve = (record: object, slug = "x") =>
+    worker
+      .fetch(
+        req(`/${slug}`, { headers: { "user-agent": IPHONE } }),
+        env({ [slug]: JSON.stringify(record) }),
+      )
+      .then((r) => r.text());
+
+  // A perfectly valid https URL can still carry "</script>" in its path — so this vector
+  // survives an "is it https?" check and is not self-host-only.
+  it("a breakout in fbu can't close the script tag", async () => {
+    const body = await serve({
+      url: "https://x.com/nasa",
+      fbu: `https://evil.example.com/${BREAKOUT}`,
+    });
+    expect(body).not.toContain("</script><script>alert(1)");
+    expect(body).toContain("\\u003c/script>"); // escaped, inert inside the JS string
+  });
+
+  it("a breakout in the destination URL can't close the script tag", async () => {
+    const body = await serve({ url: `https://x.com/${BREAKOUT}` });
+    expect(body).not.toContain("</script><script>alert(1)");
+  });
+
+  it("a breakout in the slug can't close the script tag via the beacon body", async () => {
+    const body = await serve({ url: "https://x.com/nasa" }, `a${BREAKOUT}`);
+    expect(body).not.toContain("</script><script>alert(1)");
+  });
+
+  it("ordinary records are unaffected — no stray escaping", async () => {
+    const body = await serve({ url: "https://x.com/nasa/status/999" });
+    expect(body).toContain(JSON.stringify("https://x.com/nasa/status/999"));
   });
 });
 
@@ -1123,6 +1221,25 @@ describe("A/B destination split (ab)", () => {
       expect(res.headers.get("location")).toBe(B);
     }
     for (const p of points) expect(p.blobs?.[9]).toBe("1");
+  });
+
+  // The whole point of threading the variant to the OUTCOME beacon: "variant B opened the
+  // app more often", not just "variant B got more clicks". The interstitial learns it the
+  // same way it learns slug/platformKey — server-serialized into the beacon body.
+  it("bakes the picked variant into the interstitial's beacon body", async () => {
+    const e = split([
+      { u: "https://instagram.com/a", w: 0 },
+      { u: "https://instagram.com/b", w: 1 },
+    ]);
+    const res = await worker.fetch(req("/ab", { headers: { "user-agent": IPHONE } }), e);
+    const body = await res.text();
+    expect(body).toContain('"abVariant":1');
+  });
+
+  it("omits abVariant from the beacon body when the link has no split", async () => {
+    const e = env({ ab: JSON.stringify({ url: "https://instagram.com/nasa" }) });
+    const res = await worker.fetch(req("/ab", { headers: { "user-agent": IPHONE } }), e);
+    expect(await res.text()).not.toContain("abVariant");
   });
 
   it("a 50/50 split lands both variants over ~200 taps", async () => {

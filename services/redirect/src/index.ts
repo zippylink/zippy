@@ -485,15 +485,18 @@ async function handleRedirect(
   // settled at parse: routing wins, so reaching here with `ab` means no routing at all).
   // The pick then flows through matchPlatform like any destination, so an App Store
   // variant still springs the store.
-  let abVariant = "";
+  // The picked index rides on to the interstitial's outcome beacon, so an A/B report can
+  // say "variant B OPENED THE APP more often", not just "got more clicks".
+  let abIndex: number | undefined;
   if (link.ab) {
     const i = pickAb(link.ab);
     const v = link.ab[i];
     if (v) {
       dest = v.u;
-      abVariant = String(i);
+      abIndex = i;
     }
   }
+  const abVariant = abIndex === undefined ? "" : String(abIndex);
   const match = matchPlatform(dest);
 
   // Click data point — one row per HUMAN redirect (crawlers returned above). Geo, device,
@@ -543,6 +546,7 @@ async function handleRedirect(
         host: hostname,
         fbu: link.fbu,
         px: link.px,
+        abVariant: abIndex,
       }),
       200,
     );
@@ -658,10 +662,29 @@ async function handleBeacon(req: Request, env: Env, ctx?: ExecutionContext): Pro
   const host = str(body.host, 255);
   const sourceApp = str(body.sourceApp, 64);
   const platformKey = str(body.platformKey, 32);
+  // A/B variant index the interstitial echoed back. CLIENT-SUPPLIED, so re-validate rather
+  // than trust: an integer in [0, AB_MAX) — the same bound parseAb enforces on the split
+  // itself, checkable without a KV read (no round-trip on the beacon path). Anything else
+  // (string, float, negative, out of range) drops the field; the outcome still records.
+  const av = body.abVariant;
+  const abVariant =
+    typeof av === "number" && Number.isInteger(av) && av >= 0 && av < AB_MAX ? av : undefined;
 
   env.CLICKS?.writeDataPoint({
     indexes: [slug],
-    blobs: [slug, host, outcome, sourceApp, platformKey, country, city, device],
+    // Append-only, positionally read by the cloud: abVariant(9) is "" when the link has no
+    // split, which is nearly every link.
+    blobs: [
+      slug,
+      host,
+      outcome,
+      sourceApp,
+      platformKey,
+      country,
+      city,
+      device,
+      abVariant === undefined ? "" : String(abVariant),
+    ],
     doubles: [1],
   });
 
@@ -685,6 +708,9 @@ async function handleBeacon(req: Request, env: Env, ctx?: ExecutionContext): Pro
           country,
           city,
           device,
+          // Omitted (JSON.stringify drops undefined) on every non-A/B link, so the
+          // overwhelming-majority payload is byte-identical to before this field existed.
+          abVariant,
           ts: typeof body.ts === "number" ? body.ts : undefined,
         }),
       }).catch(() => {}),
