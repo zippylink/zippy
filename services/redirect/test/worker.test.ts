@@ -590,6 +590,37 @@ describe("interstitial telemetry wiring", () => {
   });
 });
 
+// Rich no-app fallback (fbu): a cloud-entitled record carries `fbu`, the absolute https
+// URL of a cloud-hosted fallback page. Only the interstitial's AUTOMATIC timeout bail
+// retargets to it — the visible "Continue in browser" anchor keeps the real web URL.
+describe("rich fallback (fbu)", () => {
+  const FBU = "https://cloud.zipthe.link/f/tw";
+  const WEB = "https://x.com/nasa/status/999";
+  const serve = (record: object) =>
+    worker
+      .fetch(req("/tw", { headers: { "user-agent": IPHONE } }), env({ tw: JSON.stringify(record) }))
+      .then((r) => r.text());
+
+  it("bails to the fbu while the visible fallback anchor keeps the web destination", async () => {
+    const body = await serve({ url: WEB, fbu: FBU });
+    expect(body).toContain(`var bailTo = ${JSON.stringify(FBU)}`); // automatic timeout bail
+    expect(body).toContain(`<a id="fallback" href="${WEB}">`); // human tap path unchanged
+  });
+
+  it("without fbu the bail targets the web URL exactly as before", async () => {
+    const body = await serve({ url: WEB });
+    expect(body).toContain(`var bailTo = ${JSON.stringify(WEB)}`);
+    expect(body).not.toContain("cloud.zipthe.link");
+  });
+
+  it("ignores a non-string or non-https fbu", async () => {
+    for (const fbu of [42, "http://insecure.example.com/f", "ftp://x", { u: FBU }]) {
+      const body = await serve({ url: WEB, fbu });
+      expect(body).toContain(`var bailTo = ${JSON.stringify(WEB)}`); // defensively dropped
+    }
+  });
+});
+
 describe("routing (geo + device/OS)", () => {
   // A cloud-managed JSON record with routing rules under slug `r`, default `https://default.com`.
   const routed = (routing: object, url = "https://default.com") =>

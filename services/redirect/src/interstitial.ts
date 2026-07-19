@@ -70,7 +70,15 @@ function zippyBolt(sad = false): string {
 
 export function renderInterstitial(
   match: PlatformMatch,
-  opts?: { branded?: boolean; homeUrl?: string; ua?: string; slug?: string; host?: string },
+  opts?: {
+    branded?: boolean;
+    homeUrl?: string;
+    ua?: string;
+    slug?: string;
+    host?: string;
+    /** Rich fallback page — where the automatic timeout bail lands instead of the web URL. */
+    fbu?: string;
+  },
 ): string {
   // Branding footer only when the record says so (the cloud bakes in this effect).
   const footer = opts?.branded
@@ -130,7 +138,7 @@ export function renderInterstitial(
 (function(){
   var iosPrimary = ${JSON.stringify(iosPrimary)};
   var android = ${JSON.stringify(match.android)};
-  var web = ${JSON.stringify(match.web)};
+  var bailTo = ${JSON.stringify(opts?.fbu ?? match.web)}; // rich fallback page when entitled, else the web URL
   // Outcome telemetry (POST /t on this same short-domain origin). A rate/trend
   // signal, not per-click truth: the page going hidden = the app launched ("opened");
   // the fallback firing while still visible = stayed in the browser ("browser").
@@ -147,7 +155,7 @@ export function renderInterstitial(
   document.addEventListener("visibilitychange", function(){ if(document.hidden){ done = true; beacon("opened"); } });
   var isAndroid = /Android/i.test(navigator.userAgent);
   if (isAndroid) { window.location.replace(android); return; } // intent:// self-falls-back (webviews too)
-  function bail(){ if(!done){ done = true; beacon("browser"); window.location.replace(web); } }
+  function bail(){ if(!done){ done = true; beacon("browser"); window.location.replace(bailTo); } }
   var t = setTimeout(bail, ${FALLBACK_MS});
   window.addEventListener("pagehide", function(){ done = true; clearTimeout(t); });
   window.location.replace(iosPrimary); // scheme opens the app; x-safari punts github to Safari

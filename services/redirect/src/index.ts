@@ -199,6 +199,10 @@ type LinkValue = {
    *  plaintext). Present = the link is gated: the engine shows a password form until the
    *  visitor proves the password. The engine never sees or stores the plaintext. */
   pw?: string;
+  /** Cloud-hosted rich fallback page (absolute https URL). Only changes where the
+   *  interstitial's automatic timeout bail lands; the visible "Continue in browser"
+   *  anchor and every redirect path are untouched. */
+  fbu?: string;
 };
 
 /** Keep only the string routing fields the cloud denormalized — defends the redirect path. */
@@ -265,6 +269,7 @@ function parseLinkValue(raw: string): LinkValue | null {
       orgId?: unknown;
       routing?: unknown;
       pw?: unknown;
+      fbu?: unknown;
     };
     if (typeof o.url !== "string") return null;
     return {
@@ -277,6 +282,8 @@ function parseLinkValue(raw: string): LinkValue | null {
       routing: parseRouting(o.routing),
       // Password hash (never plaintext) — a gate the engine enforces before any redirect.
       pw: typeof o.pw === "string" && o.pw ? o.pw : undefined,
+      // Rich fallback page URL — defensively require an absolute https URL, else ignore.
+      fbu: typeof o.fbu === "string" && o.fbu.startsWith("https://") ? o.fbu : undefined,
     };
   } catch {
     return null; // malformed record → unroutable, never 500 a visitor
@@ -393,6 +400,7 @@ async function handleRedirect(
         ua,
         slug,
         host: hostname,
+        fbu: link.fbu,
       }),
       200,
     );
