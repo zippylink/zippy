@@ -16,10 +16,25 @@ import type { PlatformMatch } from "./platforms.js";
 //   Android  — hand the browser the intent:// URL. Chrome falls back to
 //              browser_fallback_url NATIVELY (works inside Android webviews too).
 //
-// visibilitychange is the honest signal the app launched (the page is hidden while
-// iOS switches apps); we cancel the fallback when it fires. FALLBACK_MS is the
-// backstop for browsers that don't hide the page.
-const FALLBACK_MS = 1500;
+// visibilitychange is the honest signal the app launched (the page is hidden while iOS
+// switches apps).
+//
+// We do NOT navigate when the app doesn't open. An automatic redirect a second and a half
+// after the tap reads as a glitch ("why am I here?"), so the page stays put, says out loud
+// that the app didn't open, and hands the visitor the two real anchors already on it.
+//
+// UX AND MEASUREMENT ARE SEPARATE CLOCKS — they want different numbers:
+//   COPY_SWAP_MS  is a UI honesty signal. It ONLY rewrites the copy, never beacons. A
+//                 1.5s-slow launch is common; calling that "stayed in browser" would
+//                 undercount real app opens, and worst on the retry-tap flow this UX
+//                 now encourages.
+//   LONGSTOP_MS   is the measurement backstop for a visitor who just sits on the page.
+// "browser" is otherwise recorded on `pagehide` — the point at which it is actually true
+// (they tapped "Continue in browser", or closed the tab). Net effect: a retry tap that
+// lands in the app inside the long-stop window counts as "opened", which is the honest
+// answer to "did this link ultimately get them into the app".
+const COPY_SWAP_MS = 1500;
+const LONGSTOP_MS = 9000;
 
 // In-app webviews that trap taps on iOS. Best-effort UA sniff — used only to pick the
 // iOS escape technique + button copy; a miss degrades to the plain web link, never a
@@ -141,7 +156,7 @@ export function renderInterstitial(
     ua?: string;
     slug?: string;
     host?: string;
-    /** Rich fallback page — where the automatic timeout bail lands instead of the web URL. */
+    /** Rich fallback page — where "Continue in browser" points instead of the web URL. */
     fbu?: string;
     /** Validated retargeting pixel tags — injected into the head, fire on the creator's behalf. */
     px?: PixelTag[];
@@ -177,6 +192,11 @@ export function renderInterstitial(
   const escapeBtn = escape
     ? `<p><a id="escape" href="${esc(escape.href)}" style="display:inline-block;margin-bottom:.6rem;padding:.7rem 1.4rem;border-radius:12px;background:#1A1033;color:#EEFF00;text-decoration:none;font-weight:700">${escape.label}</a></p>`
     : "";
+  // "Continue in browser" = the rich fallback page when the record carries one, else the
+  // plain web URL. Nothing else routes there any more, so this anchor IS that surface's door.
+  const fallbackHref = opts?.fbu ?? match.web;
+  // Swapped in once the copy timer says the app hasn't opened — the page stops pretending.
+  const noAppMsg = `Welp — the ${match.key} app didn't open. Pick your fighter 👇`;
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -201,19 +221,18 @@ ${pixelSnippets(opts?.px)}
 <body>
 <main>
   ${zippyBolt()}
-  <p>Opening the ${esc(match.key)} app<span class="dot"></span><span class="dot"></span><span class="dot"></span></p>
+  <p id="status">Opening the ${esc(match.key)} app<span class="dot"></span><span class="dot"></span><span class="dot"></span></p>
   ${escapeBtn}
-  <p><a id="fallback" href="${esc(match.web)}">Continue in browser</a></p>
+  <p><a id="fallback" href="${esc(fallbackHref)}">Continue in browser</a></p>
   ${footer}
 </main>
 <script>
 (function(){
   var iosPrimary = ${jsLit(iosPrimary)};
   var android = ${jsLit(match.android)};
-  var bailTo = ${jsLit(opts?.fbu ?? match.web)}; // rich fallback page when entitled, else the web URL
   // Outcome telemetry (POST /t on this same short-domain origin). A rate/trend
   // signal, not per-click truth: the page going hidden = the app launched ("opened");
-  // the fallback firing while still visible = stayed in the browser ("browser").
+  // the timer firing while still visible = stayed in the browser ("browser").
   var beaconBody = ${jsLit({ slug: opts?.slug ?? "", host: opts?.host ?? "", platformKey: match.key, sourceApp: webview ?? "", abVariant: opts?.abVariant })};
   function beacon(outcome){
     try {
@@ -221,15 +240,28 @@ ${pixelSnippets(opts?.px)}
       navigator.sendBeacon("/t", JSON.stringify(beaconBody));
     } catch(e){}
   }
+  // ONE outcome per click, ever. Every send routes through this guard — the page now
+  // outlives the timers (nothing navigates away), so an unguarded second beacon would
+  // double-count exactly the flow this UX invites: time out, tap retry, app opens late.
   var done = false;
+  function send(o){ if(done) return; done = true; beacon(o); }
   // Register the visibility listener BEFORE the Android branch so an Android app-open
   // (intent:// hides the page) is captured as "opened" too.
-  document.addEventListener("visibilitychange", function(){ if(document.hidden){ done = true; beacon("opened"); } });
+  document.addEventListener("visibilitychange", function(){ if(document.hidden) send("opened"); });
   var isAndroid = /Android/i.test(navigator.userAgent);
   if (isAndroid) { window.location.replace(android); return; } // intent:// self-falls-back (webviews too)
-  function bail(){ if(!done){ done = true; beacon("browser"); window.location.replace(bailTo); } }
-  var t = setTimeout(bail, ${FALLBACK_MS});
-  window.addEventListener("pagehide", function(){ done = true; clearTimeout(t); });
+  // UX clock — copy only, NO beacon. A slow launch is not a browser outcome.
+  setTimeout(function(){
+    if(done) return;
+    var s = document.getElementById("status");
+    if(s) s.textContent = ${jsLit(noAppMsg)}; // textContent also drops the "…" dots
+  }, ${COPY_SWAP_MS});
+  // Measurement clock — "browser" recorded only where it's true: they left the page
+  // (tapped "Continue in browser" / closed the tab), or they sat here past the long stop.
+  // ORDER MATTERS: backgrounding to a launched app fires visibilitychange BEFORE pagehide,
+  // so "opened" always claims the single send first and this listener no-ops on that path.
+  window.addEventListener("pagehide", function(){ send("browser"); });
+  setTimeout(function(){ send("browser"); }, ${LONGSTOP_MS});
   window.location.replace(iosPrimary); // scheme opens the app; x-safari punts github to Safari
 })();
 </script>

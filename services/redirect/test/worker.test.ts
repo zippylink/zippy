@@ -752,15 +752,17 @@ describe("interstitial telemetry wiring", () => {
       )
       .then((r) => r.text());
     expect(body).toContain('navigator.sendBeacon("/t"');
-    expect(body).toContain('beacon("opened")'); // app-launched signal
-    expect(body).toContain('beacon("browser")'); // stayed-in-browser signal
+    // Both outcomes route through the single-send guard, hence send() not beacon().
+    expect(body).toContain('send("opened")'); // app-launched signal
+    expect(body).toContain('send("browser")'); // stayed-in-browser signal
     expect(body).toContain('"slug":"tw"');
   });
 });
 
 // Rich no-app fallback (fbu): a cloud-entitled record carries `fbu`, the absolute https
-// URL of a cloud-hosted fallback page. Only the interstitial's AUTOMATIC timeout bail
-// retargets to it — the visible "Continue in browser" anchor keeps the real web URL.
+// URL of a cloud-hosted fallback page. The interstitial no longer auto-navigates anywhere
+// when the app doesn't open, so the visible "Continue in browser" anchor is the ONLY door
+// to that page — it must target the fbu when present, else the plain web URL.
 describe("rich fallback (fbu)", () => {
   const FBU = "https://cloud.zipthe.link/f/tw";
   const WEB = "https://x.com/nasa/status/999";
@@ -769,23 +771,165 @@ describe("rich fallback (fbu)", () => {
       .fetch(req("/tw", { headers: { "user-agent": IPHONE } }), env({ tw: JSON.stringify(record) }))
       .then((r) => r.text());
 
-  it("bails to the fbu while the visible fallback anchor keeps the web destination", async () => {
+  it("points the visible 'Continue in browser' anchor at the fbu (its only door now)", async () => {
     const body = await serve({ url: WEB, fbu: FBU });
-    expect(body).toContain(`var bailTo = ${JSON.stringify(FBU)}`); // automatic timeout bail
-    expect(body).toContain(`<a id="fallback" href="${WEB}">`); // human tap path unchanged
+    expect(body).toContain(`<a id="fallback" href="${FBU}">`);
+    expect(body).not.toContain(`<a id="fallback" href="${WEB}">`);
   });
 
-  it("without fbu the bail targets the web URL exactly as before", async () => {
+  it("without fbu the fallback anchor targets the web URL exactly as before", async () => {
     const body = await serve({ url: WEB });
-    expect(body).toContain(`var bailTo = ${JSON.stringify(WEB)}`);
+    expect(body).toContain(`<a id="fallback" href="${WEB}">`);
     expect(body).not.toContain("cloud.zipthe.link");
   });
 
   it("ignores a non-string or non-https fbu", async () => {
     for (const fbu of [42, "http://insecure.example.com/f", "ftp://x", { u: FBU }]) {
       const body = await serve({ url: WEB, fbu });
-      expect(body).toContain(`var bailTo = ${JSON.stringify(WEB)}`); // defensively dropped
+      expect(body).toContain(`<a id="fallback" href="${WEB}">`); // defensively dropped
     }
+  });
+});
+
+// The founder call: the automatic timeout redirect was "too fast and confusing". The
+// instant app-open stays; when it doesn't land, the visitor stays put and chooses.
+describe("no-app timeout: measures, never navigates", () => {
+  const WEB = "https://x.com/nasa/status/999";
+  const FBU = "https://cloud.zipthe.link/f/tw";
+  const serve = (record: object) =>
+    worker
+      .fetch(req("/tw", { headers: { "user-agent": IPHONE } }), env({ tw: JSON.stringify(record) }))
+      .then((r) => r.text());
+
+  it("still fires the instant app-open", async () => {
+    expect(await serve({ url: WEB })).toContain("window.location.replace(iosPrimary)");
+  });
+
+  it("no longer auto-navigates to the fallback on the timer", async () => {
+    const body = await serve({ url: WEB, fbu: FBU });
+    expect(body).not.toContain("bailTo"); // the old automatic bail target is gone
+    // The ONLY location.replace left is the app-open (Android's intent:// self-falls-back).
+    expect(body.match(/window\.location\.replace\(/g)).toEqual([
+      "window.location.replace(",
+      "window.location.replace(",
+    ]);
+    expect(body).toContain("window.location.replace(android)");
+  });
+
+  it("still records a 'browser' outcome — app-open rate must survive", async () => {
+    expect(await serve({ url: WEB })).toContain('send("browser")');
+  });
+
+  it("swaps the copy so the page stops pretending it's still opening", async () => {
+    const body = await serve({ url: WEB });
+    expect(body).toContain(`<p id="status">Opening the x app`); // before
+    expect(body).toContain(`s.textContent = "Welp — the x app didn't open.`); // after
+    expect(body).toContain('document.getElementById("status")');
+    expect(body).toContain(`<a id="escape" href="twitter://status?id=999"`); // retry is a real anchor
+  });
+});
+
+// Because nothing navigates away any more, the page OUTLIVES its own timers — so a second
+// beacon is now reachable on the very flow the new UX invites (time out → tap retry → app
+// opens late). One click must still produce exactly one outcome, and the truest one.
+describe("one outcome per click (single-send guard)", () => {
+  const WEB = "https://x.com/nasa/status/999";
+  const serve = () =>
+    worker
+      .fetch(
+        req("/tw", { headers: { "user-agent": IPHONE } }),
+        env({ tw: JSON.stringify({ url: WEB }) }),
+      )
+      .then((r) => r.text());
+
+  // Executes the page's inline <script> against a fake DOM so the ORDERING of real events
+  // is exercised, not just the source text. Returns every outcome the page tried to send.
+  const runScript = async (ua = IPHONE) => {
+    const body = await serve();
+    const src = body.slice(body.lastIndexOf("<script>") + 8, body.lastIndexOf("</script>"));
+    const sent: string[] = [];
+    const listeners: Record<string, Array<() => void>> = {};
+    const timers: Array<{ fn: () => void; ms: number }> = [];
+    const status = { textContent: "Opening the x app..." };
+    const on = (k: string, f: () => void) => (listeners[k] ??= []).push(f);
+    const doc = {
+      hidden: false,
+      addEventListener: on,
+      getElementById: (id: string) => (id === "status" ? status : null),
+    };
+    // Deliberate: `src` is the interstitial WE just rendered, and executing it is the
+    // whole point — event ORDERING (visibilitychange before pagehide) is what regressed,
+    // and no amount of string-matching the source can catch that. Not attacker input.
+    // oxlint-disable-next-line typescript/no-implied-eval
+    const fn = new Function(
+      "document",
+      "window",
+      "navigator",
+      "setTimeout",
+      "clearTimeout",
+      src,
+    ) as (...a: unknown[]) => void;
+    fn(
+      doc,
+      { addEventListener: on, location: { replace() {} } },
+      {
+        userAgent: ua,
+        sendBeacon: (_u: string, b: string) => sent.push(JSON.parse(b).outcome),
+      },
+      (f: () => void, ms: number) => timers.push({ fn: f, ms }),
+      () => {},
+    );
+    const fire = (k: string) => (listeners[k] ?? []).forEach((f) => f());
+    // Timers are registered copy-swap first, long-stop second (see interstitial.ts).
+    return { sent, status, doc, fire, tick: (i: number) => timers[i]?.fn(), timers };
+  };
+
+  it("the copy-swap timer rewrites the copy and emits NO beacon", async () => {
+    const p = await runScript();
+    p.tick(0);
+    expect(p.status.textContent).toContain("didn't open");
+    expect(p.sent).toEqual([]); // a slow launch is not a 'browser' outcome
+  });
+
+  it("an app-open AFTER the copy swap records 'opened' and never also 'browser'", async () => {
+    const p = await runScript();
+    p.tick(0); // 1.5s: copy swaps, still no outcome
+    p.doc.hidden = true;
+    p.fire("visibilitychange"); // they tapped retry and the app launched late
+    p.tick(1); // long-stop fires anyway
+    p.fire("pagehide"); // and so does pagehide
+    expect(p.sent).toEqual(["opened"]); // exactly one, and the true one
+  });
+
+  it("pagehide with no app-open records 'browser' exactly once", async () => {
+    const p = await runScript();
+    p.fire("pagehide");
+    p.fire("pagehide");
+    p.tick(1);
+    expect(p.sent).toEqual(["browser"]);
+  });
+
+  it("the long-stop timer records 'browser' when the visitor just sits there", async () => {
+    const p = await runScript();
+    p.tick(0);
+    expect(p.sent).toEqual([]);
+    p.tick(1);
+    expect(p.sent).toEqual(["browser"]);
+  });
+
+  it("the long-stop is well after the copy swap, not the same clock", async () => {
+    const p = await runScript();
+    expect(p.timers[0]!.ms).toBe(1500);
+    expect(p.timers[1]!.ms).toBeGreaterThanOrEqual(8000);
+  });
+
+  it("routes every send through the guard — no bare beacon() call sites remain", async () => {
+    const body = await serve();
+    expect(body).toContain("function send(o){ if(done) return; done = true; beacon(o); }");
+    // beacon() appears exactly twice: its own definition, and the single call inside
+    // send(). Any new bare call site breaks this and the double-count is caught here.
+    expect(body.match(/beacon\(/g)).toEqual(["beacon(", "beacon("]);
+    expect(body).not.toContain('done = true; beacon("opened")'); // the old unguarded assign
   });
 });
 
@@ -805,14 +949,15 @@ describe("inline-script injection (jsLit)", () => {
       .then((r) => r.text());
 
   // A perfectly valid https URL can still carry "</script>" in its path — so this vector
-  // survives an "is it https?" check and is not self-host-only.
+  // survives an "is it https?" check and is not self-host-only. fbu now lands in the
+  // "Continue in browser" href rather than the <script>, so `esc` is the guard.
   it("a breakout in fbu can't close the script tag", async () => {
     const body = await serve({
       url: "https://x.com/nasa",
       fbu: `https://evil.example.com/${BREAKOUT}`,
     });
     expect(body).not.toContain("</script><script>alert(1)");
-    expect(body).toContain("\\u003c/script>"); // escaped, inert inside the JS string
+    expect(body).toContain("&lt;/script&gt;"); // escaped, inert inside the href attribute
   });
 
   it("a breakout in the destination URL can't close the script tag", async () => {

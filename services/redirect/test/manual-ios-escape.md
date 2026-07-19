@@ -51,7 +51,8 @@ Then, on a **real iPhone** with the LinkedIn app **and** the GitHub app installe
 | 3 | DM the **GitHub** short link in **Instagram**. Tap it. | Page tries the Safari punt; **Safari** opens and the **GitHub app** takes over (Universal Link). If the silent punt is blocked, the **"Open in Safari ↗"** button must do it on tap. |
 | 4 | Repeat #1 and #3 inside **TikTok** and **LinkedIn** webviews. | Same outcomes. |
 | 5 | Open either link in **real Safari** (paste in address bar). | App opens (scheme / UL); no dead end. |
-| 6 | On any link, if no app is installed, wait ~1.5 s or tap **"Continue in browser"**. | Lands on the correct web page — never a dead end. |
+| 6 | On any link, if no app is installed, wait ~1.5 s. | The page **stays put** and the copy changes to "Welp — the &lt;app&gt; app didn't open. Pick your fighter 👇". No automatic redirect. |
+| 7 | From that state, tap **"Continue in browser"**. | Lands on the correct web page (the rich fallback page when the link has one) — never a dead end. |
 
 ## Honest confidence
 
