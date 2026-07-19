@@ -574,6 +574,118 @@ describe("outcome telemetry beacon (/t)", () => {
   });
 });
 
+// Wave 2.9 — cloud event stream: when EVENTS_URL is set, each recorded beacon is also
+// forwarded as a fire-and-forget JSON POST. Off entirely when unset (self-host / local).
+describe("beacon event forwarding (EVENTS_URL)", () => {
+  const post = (body: string, headers: Record<string, string> = {}) =>
+    req("/t", { method: "POST", body, headers });
+  const eventsEnv = (): Env => ({
+    ...env(),
+    EVENTS_URL: "https://cloud.example/events",
+    EVENTS_TOKEN: "evt-token",
+  });
+  const validBeacon = JSON.stringify({
+    slug: "abc",
+    host: "zipthe.link",
+    outcome: "opened",
+    platformKey: "instagram",
+    sourceApp: "instagram",
+    ts: 1234,
+  });
+
+  /** Minimal ExecutionContext: collects waitUntil promises so tests can await them. */
+  function stubCtx() {
+    const waits: Promise<unknown>[] = [];
+    return {
+      waits,
+      ctx: {
+        waitUntil: (p: Promise<unknown>) => void waits.push(p),
+      } as unknown as ExecutionContext,
+    };
+  }
+
+  /** Swap globalThis.fetch for a recording stub; callers must restore() in finally. */
+  function stubFetch(
+    impl: () => Promise<Response> = async () => new Response(null, { status: 202 }),
+  ) {
+    const calls: { url: string; init?: RequestInit }[] = [];
+    const real = globalThis.fetch;
+    // The worker only ever calls fetch(EVENTS_URL, init) — a string URL.
+    globalThis.fetch = ((url: string, init?: RequestInit) => {
+      calls.push({ url, init });
+      return impl();
+    }) as unknown as typeof fetch;
+    return { calls, restore: () => void (globalThis.fetch = real) };
+  }
+
+  it("forwards the sanitized event once with the bearer header (still 204)", async () => {
+    const f = stubFetch();
+    try {
+      const { waits, ctx } = stubCtx();
+      const res = await worker.fetch(post(validBeacon, { "user-agent": IPHONE }), eventsEnv(), ctx);
+      expect(res.status).toBe(204);
+      await Promise.all(waits);
+      expect(f.calls).toHaveLength(1);
+      expect(f.calls[0]!.url).toBe("https://cloud.example/events");
+      const headers = f.calls[0]!.init?.headers as Record<string, string>;
+      expect(headers.authorization).toBe("Bearer evt-token");
+      // Server-derived fields (device/geo) come from the request, never the client body.
+      expect(JSON.parse(f.calls[0]!.init?.body as string)).toEqual({
+        slug: "abc",
+        host: "zipthe.link",
+        outcome: "opened",
+        sourceApp: "instagram",
+        platformKey: "instagram",
+        country: "",
+        city: "",
+        device: "mobile",
+        ts: 1234,
+      });
+    } finally {
+      f.restore();
+    }
+  });
+
+  it("does not forward when EVENTS_URL is unset (self-host / local)", async () => {
+    const f = stubFetch();
+    try {
+      const { waits, ctx } = stubCtx();
+      const res = await worker.fetch(post(validBeacon), env(), ctx);
+      expect(res.status).toBe(204);
+      await Promise.all(waits);
+      expect(f.calls).toHaveLength(0);
+    } finally {
+      f.restore();
+    }
+  });
+
+  it("does not forward a dropped (invalid) beacon", async () => {
+    const f = stubFetch();
+    try {
+      const { waits, ctx } = stubCtx();
+      const res = await worker.fetch(post(JSON.stringify({ slug: "abc" })), eventsEnv(), ctx);
+      expect(res.status).toBe(204);
+      await Promise.all(waits);
+      expect(f.calls).toHaveLength(0);
+    } finally {
+      f.restore();
+    }
+  });
+
+  it("still 204s when the forward fetch rejects (failure is swallowed)", async () => {
+    const f = stubFetch(() => Promise.reject(new Error("cloud down")));
+    try {
+      const { waits, ctx } = stubCtx();
+      const res = await worker.fetch(post(validBeacon), eventsEnv(), ctx);
+      expect(res.status).toBe(204);
+      await Promise.all(waits); // resolves — the rejection never escapes waitUntil
+      expect(f.calls).toHaveLength(1);
+    } finally {
+      f.restore();
+    }
+  });
+});
+
 // The interstitial wires the beacon: it POSTs to /t on visibility/pagehide outcomes.
 describe("interstitial telemetry wiring", () => {
   it("embeds the /t beacon with the slug + platform", async () => {

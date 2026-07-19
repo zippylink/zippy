@@ -27,6 +27,11 @@ export interface Env {
   CLICKS?: AnalyticsEngineDataset;
   /** Per-redirect click sink (Analytics Engine). Optional — unbound = no click stats. */
   REDIRECTS?: AnalyticsEngineDataset;
+  /** Cloud event-stream endpoint. Optional — when set, each recorded /t beacon is also
+   *  forwarded there as a fire-and-forget JSON POST. Unset (self-host / local): off. */
+  EVENTS_URL?: string;
+  /** Bearer token sent on each forwarded event. Only used when EVENTS_URL is set. */
+  EVENTS_TOKEN?: string;
 }
 
 const SLUG_RE = /^[a-zA-Z0-9-_]{1,32}$/;
@@ -526,10 +531,12 @@ const OUTCOMES = new Set(["opened", "browser", "broken"]);
  * SERVER-side (from CF geo + UA) — never trusted from the client. No PII: coarse
  * country/city + device bucket + the in-app-webview name only, no IP, no identifiers.
  * Writes one Analytics Engine data point the cloud reads for per-link app-open stats;
- * it's a rate/trend signal (AE is sampled), not per-click truth. Always 204 — a beacon
- * must never error (there's no client to see it), and a bad body is silently dropped.
+ * it's a rate/trend signal (AE is sampled), not per-click truth. When EVENTS_URL is set,
+ * the same sanitized event is also forwarded to the cloud (fire-and-forget). Always 204 —
+ * a beacon must never error (there's no client to see it), and a bad body is silently
+ * dropped.
  */
-async function handleBeacon(req: Request, env: Env): Promise<Response> {
+async function handleBeacon(req: Request, env: Env, ctx?: ExecutionContext): Promise<Response> {
   const noContent = new Response(null, { status: 204 });
   let body: Record<string, unknown>;
   try {
@@ -551,21 +558,41 @@ async function handleBeacon(req: Request, env: Env): Promise<Response> {
   const cf = (req as unknown as { cf?: Record<string, unknown> }).cf ?? {};
   const country = typeof cf.country === "string" ? cf.country : "";
   const city = typeof cf.city === "string" ? cf.city : "";
+  const host = str(body.host, 255);
+  const sourceApp = str(body.sourceApp, 64);
+  const platformKey = str(body.platformKey, 32);
 
   env.CLICKS?.writeDataPoint({
     indexes: [slug],
-    blobs: [
-      slug,
-      str(body.host, 255),
-      outcome,
-      str(body.sourceApp, 64),
-      str(body.platformKey, 32),
-      country,
-      city,
-      device,
-    ],
+    blobs: [slug, host, outcome, sourceApp, platformKey, country, city, device],
     doubles: [1],
   });
+
+  // Wave 2.9: real-time app-open event stream. Forward the SAME sanitized, server-derived
+  // event to the cloud — fire-and-forget: the beacon 204s immediately and a dead cloud
+  // endpoint (or missing ctx in tests) must never surface an error.
+  if (env.EVENTS_URL) {
+    ctx?.waitUntil(
+      fetch(env.EVENTS_URL, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${env.EVENTS_TOKEN ?? ""}`,
+        },
+        body: JSON.stringify({
+          slug,
+          host,
+          outcome,
+          sourceApp,
+          platformKey,
+          country,
+          city,
+          device,
+          ts: typeof body.ts === "number" ? body.ts : undefined,
+        }),
+      }).catch(() => {}),
+    );
+  }
   return noContent;
 }
 
@@ -638,12 +665,12 @@ async function freshRandomSlug(env: Env): Promise<string> {
 }
 
 export default {
-  async fetch(req: Request, env: Env): Promise<Response> {
+  async fetch(req: Request, env: Env, ctx?: ExecutionContext): Promise<Response> {
     const url = new URL(req.url);
     const { pathname } = url;
 
     if (pathname === "/t") {
-      if (req.method === "POST") return handleBeacon(req, env);
+      if (req.method === "POST") return handleBeacon(req, env, ctx);
       return json({ error: "Method not allowed" }, 405);
     }
     if (pathname === "/api/links") {
