@@ -1,5 +1,11 @@
 // Zippy deeplink table — THE core of the product.
 //
+// This is the CANONICAL copy: it decides real redirects. It is MIRRORED (by hand) into
+// Zippy Cloud's `libs/shared/src/platforms.ts`, which powers the public Deep Link Debugger
+// and dashboard labels. This Worker is dependency-free and lives in a separate repo, so it
+// cannot import that package — the cross-repo boundary is the one sanctioned duplication.
+// EDIT HERE FIRST, then copy the file across.
+//
 // Each platform is ONE data object. To add or fix a platform, edit this table;
 // nothing else in the Worker needs to change. Community PRs live here.
 //
