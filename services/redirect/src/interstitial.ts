@@ -41,6 +41,62 @@ export function inAppWebview(ua: string): string | null {
 const esc = (s: string): string =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
+/** URL → safe JS string literal for an inline <script> ("</script>" can't break out). */
+const jsStr = (s: string): string => JSON.stringify(s).replace(/</g, "\\u003c");
+
+// ---------------------------------------------------------------------------
+// Retargeting pixels (Wave 2.8). The cloud denormalizes `px` into the KV record;
+// ids reach here ONLY after parseLinkValue's whitelist (/^[A-Za-z0-9_-]{1,32}$/) —
+// that charset is the injection guard for the inline interpolation below.
+// ---------------------------------------------------------------------------
+export type PixelTag = { t: "meta" | "tiktok" | "gtm"; id: string };
+
+// Canonical minimal loaders: Meta Pixel base + PageView, TikTok base + page, GTM gtm.js.
+const PIXEL_TEMPLATES: Record<PixelTag["t"], (id: string) => string> = {
+  meta: (id) =>
+    `<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${id}');fbq('track','PageView');</script>`,
+  tiktok: (id) =>
+    `<script>!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};ttq.load('${id}');ttq.page();}(window,document,'ttq');</script>`,
+  gtm: (id) =>
+    `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${id}');</script>`,
+};
+
+/** Inline loader snippets for the link's validated pixel tags ("" when none). */
+export function pixelSnippets(px?: PixelTag[]): string {
+  if (!px?.length) return "";
+  return px.map((p) => PIXEL_TEMPLATES[p.t](p.id)).join("\n");
+}
+
+/**
+ * Minimal pixel page for links that would otherwise plain-30x (desktop / no platform
+ * match) but carry `px`: fire the pixels, then bounce to the destination. Functional,
+ * unbranded on purpose — beauty is cloud-only.
+ */
+export function renderPixelPage(dest: string, px: PixelTag[]): string {
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Redirecting…</title>
+${pixelSnippets(px)}
+<style>
+  html,body{height:100%;margin:0}
+  body{display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#FAF7F2;color:#1A1033;text-align:center}
+  a{color:#FF3E8A}
+</style>
+</head>
+<body>
+<main>
+  <p>zipping you along…</p>
+  <p><a href="${esc(dest)}">Continue</a></p>
+</main>
+<script>setTimeout(function(){window.location.replace(${jsStr(dest)})},400)</script>
+</body>
+</html>`;
+}
+
 // Code-drawn Zippy, inline SVG only — the worker HTML must stay tiny (no external
 // requests, no PNGs). On brand: chunky volt #EEFF00 bolt, darker volt #C7D400 side
 // edge (the flat fake-3D), thick ink #1A1033 outline, two dot eyes + a mouth,
@@ -78,6 +134,8 @@ export function renderInterstitial(
     host?: string;
     /** Rich fallback page — where the automatic timeout bail lands instead of the web URL. */
     fbu?: string;
+    /** Validated retargeting pixel tags — injected into the head, fire on the creator's behalf. */
+    px?: PixelTag[];
   },
 ): string {
   // Branding footer only when the record says so (the cloud bakes in this effect).
@@ -113,6 +171,7 @@ export function renderInterstitial(
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Opening ${esc(match.key)}…</title>
+${pixelSnippets(opts?.px)}
 <style>
   html,body{height:100%;margin:0}
   body{display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#FAF7F2;color:#1A1033}

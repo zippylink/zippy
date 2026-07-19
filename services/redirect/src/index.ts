@@ -6,7 +6,13 @@
 //
 // KV-only. No D1, no Durable Objects, no analytics. Serverless, ~$0 to run.
 import { matchPlatform } from "./platforms.js";
-import { renderInterstitial, render404, renderPasswordGate } from "./interstitial.js";
+import {
+  renderInterstitial,
+  render404,
+  renderPasswordGate,
+  renderPixelPage,
+  type PixelTag,
+} from "./interstitial.js";
 import { renderOgPage, type OgMeta } from "./og.js";
 
 export interface Env {
@@ -89,9 +95,10 @@ async function sha256hex(s: string): Promise<string> {
   return Array.from(new Uint8Array(buf), (b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-/** hex string → bytes (for the stored PBKDF2 salt). */
-function hexToBytes(hex: string): Uint8Array {
-  const out = new Uint8Array(Math.floor(hex.length / 2));
+/** hex string → bytes (for the stored PBKDF2 salt). Allocated from an explicit ArrayBuffer
+ *  so it types as Uint8Array<ArrayBuffer> (WebCrypto's BufferSource under TS 5.9 generics). */
+function hexToBytes(hex: string): Uint8Array<ArrayBuffer> {
+  const out = new Uint8Array(new ArrayBuffer(Math.floor(hex.length / 2)));
   for (let i = 0; i < out.length; i++) out[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
   return out;
 }
@@ -99,7 +106,11 @@ function hexToBytes(hex: string): Uint8Array {
 /** PBKDF2-HMAC-SHA256 → lowercase hex (32 bytes). Byte-identical to Node's
  *  crypto.pbkdf2Sync(pw, salt, iters, 32, "sha256") the cloud hashes with, so the same
  *  password verifies on both sides. */
-async function pbkdf2Hex(pw: string, salt: Uint8Array, iterations: number): Promise<string> {
+async function pbkdf2Hex(
+  pw: string,
+  salt: Uint8Array<ArrayBuffer>,
+  iterations: number,
+): Promise<string> {
   const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, [
     "deriveBits",
   ]);
@@ -203,7 +214,34 @@ type LinkValue = {
    *  interstitial's automatic timeout bail lands; the visible "Continue in browser"
    *  anchor and every redirect path are untouched. */
   fbu?: string;
+  /** Retargeting pixel tags (fire on the link CREATOR's behalf) — whitelist-validated
+   *  by parsePx before any HTML/JS interpolation. */
+  px?: PixelTag[];
 };
+
+// SECURITY: pixel ids get interpolated into inline HTML/JS — this charset whitelist
+// IS the injection guard. Anything outside it (quotes, tags, >32 chars) is dropped.
+const PX_ID_RE = /^[A-Za-z0-9_-]{1,32}$/;
+const PX_MAX = 5;
+
+/** Keep only well-formed pixel entries the cloud denormalized — defends the render path. */
+function parsePx(raw: unknown): PixelTag[] | undefined {
+  if (!Array.isArray(raw)) return undefined;
+  const out: PixelTag[] = [];
+  for (const e of raw) {
+    if (out.length >= PX_MAX) break;
+    if (!e || typeof e !== "object") continue;
+    const { t, id } = e as Record<string, unknown>;
+    if (
+      (t === "meta" || t === "tiktok" || t === "gtm") &&
+      typeof id === "string" &&
+      PX_ID_RE.test(id)
+    ) {
+      out.push({ t, id });
+    }
+  }
+  return out.length ? out : undefined;
+}
 
 /** Keep only the string routing fields the cloud denormalized — defends the redirect path. */
 function parseRouting(raw: unknown): RoutingRules | undefined {
@@ -270,6 +308,7 @@ function parseLinkValue(raw: string): LinkValue | null {
       routing?: unknown;
       pw?: unknown;
       fbu?: unknown;
+      px?: unknown;
     };
     if (typeof o.url !== "string") return null;
     return {
@@ -284,6 +323,7 @@ function parseLinkValue(raw: string): LinkValue | null {
       pw: typeof o.pw === "string" && o.pw ? o.pw : undefined,
       // Rich fallback page URL — defensively require an absolute https URL, else ignore.
       fbu: typeof o.fbu === "string" && o.fbu.startsWith("https://") ? o.fbu : undefined,
+      px: parsePx(o.px),
     };
   } catch {
     return null; // malformed record → unroutable, never 500 a visitor
@@ -401,9 +441,20 @@ async function handleRedirect(
         slug,
         host: hostname,
         fbu: link.fbu,
+        px: link.px,
       }),
       200,
     );
+  }
+  // A link with pixels can't plain-30x — the pixel JS needs a page to run in. Serve the
+  // minimal pixel page instead: fire the tags, then client-side bounce to the resolved
+  // destination. Crawlers never reach here (returned above) and the click point already
+  // recorded once. no-store: a living link's destination is editable + pixels must re-fire.
+  if (link.px) {
+    return new Response(renderPixelPage(dest, link.px), {
+      status: 200,
+      headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" },
+    });
   }
   // Cloud-managed (JSON) records are LIVING links — the destination is editable
   // after posting, so browsers must re-ask (302). A bare uncontrolled 301 is cached
