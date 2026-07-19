@@ -222,7 +222,73 @@ type LinkValue = {
   /** Retargeting pixel tags (fire on the link CREATOR's behalf) — whitelist-validated
    *  by parsePx before any HTML/JS interpolation. */
   px?: PixelTag[];
+  /** Scheduled destinations (epoch-seconds `from`, ascending). At redirect time the
+   *  latest past entry's url becomes the EFFECTIVE default before routing runs. */
+  sched?: SchedEntry[];
+  /** A/B destination split — weighted variants that REPLACE the default url (the record's
+   *  `url` is only the fallback when the split fails to parse). Cloud enforces ab XOR
+   *  routing; if both somehow arrive, routing wins and ab is dropped at parse. */
+  ab?: AbEntry[];
 };
+
+type SchedEntry = { from: number; url: string };
+const SCHED_MAX = 10;
+
+/** Keep only well-formed schedule entries, sorted by `from` asc — defends the redirect path. */
+function parseSched(raw: unknown): SchedEntry[] | undefined {
+  if (!Array.isArray(raw)) return undefined;
+  const out: SchedEntry[] = [];
+  for (const e of raw) {
+    if (out.length >= SCHED_MAX) break;
+    if (!e || typeof e !== "object") continue;
+    const { from, url } = e as Record<string, unknown>;
+    if (
+      typeof from === "number" &&
+      Number.isFinite(from) &&
+      from > 0 &&
+      typeof url === "string" &&
+      url.startsWith("https://")
+    ) {
+      out.push({ from, url });
+    }
+  }
+  return out.length ? out.sort((a, b) => a.from - b.from) : undefined;
+}
+
+type AbEntry = { u: string; w: number };
+const AB_MIN = 2;
+const AB_MAX = 4;
+
+/**
+ * Keep the A/B split only when EVERY entry is well-formed (2-4 entries, https urls,
+ * integer weights >= 0, at least one positive) — one bad entry drops the whole split and
+ * the record's url stands. Weights are cloud-validated as positive ints; the engine also
+ * tolerates w=0 (a paused variant) but never negatives.
+ */
+function parseAb(raw: unknown): AbEntry[] | undefined {
+  if (!Array.isArray(raw) || raw.length < AB_MIN || raw.length > AB_MAX) return undefined;
+  const out: AbEntry[] = [];
+  for (const e of raw) {
+    if (!e || typeof e !== "object") return undefined;
+    const { u, w } = e as Record<string, unknown>;
+    if (typeof u !== "string" || !u.startsWith("https://")) return undefined;
+    if (typeof w !== "number" || !Number.isInteger(w) || w < 0) return undefined;
+    out.push({ u, w });
+  }
+  return out.some((e) => e.w > 0) ? out : undefined;
+}
+
+/** Weighted-random variant index. Zero-weight entries are never picked. */
+function pickAb(ab: AbEntry[]): number {
+  let total = 0;
+  for (const e of ab) total += e.w;
+  let r = Math.random() * total;
+  for (let i = 0; i < ab.length; i++) {
+    r -= ab[i]?.w ?? 0;
+    if (r < 0) return i;
+  }
+  return 0; // unreachable (r < total and weights sum to total); satisfies tsc
+}
 
 // SECURITY: pixel ids get interpolated into inline HTML/JS — this charset whitelist
 // IS the injection guard. Anything outside it (quotes, tags, >32 chars) is dropped.
@@ -314,8 +380,11 @@ function parseLinkValue(raw: string): LinkValue | null {
       pw?: unknown;
       fbu?: unknown;
       px?: unknown;
+      sched?: unknown;
+      ab?: unknown;
     };
     if (typeof o.url !== "string") return null;
+    const routing = parseRouting(o.routing);
     return {
       url: o.url,
       branded: o.branded === true,
@@ -323,12 +392,15 @@ function parseLinkValue(raw: string): LinkValue | null {
       // Opaque tenant tag the cloud denormalizes in — the engine never interprets it,
       // only stamps it on the click data point so the cloud can roll up per-org.
       orgId: typeof o.orgId === "string" ? o.orgId : undefined,
-      routing: parseRouting(o.routing),
+      routing,
       // Password hash (never plaintext) — a gate the engine enforces before any redirect.
       pw: typeof o.pw === "string" && o.pw ? o.pw : undefined,
       // Rich fallback page URL — defensively require an absolute https URL, else ignore.
       fbu: typeof o.fbu === "string" && o.fbu.startsWith("https://") ? o.fbu : undefined,
       px: parsePx(o.px),
+      sched: parseSched(o.sched),
+      // Cloud enforces ab XOR routing — if both somehow arrive, routing wins.
+      ab: routing ? undefined : parseAb(o.ab),
     };
   } catch {
     return null; // malformed record → unroutable, never 500 a visitor
@@ -393,21 +465,43 @@ async function handleRedirect(
     });
   }
 
+  // Scheduled destinations — the latest entry whose `from` has passed becomes the
+  // EFFECTIVE default before routing/platform matching (a device rule can still beat it;
+  // a scheduled App Store URL still springs the store). Entries are sorted asc by parse,
+  // so the last past entry wins. Future-only schedule → the record's url stands.
+  if (link.sched) {
+    const now = Date.now() / 1000;
+    for (const e of link.sched) if (e.from <= now) link.url = e.url;
+  }
+
   // Resolve the effective destination — a cloud-managed link can route by device/OS + geo
   // to different destinations. CF geo is server-derived; nothing client-supplied is trusted.
   // The deeplink match runs on the RESOLVED destination, so routing + native-app spring
   // compose (iOS → App Store URL → springs the App Store app).
   const cf = (req as { cf?: { country?: string; city?: string } }).cf ?? {};
   const country = typeof cf.country === "string" ? cf.country.toUpperCase() : "";
-  const dest = resolveDestination(link, ua, country);
+  let dest = resolveDestination(link, ua, country);
+  // A/B split — the picked variant REPLACES the default url entirely (ab XOR routing is
+  // settled at parse: routing wins, so reaching here with `ab` means no routing at all).
+  // The pick then flows through matchPlatform like any destination, so an App Store
+  // variant still springs the store.
+  let abVariant = "";
+  if (link.ab) {
+    const i = pickAb(link.ab);
+    const v = link.ab[i];
+    if (v) {
+      dest = v.u;
+      abVariant = String(i);
+    }
+  }
   const match = matchPlatform(dest);
 
   // Click data point — one row per HUMAN redirect (crawlers returned above). Geo, device,
   // os, campaign derive server-side; nothing client-supplied is trusted. Dataset contract
   // (docs/stack/kv-schema.md): index1=orgId (opaque tenant tag from the KV record, '' for
   // self-host), blobs=[slug, country, device, platform, referrerHost, hostname, os, city,
-  // campaign]. Append-only — the cloud reader is positional. Optional binding — self-host /
-  // local dev without it skips analytics entirely.
+  // campaign, abVariant]. Append-only — the cloud reader is positional. Optional binding —
+  // self-host / local dev without it skips analytics entirely.
   if (env.REDIRECTS) {
     let referrerHost = "";
     try {
@@ -421,7 +515,8 @@ async function handleRedirect(
       indexes: [link.orgId ?? ""],
       // Append-only: the cloud reader maps blob1..6 by position, so new dimensions go on
       // the end. os(7)=ios/android split (the deeplink product's key metric), city(8)=
-      // finer "where are my fans" than country, campaign(9)=?ref/?utm_source attribution.
+      // finer "where are my fans" than country, campaign(9)=?ref/?utm_source attribution,
+      // abVariant(10)=picked A/B variant index ("" when no split) for per-variant rates.
       blobs: [
         slug,
         cf.country ?? "",
@@ -432,6 +527,7 @@ async function handleRedirect(
         osOf(ua),
         cf.city ?? "",
         campaignOf(new URL(req.url)),
+        abVariant,
       ],
       doubles: [1],
     });
@@ -467,9 +563,10 @@ async function handleRedirect(
   // records (OSS API writes) stay 301: immutable by construction.
   const editable = raw[0] === "{";
   const status = editable ? 302 : 301;
-  // A ROUTED link returns different destinations per visitor (device/geo) — never let a
-  // shared cache pin one visitor's route onto the next. no-store only when routing is set.
-  if (link.routing) {
+  // A ROUTED link returns different destinations per visitor (device/geo), a SCHEDULED
+  // one per moment in time, and an A/B one per random pick — never let a shared cache
+  // pin one answer onto the next visitor.
+  if (link.routing || link.sched || link.ab) {
     return new Response(null, { status, headers: { location: dest, "cache-control": "no-store" } });
   }
   return Response.redirect(dest, status);

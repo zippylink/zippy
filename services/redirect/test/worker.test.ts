@@ -781,6 +781,86 @@ describe("routing (geo + device/OS)", () => {
   });
 });
 
+describe("scheduled destinations (sched)", () => {
+  const now = Math.floor(Date.now() / 1000);
+  // A cloud-managed JSON record with a schedule under slug `s`, default `https://default.com`.
+  const sched = (entries: unknown, extra: object = {}) =>
+    env({ s: JSON.stringify({ url: "https://default.com", sched: entries, ...extra }) });
+
+  it("a past entry replaces the default (302 + no-store)", async () => {
+    const res = await worker.fetch(
+      req("/s", { headers: { "user-agent": DESKTOP } }),
+      sched([{ from: now - 100, url: "https://live.example.com" }]),
+    );
+    expect(res.status).toBe(302);
+    expect(res.headers.get("location")).toBe("https://live.example.com");
+    expect(res.headers.get("cache-control")).toBe("no-store");
+  });
+
+  it("a future entry is ignored (default stands, still no-store)", async () => {
+    const res = await worker.fetch(
+      req("/s", { headers: { "user-agent": DESKTOP } }),
+      sched([{ from: now + 100, url: "https://later.example.com" }]),
+    );
+    expect(res.headers.get("location")).toBe("https://default.com");
+    expect(res.headers.get("cache-control")).toBe("no-store");
+  });
+
+  it("the latest of two past entries wins", async () => {
+    const res = await worker.fetch(
+      req("/s", { headers: { "user-agent": DESKTOP } }),
+      sched([
+        { from: now - 50, url: "https://second.example.com" },
+        { from: now - 200, url: "https://first.example.com" },
+      ]),
+    );
+    expect(res.headers.get("location")).toBe("https://second.example.com");
+  });
+
+  it("composes with routing — sched sets the default, an ios rule still beats it", async () => {
+    const e = sched([{ from: now - 100, url: "https://live.example.com" }], {
+      routing: { ios: "https://ios.example.com" },
+    });
+    const ios = await worker.fetch(req("/s", { headers: { "user-agent": IPHONE } }), e);
+    expect(ios.headers.get("location")).toBe("https://ios.example.com");
+    const desktop = await worker.fetch(req("/s", { headers: { "user-agent": DESKTOP } }), e);
+    expect(desktop.headers.get("location")).toBe("https://live.example.com");
+  });
+
+  it("drops malformed entries (bad from, non-https url) and keeps the good one", async () => {
+    const res = await worker.fetch(
+      req("/s", { headers: { "user-agent": DESKTOP } }),
+      sched([
+        { from: "soon", url: "https://bad.example.com" },
+        { from: now - 100, url: "http://insecure.example.com" },
+        { from: Infinity, url: "https://bad.example.com" },
+        "junk",
+        { from: now - 100, url: "https://good.example.com" },
+      ]),
+    );
+    expect(res.headers.get("location")).toBe("https://good.example.com");
+  });
+
+  it("an all-malformed sched behaves like no sched (302, no no-store)", async () => {
+    const res = await worker.fetch(
+      req("/s", { headers: { "user-agent": DESKTOP } }),
+      sched(["junk", { from: -5, url: "https://bad.example.com" }]),
+    );
+    // Response.redirect normalizes the URL (adds the trailing slash)
+    expect(res.headers.get("location")).toBe("https://default.com/");
+    expect(res.headers.get("cache-control")).toBeNull();
+  });
+
+  it("plain-string records are unchanged (301, no no-store)", async () => {
+    const res = await worker.fetch(
+      req("/p", { headers: { "user-agent": DESKTOP } }),
+      env({ p: "https://example.com/page" }),
+    );
+    expect(res.status).toBe(301);
+    expect(res.headers.get("cache-control")).toBeNull();
+  });
+});
+
 describe("password gate", () => {
   const sha = (s: string) => createHash("sha256").update(s).digest("hex");
   const PW = "hunter2";
@@ -992,5 +1072,141 @@ describe("retargeting pixels (px)", () => {
     expect(body).toContain("fbq('init','id4')");
     expect(body).not.toContain("id5");
     expect(body).not.toContain("id6");
+  });
+});
+
+describe("A/B destination split (ab)", () => {
+  // A cloud-managed JSON record with an A/B split under slug `ab`, default `https://default.com`.
+  const split = (ab: unknown, extra: object = {}) =>
+    env({ ab: JSON.stringify({ url: "https://default.com", ab, ...extra }) });
+  const A = "https://a.example.com";
+  const B = "https://b.example.com";
+
+  function capturingSink() {
+    const points: Array<{ blobs?: string[] }> = [];
+    return {
+      sink: { writeDataPoint: (p: (typeof points)[number]) => void points.push(p) },
+      points,
+    };
+  }
+
+  it("degenerate weights [1,0] always pick A and record variant blob '0' (302 + no-store)", async () => {
+    const { sink, points } = capturingSink();
+    const e = {
+      ...split([
+        { u: A, w: 1 },
+        { u: B, w: 0 },
+      ]),
+      REDIRECTS: sink as unknown as AnalyticsEngineDataset,
+    };
+    for (let i = 0; i < 20; i++) {
+      const res = await worker.fetch(req("/ab", { headers: { "user-agent": DESKTOP } }), e);
+      expect(res.status).toBe(302);
+      expect(res.headers.get("location")).toBe(A);
+      expect(res.headers.get("cache-control")).toBe("no-store");
+    }
+    expect(points).toHaveLength(20);
+    for (const p of points) expect(p.blobs?.[9]).toBe("0");
+  });
+
+  it("degenerate weights [0,1] always pick B and record variant blob '1'", async () => {
+    const { sink, points } = capturingSink();
+    const e = {
+      ...split([
+        { u: A, w: 0 },
+        { u: B, w: 1 },
+      ]),
+      REDIRECTS: sink as unknown as AnalyticsEngineDataset,
+    };
+    for (let i = 0; i < 20; i++) {
+      const res = await worker.fetch(req("/ab", { headers: { "user-agent": DESKTOP } }), e);
+      expect(res.headers.get("location")).toBe(B);
+    }
+    for (const p of points) expect(p.blobs?.[9]).toBe("1");
+  });
+
+  it("a 50/50 split lands both variants over ~200 taps", async () => {
+    const e = split([
+      { u: A, w: 1 },
+      { u: B, w: 1 },
+    ]);
+    const seen = new Set<string>();
+    for (let i = 0; i < 200; i++) {
+      const res = await worker.fetch(req("/ab", { headers: { "user-agent": DESKTOP } }), e);
+      seen.add(res.headers.get("location") ?? "");
+    }
+    expect(seen).toEqual(new Set([A, B]));
+  });
+
+  it("ignores the whole split on any invalid entry (http url, negative weight, single entry, all-zero)", async () => {
+    const bad = [
+      [
+        { u: "http://insecure.example.com", w: 1 },
+        { u: B, w: 1 },
+      ],
+      [
+        { u: A, w: -1 },
+        { u: B, w: 1 },
+      ],
+      [{ u: A, w: 1 }],
+      [
+        { u: A, w: 0 },
+        { u: B, w: 0 },
+      ],
+    ];
+    for (const ab of bad) {
+      const res = await worker.fetch(req("/ab", { headers: { "user-agent": DESKTOP } }), split(ab));
+      // no ab → plain living-link redirect; Response.redirect normalizes the bare origin
+      expect(res.headers.get("location")).toBe("https://default.com/");
+    }
+  });
+
+  it("routing wins when both routing and ab are present — ab is ignored", async () => {
+    const { sink, points } = capturingSink();
+    const e = {
+      ...split(
+        [
+          { u: A, w: 0 },
+          { u: B, w: 1 },
+        ],
+        { routing: { ios: "https://ios.example.com" } },
+      ),
+      REDIRECTS: sink as unknown as AnalyticsEngineDataset,
+    };
+    const ios = await worker.fetch(req("/ab", { headers: { "user-agent": IPHONE } }), e);
+    expect(ios.headers.get("location")).toBe("https://ios.example.com");
+    const desktop = await worker.fetch(req("/ab", { headers: { "user-agent": DESKTOP } }), e);
+    expect(desktop.headers.get("location")).toBe("https://default.com");
+    for (const p of points) expect(p.blobs?.[9]).toBe(""); // no ab pick recorded
+  });
+
+  it("a platform variant serves the interstitial with the picked deeplink", async () => {
+    const res = await worker.fetch(
+      req("/ab", { headers: { "user-agent": IPHONE } }),
+      split([
+        { u: "https://x.com/nasa/status/999", w: 1 },
+        { u: B, w: 0 },
+      ]),
+    );
+    expect(res.status).toBe(200);
+    expect(await res.text()).toContain("twitter://status?id=999");
+  });
+
+  it("crawlers get the OG card, no ab pick recorded", async () => {
+    const { sink, points } = capturingSink();
+    const e = {
+      ...split(
+        [
+          { u: A, w: 1 },
+          { u: B, w: 1 },
+        ],
+        { og: { title: "Split" } },
+      ),
+      REDIRECTS: sink as unknown as AnalyticsEngineDataset,
+    };
+    const res = await worker.fetch(req("/ab", { headers: { "user-agent": "Twitterbot/1.0" } }), e);
+    expect(res.status).toBe(200);
+    expect(await res.text()).toContain("Split");
+    expect(points).toHaveLength(0);
   });
 });
