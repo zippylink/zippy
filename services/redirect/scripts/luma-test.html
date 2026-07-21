@@ -1,0 +1,103 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Luma scheme test ⚡</title>
+<style>
+body{font-family:-apple-system,sans-serif;background:#FAF7F2;color:#1A1033;margin:24px;max-width:1100px}
+h1{font-size:22px} .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.card{border:2px solid #1A1033;border-radius:12px;background:#fff;padding:14px;text-align:center;box-shadow:4px 4px 0 #1A1033}
+.card h3{margin:10px 0 4px;font-size:14px} .card code{font-size:11px;word-break:break-all;background:#EEFF0033;padding:2px 4px}
+.note{font-size:11px;color:#666;margin:6px 0}
+.verdicts button{margin:2px;padding:5px 9px;border:2px solid #1A1033;border-radius:999px;background:#fff;cursor:pointer;font-size:11px}
+.verdicts button.on{background:#EEFF00}
+.qr svg{width:170px;height:170px}
+#bar{position:sticky;top:0;background:#FAF7F2;padding:10px 0;display:flex;gap:12px;align-items:center;z-index:9}
+#export{padding:8px 14px;border:2px solid #1A1033;border-radius:999px;background:#EEFF00;font-weight:bold;cursor:pointer}
+</style></head><body>
+<h1>⚡ Luma — which scheme opens the app?</h1>
+<p><b>Scan each QR with your iPhone camera.</b> Start with the CONTROL: if it opens the Luma app, the app is installed and universal links work. Then the scheme cards tell us which custom scheme fires from inside an in-app browser (the case Zippy actually needs).<br>
+Test event: <code>https://luma.com/cjhtl6rb</code> — verified packages: <code>com.luma.mobile</code> (Android) · <code>RVS4KQ8A32.com.luma.mobile</code> (iOS).</p>
+<div id="bar"><button id="export">Export results</button><span id="count"></span></div>
+<div class="grid">
+  <div class="card">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="190" height="190" viewBox="0 0 27 27" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h27v27H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h1m3 0h3m3 0h7M1 2.5h1m5 0h1m1 0h2m1 0h2m1 0h1m1 0h1m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h3m2 0h2m3 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m4 0h3m1 0h2m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h3m1 0h3m3 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m4 0h1m1 0h1m4 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M11 8.5h2m1 0h2m1 0h1M1 9.5h1m2 0h8m3 0h1m1 0h2m2 0h1m1 0h3M2 10.5h3m1 0h1m2 0h1m1 0h1m1 0h4m1 0h1m1 0h5M1 11.5h3m3 0h3m2 0h2m1 0h3m1 0h1m1 0h2m2 0h1M2 12.5h1m2 0h2m3 0h4m2 0h1m2 0h7M1 13.5h3m1 0h1m1 0h1m1 0h1m3 0h1m3 0h1m1 0h2m4 0h1M1 14.5h1m1 0h4m1 0h1m1 0h2m2 0h1m1 0h2m3 0h1m2 0h1M1 15.5h2m1 0h5m1 0h1m1 0h5m1 0h1m2 0h5M1 16.5h1m7 0h4m2 0h6m1 0h2m1 0h1M1 17.5h1m1 0h3m1 0h4m2 0h2m1 0h6m1 0h2M9 18.5h1m1 0h4m2 0h1m3 0h1m1 0h2M1 19.5h7m1 0h2m1 0h3m2 0h1m1 0h1m1 0h1m3 0h1M1 20.5h1m5 0h1m1 0h9m3 0h1m2 0h2M1 21.5h1m1 0h3m1 0h1m1 0h3m1 0h1m2 0h6M1 22.5h1m1 0h3m1 0h1m1 0h1m2 0h1m5 0h2m4 0h2M1 23.5h1m1 0h3m1 0h1m2 0h1m1 0h3m2 0h2m2 0h5M1 24.5h1m5 0h1m5 0h1m4 0h4m1 0h3M1 25.5h7m1 0h1m2 0h1m3 0h2m1 0h1m2 0h1m2 0h1"/></svg>
+</div>
+    <h3>CONTROL — plain https</h3>
+    <code>https://luma.com/cjhtl6rb</code>
+    <p class="note">Universal Link. If THIS opens the Luma app, the app is installed and claims the domain.</p>
+    <div class="verdicts" data-key="https://luma.com/cjhtl6rb">
+      <button data-v="content">✅ opened the EVENT</button>
+      <button data-v="home">🏠 app home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="190" height="190" viewBox="0 0 27 27" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h27v27H0z"/><path stroke="#000000" d="M1 1.5h7m3 0h1m2 0h3m2 0h7M1 2.5h1m5 0h1m2 0h8m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m1 0h4m1 0h1m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h5m1 0h2m2 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m1 0h1m4 0h2m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h1m2 0h1m6 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h2m2 0h1m1 0h1m1 0h1M1 9.5h1m1 0h5m2 0h1m1 0h2m5 0h5M2 10.5h2m4 0h3m3 0h3m3 0h1m2 0h1M2 11.5h1m1 0h1m1 0h5m1 0h5m4 0h1m2 0h2M4 12.5h1m4 0h1m1 0h1m1 0h2m4 0h1m1 0h1m2 0h2M1 13.5h1m1 0h1m1 0h4m1 0h2m1 0h1m1 0h2m1 0h2m1 0h5M1 14.5h2m2 0h1m4 0h1m6 0h2m1 0h1m1 0h1m1 0h1M1 15.5h1m1 0h2m2 0h1m2 0h1m1 0h2m2 0h1m1 0h4m2 0h2M1 16.5h1m1 0h3m2 0h2m2 0h1m2 0h1m3 0h1m2 0h1m2 0h1M1 17.5h1m5 0h6m3 0h6m1 0h2M9 18.5h1m1 0h1m1 0h3m1 0h1m3 0h3M1 19.5h7m2 0h2m2 0h2m1 0h1m1 0h1m1 0h5M1 20.5h1m5 0h1m1 0h3m1 0h2m2 0h1m3 0h2m1 0h1M1 21.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h10M1 22.5h1m1 0h3m1 0h1m1 0h1m6 0h4m1 0h1m1 0h1m1 0h1M1 23.5h1m1 0h3m1 0h1m1 0h2m1 0h2m6 0h1m2 0h1m1 0h1M1 24.5h1m5 0h1m2 0h3m2 0h1m1 0h2m1 0h3m2 0h1M1 25.5h7m1 0h2m1 0h1m3 0h1m2 0h7"/></svg>
+</div>
+    <h3>luma:// + slug</h3>
+    <code>luma://cjhtl6rb</code>
+    <p class="note">Most common pattern.</p>
+    <div class="verdicts" data-key="luma://cjhtl6rb">
+      <button data-v="content">✅ opened the EVENT</button>
+      <button data-v="home">🏠 app home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="190" height="190" viewBox="0 0 27 27" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h27v27H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h2m2 0h2m2 0h1m1 0h7M1 2.5h1m5 0h1m1 0h1m4 0h2m1 0h1m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h2m1 0h5m2 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m2 0h1m2 0h5m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h1m3 0h1m4 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m5 0h3M1 9.5h1m1 0h2m1 0h3m2 0h1m3 0h3m1 0h1m2 0h1m1 0h2M5 10.5h1m3 0h2m1 0h1m2 0h1m4 0h1m2 0h1M2 11.5h1m1 0h10m3 0h1m1 0h4M1 12.5h1m1 0h2m1 0h1m2 0h1m3 0h2m3 0h1m3 0h3M1 13.5h1m1 0h3m1 0h2m2 0h1m2 0h2m2 0h8M2 14.5h1m1 0h1m3 0h1m3 0h1m1 0h8m3 0h1M2 15.5h4m1 0h3m3 0h3m4 0h1m1 0h3M1 16.5h1m1 0h1m1 0h1m2 0h3m2 0h1m3 0h6m2 0h1M3 17.5h2m2 0h1m2 0h3m1 0h10m1 0h1M9 18.5h1m3 0h3m1 0h1m3 0h1m3 0h1M1 19.5h7m1 0h2m1 0h4m1 0h1m1 0h1m1 0h5M1 20.5h1m5 0h1m1 0h1m3 0h1m1 0h3m3 0h1m2 0h1M1 21.5h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h1m1 0h5m3 0h1M1 22.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3M1 23.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h2m2 0h7M1 24.5h1m5 0h1m2 0h3m1 0h1m3 0h2m1 0h1m1 0h1M1 25.5h7m1 0h3m1 0h3m4 0h6"/></svg>
+</div>
+    <h3>luma:// + host + path</h3>
+    <code>luma://luma.com/cjhtl6rb</code>
+    <p class="note">Host-preserving passthrough (what Spotify/YouTube do).</p>
+    <div class="verdicts" data-key="luma://luma.com/cjhtl6rb">
+      <button data-v="content">✅ opened the EVENT</button>
+      <button data-v="home">🏠 app home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="190" height="190" viewBox="0 0 27 27" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h27v27H0z"/><path stroke="#000000" d="M1 1.5h7m2 0h2m3 0h1m3 0h7M1 2.5h1m5 0h1m1 0h5m1 0h1m3 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h1m3 0h3m3 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h1m1 0h4m3 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m3 0h1M1 9.5h1m5 0h1m1 0h2m1 0h4m2 0h2m2 0h3M2 10.5h2m5 0h1m2 0h1m3 0h1m3 0h3M3 11.5h1m1 0h3m2 0h3m1 0h1m1 0h1m1 0h2m1 0h1m2 0h2M3 12.5h2m1 0h1m2 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m1 0h2M1 13.5h2m4 0h2m1 0h4m3 0h1m1 0h1m2 0h1m2 0h1M1 14.5h3m1 0h1m3 0h1m1 0h1m4 0h2m2 0h1m3 0h1M1 15.5h1m1 0h2m1 0h9m1 0h3m1 0h1m3 0h2M1 16.5h1m4 0h1m1 0h1m2 0h2m2 0h3m2 0h2m1 0h1m1 0h1M1 17.5h1m1 0h3m1 0h3m2 0h1m3 0h6m1 0h2M9 18.5h2m2 0h2m2 0h1m3 0h1m1 0h1M1 19.5h7m4 0h1m4 0h1m1 0h1m1 0h2m2 0h1M1 20.5h1m5 0h1m3 0h1m1 0h2m1 0h2m3 0h1m2 0h2M1 21.5h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h11M1 22.5h1m1 0h3m1 0h1m2 0h1m4 0h2m1 0h2m2 0h1m1 0h2M1 23.5h1m1 0h3m1 0h1m2 0h1m1 0h2m3 0h2m1 0h1m2 0h1m1 0h1M1 24.5h1m5 0h1m2 0h1m1 0h1m2 0h1m1 0h5m3 0h1M1 25.5h7m1 0h3m2 0h6m2 0h1m2 0h1"/></svg>
+</div>
+    <h3>luma:// + event/slug</h3>
+    <code>luma://event/cjhtl6rb</code>
+    <p class="note">Resource-prefixed variant.</p>
+    <div class="verdicts" data-key="luma://event/cjhtl6rb">
+      <button data-v="content">✅ opened the EVENT</button>
+      <button data-v="home">🏠 app home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="190" height="190" viewBox="0 0 27 27" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h27v27H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h1m1 0h1m3 0h1m3 0h7M1 2.5h1m5 0h1m4 0h2m1 0h1m3 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h3m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h1m2 0h2m2 0h1m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m3 0h2m1 0h1m4 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h1m1 0h2m1 0h2m3 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h2M1 9.5h1m1 0h1m3 0h2m1 0h1m6 0h1m2 0h1m2 0h1m1 0h1M2 10.5h4m2 0h2m5 0h3m1 0h1m2 0h2m1 0h1M2 11.5h1m2 0h3m1 0h3m3 0h3m3 0h1m1 0h1m1 0h1M1 12.5h2m2 0h1m5 0h2m3 0h1m2 0h2m1 0h1m1 0h1M1 13.5h4m2 0h5m1 0h1m3 0h1m1 0h1m2 0h1m2 0h1M5 14.5h1m2 0h2m3 0h1m2 0h2m1 0h2m3 0h2M1 15.5h4m2 0h1m2 0h2m1 0h1m1 0h2m3 0h2m1 0h1m1 0h1M3 16.5h1m1 0h1m2 0h2m1 0h3m2 0h1m1 0h1m1 0h2M1 17.5h2m1 0h1m1 0h3m1 0h1m3 0h8M9 18.5h1m4 0h1m2 0h1m3 0h1m1 0h1m1 0h1M1 19.5h7m1 0h1m1 0h2m4 0h1m1 0h1m1 0h2m2 0h1M1 20.5h1m5 0h1m2 0h1m3 0h1m1 0h2m3 0h1m2 0h1M1 21.5h1m1 0h3m1 0h1m2 0h5m1 0h7m2 0h1M1 22.5h1m1 0h3m1 0h1m3 0h1m1 0h1m2 0h3m2 0h4M1 23.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h3m2 0h1m2 0h1m2 0h2M1 24.5h1m5 0h1m2 0h1m1 0h2m1 0h1m1 0h1m2 0h2M1 25.5h7m1 0h3m2 0h4m1 0h1m2 0h1m2 0h1"/></svg>
+</div>
+    <h3>lu.ma short host</h3>
+    <code>luma://lu.ma/cjhtl6rb</code>
+    <p class="note">Their short domain.</p>
+    <div class="verdicts" data-key="luma://lu.ma/cjhtl6rb">
+      <button data-v="content">✅ opened the EVENT</button>
+      <button data-v="home">🏠 app home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="190" height="190" viewBox="0 0 27 27" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h27v27H0z"/><path stroke="#000000" d="M1 1.5h7m6 0h1m4 0h7M1 2.5h1m5 0h1m4 0h1m1 0h4m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h1m4 0h2m3 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m3 0h1m5 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h1m1 0h1m1 0h2m1 0h1m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m1 0h1m3 0h1M1 9.5h1m1 0h5m5 0h3m1 0h1m1 0h5M1 10.5h1m2 0h3m1 0h1m2 0h4m5 0h1m2 0h1M4 11.5h1m1 0h2m2 0h2m1 0h2m1 0h3m2 0h1m2 0h2M3 12.5h4m1 0h1m2 0h3m2 0h7m1 0h1M1 13.5h1m3 0h1m1 0h1m1 0h3m1 0h4m1 0h2m1 0h4M1 14.5h2m1 0h1m6 0h1m1 0h2m2 0h1m5 0h1M1 15.5h1m1 0h1m1 0h1m1 0h1m5 0h1m2 0h1m1 0h1m1 0h1m1 0h4M1 16.5h1m1 0h2m1 0h1m3 0h4m2 0h3m5 0h1M1 17.5h1m3 0h4m4 0h3m1 0h7m1 0h1M9 18.5h1m1 0h2m2 0h3m3 0h1m1 0h1M1 19.5h7m2 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h2m1 0h2M1 20.5h1m5 0h1m1 0h5m3 0h1m3 0h1M1 21.5h1m1 0h3m1 0h1m1 0h1m4 0h8m1 0h1M1 22.5h1m1 0h3m1 0h1m1 0h4m1 0h1m3 0h2m1 0h1m2 0h2M1 23.5h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h3m2 0h1m4 0h1M1 24.5h1m5 0h1m3 0h2m3 0h2m1 0h2m4 0h1M1 25.5h7m1 0h3m2 0h1m5 0h6"/></svg>
+</div>
+    <h3>bundle-id scheme</h3>
+    <code>com.luma.mobile://cjhtl6rb</code>
+    <p class="note">Some apps register their bundle id as a scheme.</p>
+    <div class="verdicts" data-key="com.luma.mobile://cjhtl6rb">
+      <button data-v="content">✅ opened the EVENT</button>
+      <button data-v="home">🏠 app home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div></div>
+<script>
+const KEY="zippy-luma-verdicts";const state=JSON.parse(localStorage.getItem(KEY)||"{}");
+function paint(){document.querySelectorAll(".verdicts").forEach(v=>{const k=v.dataset.key;v.querySelectorAll("button").forEach(b=>b.classList.toggle("on",state[k]===b.dataset.v))});
+document.getElementById("count").textContent=Object.keys(state).length+" / 6 recorded";}
+document.querySelectorAll(".verdicts button").forEach(b=>b.addEventListener("click",()=>{state[b.parentElement.dataset.key]=b.dataset.v;localStorage.setItem(KEY,JSON.stringify(state));paint();}));
+document.getElementById("export").addEventListener("click",()=>{const t=JSON.stringify(state,null,1);navigator.clipboard?.writeText(t);alert("Copied to clipboard:\n\n"+t);});
+paint();
+</script></body></html>

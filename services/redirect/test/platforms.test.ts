@@ -355,6 +355,30 @@ const cases: Array<{ name: string; url: string; key: string; ios: string; pkg: s
     ios: "https://snapchat.com/add/team.snapchat",
     pkg: "com.snapchat.android",
   },
+  // Luma — DEVICE-VERIFIED 2026-07-21 (see the platforms.ts entry for the full QR matrix).
+  // Host-preserving on purpose: luma://event/<slug> opened the app HOME and lost the event,
+  // so the shipped shape carries host+path verbatim and works for any Luma URL shape.
+  {
+    name: "luma event (the device-verified shape)",
+    url: "https://luma.com/cjhtl6rb",
+    key: "luma",
+    ios: "luma://luma.com/cjhtl6rb",
+    pkg: "com.luma.mobile",
+  },
+  {
+    name: "luma short host lu.ma",
+    url: "https://lu.ma/cjhtl6rb",
+    key: "luma",
+    ios: "luma://lu.ma/cjhtl6rb",
+    pkg: "com.luma.mobile",
+  },
+  {
+    name: "luma keeps a query string (utm etc.)",
+    url: "https://luma.com/cjhtl6rb?utm_source=zippy",
+    key: "luma",
+    ios: "luma://luma.com/cjhtl6rb?utm_source=zippy",
+    pkg: "com.luma.mobile",
+  },
   {
     name: "twitch channel",
     url: "https://www.twitch.tv/shroud",

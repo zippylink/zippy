@@ -371,6 +371,29 @@ export const PLATFORMS: Platform[] = [
       return "";
     },
   },
+  {
+    // DEVICE-VERIFIED on a real iPhone 2026-07-21 (founder scanned a QR matrix against a
+    // live event). Results that decided this entry:
+    //   luma://luma.com/<path>  → opened the EVENT   ← what we ship (host-preserving)
+    //   luma://<slug>           → opened the EVENT
+    //   luma://lu.ma/<path>     → opened the EVENT
+    //   luma://event/<slug>     → app HOME only (content lost) — the shape NOT to use
+    //   com.luma.mobile://<slug>→ nothing
+    // Host-preserving wins because it is URL-SHAPE AGNOSTIC: event slugs, user profiles
+    // and calendars all keep working without us enumerating Luma's routes. The verified
+    // trio above only ever exercised event slugs, so anything cleverer would be a guess.
+    //
+    // Android package from Luma's OWN assetlinks.json, which publishes FOUR:
+    // com.luma.mobile (production, ours), com.luma.studio (a different app), plus .dev
+    // builds of both. Our best-effort harvest picked com.luma.studio.dev — a dev build of
+    // the wrong app — which is exactly why that tier stays dark and why hand-verified
+    // entries like this one exist.
+    key: "luma",
+    scheme: "luma",
+    androidPackage: "com.luma.mobile",
+    hosts: ["luma.com", "lu.ma"],
+    path: (url) => `${url.hostname}${url.pathname}${url.search}`,
+  },
 ];
 
 function buildMatch(p: Platform, url: URL, fallbackUrl?: string): PlatformMatch {
