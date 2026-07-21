@@ -6,7 +6,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-PORT="${TILT_PORT:-10382}"   # bump this per project to keep dashboards distinct
+PORT="${TILT_PORT:-10602}"   # committed range 10600-10699: 10600 umbrella, 10601 cloud, 10602 core
 
 # Homebrew bin isn't always on non-interactive PATH — portless lives there.
 export PATH="/opt/homebrew/bin:$PATH"

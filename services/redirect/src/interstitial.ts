@@ -13,11 +13,39 @@ import type { PlatformMatch } from "./platforms.js";
 //              tap-target "Open in Safari ↗" is always shown as the user-gesture path.
 //   iOS — a visible tap target re-fires the escape on tap; some webviews only allow the
 //              escape on a user gesture, not the automatic one.
-//   Android  — hand the browser the intent:// URL. Chrome falls back to
-//              browser_fallback_url NATIVELY (works inside Android webviews too).
+//   Android  — hand the browser the intent:// URL and let Chrome fall back to
+//              browser_fallback_url NATIVELY. Chrome proper handles this; an Android
+//              webview that swallows intent:// does NOT, which is why the copy timer runs
+//              on this path too. UNMEASURED BY CONSTRUCTION — we record one `unmeasured`
+//              row and no app-open outcome (see the Android branch below for why).
 //
 // visibilitychange is the honest signal the app launched (the page is hidden while iOS
-// switches apps).
+// switches apps) — on iOS ONLY. Chrome fires it on unload too, so it does not discriminate
+// there. Every app-open rate this engine produces is therefore an iOS rate.
+//
+// ANDROID IS UNMEASURED — and the data says so out loud.
+//   We hand intent:// to the OS and it self-falls-back via S.browser_fallback_url. Good UX
+//   trade, measurement dead end: Chrome fires visibilitychange->hidden as part of its
+//   UNLOAD sequence, not only on backgrounding, so a tab NAVIGATING to the fallback (the
+//   failure) is indistinguishable from a tab backgrounding to a launched app (the
+//   success). An "opened" listener on that path would relabel failures as successes and
+//   read near-100% by construction — which is exactly the bug this branch used to have,
+//   because the listener sat ABOVE the branch while both "browser" emitters sat below it.
+//   So Android registers NO outcome listener and writes one explicit "unmeasured" row
+//   instead; sendBeacon queues before the replace, so it survives the navigation.
+//   LAW FOR EVERY CONSUMER: "unmeasured" is in NEITHER the numerator NOR the denominator
+//   of any rate. It is reportable only as its own count, labelled unmeasured.
+//   The copy timer runs on this path too (an Android webview that swallows intent://
+//   leaves the page alive AND visible, and the visitor would otherwise stare at
+//   "Opening the X app…" forever). It is guarded on VISIBILITY rather than on `done`:
+//   `done` is already true on Android from the unmeasured row, yet nothing has opened.
+//
+//   THE FLAG (index.ts ANDROID_FALLBACK_MEASURE=1) attacks the dead end from the SERVER
+//   side, not from here: it aims browser_fallback_url at /:slug?fb=1 — a URL we serve — so
+//   the failure hop is delivered to us and recorded as an OBSERVED "browser" row. This
+//   file is deliberately identical either way. Nothing on this page can tell the two
+//   Android fates apart, so nothing on this page tries; "unmeasured" still means "dispatched
+//   to the OS", and with the flag on it is the observed "browser" rows that subtract from it.
 //
 // We do NOT navigate when the app doesn't open. An automatic redirect a second and a half
 // after the tap reads as a glitch ("why am I here?"), so the page stays put, says out loud
@@ -245,17 +273,18 @@ ${pixelSnippets(opts?.px)}
   // double-count exactly the flow this UX invites: time out, tap retry, app opens late.
   var done = false;
   function send(o){ if(done) return; done = true; beacon(o); }
-  // Register the visibility listener BEFORE the Android branch so an Android app-open
-  // (intent:// hides the page) is captured as "opened" too.
-  document.addEventListener("visibilitychange", function(){ if(document.hidden) send("opened"); });
-  var isAndroid = /Android/i.test(navigator.userAgent);
-  if (isAndroid) { window.location.replace(android); return; } // intent:// self-falls-back (webviews too)
-  // UX clock — copy only, NO beacon. A slow launch is not a browser outcome.
+  // UX clock — copy only, NO beacon. Above the Android branch on purpose; visibility-
+  // guarded, not done-guarded. See ANDROID IS UNMEASURED in the file header.
   setTimeout(function(){
-    if(done) return;
+    if(document.visibilityState !== "visible") return;
     var s = document.getElementById("status");
     if(s) s.textContent = ${jsLit(noAppMsg)}; // textContent also drops the "…" dots
   }, ${COPY_SWAP_MS});
+  // Android: one unmeasured row, hand off, register NOTHING. File header says why.
+  var isAndroid = /Android/i.test(navigator.userAgent);
+  if (isAndroid) { send("unmeasured"); window.location.replace(android); return; }
+  // iOS only below. Safari does not fire visibilitychange on unload; Chrome does.
+  document.addEventListener("visibilitychange", function(){ if(document.hidden) send("opened"); });
   // Measurement clock — "browser" recorded only where it's true: they left the page
   // (tapped "Continue in browser" / closed the tab), or they sat here past the long stop.
   // ORDER MATTERS: backgrounding to a launched app fires visibilitychange BEFORE pagehide,

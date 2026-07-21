@@ -1,0 +1,974 @@
+[
+  {
+    "domain": "500px.com",
+    "appName": "500px",
+    "category": "social",
+    "iosAppId": "RV3U5W9EBE.com.500px",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "music.amazon.com",
+    "appName": "Amazon Music",
+    "category": "music",
+    "iosAppId": "J7P34ALZ5R.com.amazon.mp3.AmazonCloudPlayer",
+    "schemes": [
+      {
+        "scheme": "amznmp3",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/nathangathright/podcast-platform-links/blob/main/schemes.md"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "amcplus.com",
+    "appName": "AMC+",
+    "category": "video",
+    "iosAppId": "72GP743PB7.com.amcplus.amcn",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "audible.com",
+    "appName": "Audible Podcasts",
+    "category": "podcasts",
+    "iosAppId": "5WD9C99DFM.com.audible.iphone",
+    "schemes": [
+      {
+        "scheme": "audible",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/nathangathright/podcast-platform-links/blob/main/schemes.md",
+        "urlPassthroughClaim": "appends the app-domain universal-link path (host-preserving deepLink)"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "audiomack.com",
+    "appName": "Audiomack",
+    "category": "music",
+    "iosAppId": "UQ772J4224.com.audiomack.iphone.creators",
+    "schemes": [
+      {
+        "scheme": "audiomack",
+        "evidence": "first-party-web",
+        "sourceUrl": "https://audiomack.com/"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "band.us",
+    "appName": "Band",
+    "category": "social",
+    "iosAppId": "K9UP278937.com.nhncorp.m2app",
+    "schemes": [
+      {
+        "scheme": "bandapp",
+        "evidence": "first-party-web",
+        "sourceUrl": "https://band.us/"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "bandcamp.com",
+    "appName": "Bandcamp",
+    "category": "music",
+    "iosAppId": "63Q7VC48MZ.com.bandcamp.iosapp",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "bandlab.com",
+    "appName": "BandLab",
+    "category": "music",
+    "iosAppId": "L2AYX89ARS.com.bandlab.bandlab.iphone.qa",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "bere.al",
+    "appName": "BeReal",
+    "category": "social",
+    "iosAppId": "SYYHV8RW83.AlexisBarreyat.BeReal",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "bsky.app",
+    "appName": "Bluesky",
+    "category": "social",
+    "iosAppId": "B3LX46C5HS.xyz.blueskyweb.app",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "castbox.fm",
+    "appName": "Castbox",
+    "category": "podcasts",
+    "iosAppId": "8G74YECJ4Z.fm.castbox.audiobook.radio.podcast",
+    "schemes": [
+      {
+        "scheme": "castbox",
+        "evidence": "first-party-web",
+        "sourceUrl": "https://castbox.fm/"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "crunchyroll.com",
+    "appName": "Crunchyroll",
+    "category": "video",
+    "iosAppId": "GSSZ29HN22.com.crunchyroll.iphone",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "dailymotion.com",
+    "appName": "Dailymotion",
+    "category": "video",
+    "iosAppId": "2QS9CREZT2.com.dailymotion.dailymotion",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "dazn.com",
+    "appName": "DAZN",
+    "category": "video",
+    "iosAppId": "P5TG9EFL5D.com.dazn.theApp",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "deezer.com",
+    "appName": "Deezer",
+    "category": "music",
+    "iosAppId": "GR38B3TNKY.com.deezer.Deezer",
+    "schemes": [
+      {
+        "scheme": "deezer",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/nathangathright/podcast-platform-links/blob/main/schemes.md",
+        "urlPassthroughClaim": "appends the app-domain universal-link path (host-preserving deepLink)"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "disneyplus.com",
+    "appName": "Disney+",
+    "category": "video",
+    "iosAppId": "379ZM6R63W.in.startv.hotstar.dplus",
+    "schemes": [
+      {
+        "scheme": "disneyplus",
+        "evidence": "first-party-web",
+        "sourceUrl": "https://disneyplus.com/"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "espn.com",
+    "appName": "ESPN",
+    "category": "video",
+    "iosAppId": "WZ62FEL3UG.com.espn.ScoreCenter",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "genius.com",
+    "appName": "Genius",
+    "category": "music",
+    "iosAppId": "HV6K4MJNS7.com.rapgenius.RapGenius",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "gettr.com",
+    "appName": "Gettr",
+    "category": "social",
+    "iosAppId": "L2L3MG83L7.org.gsuite.getter",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "iheart.com",
+    "appName": "iHeartRadio",
+    "category": "music",
+    "iosAppId": "4GM6SC34JU.com.clearchannel.iheartradio",
+    "schemes": [
+      {
+        "scheme": "ihr",
+        "evidence": "first-party-web",
+        "sourceUrl": "https://iheart.com/"
+      },
+      {
+        "scheme": "iheartradio",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/nathangathright/podcast-platform-links/blob/main/schemes.md"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "kick.com",
+    "appName": "Kick",
+    "category": "video",
+    "iosAppId": "3FQ3GVMB8M.com.kick.mobile",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "kwai.com",
+    "appName": "Kwai",
+    "category": "social",
+    "iosAppId": "482229B692.com.kwai.bulldog",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "lemon8-app.com",
+    "appName": "Lemon8",
+    "category": "social",
+    "iosAppId": "T5C4RC54A6.com.bd.nproject",
+    "schemes": [
+      {
+        "scheme": "snssdk2657",
+        "evidence": "first-party-web",
+        "sourceUrl": "https://lemon8-app.com/"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "likee.video",
+    "appName": "Likee",
+    "category": "social",
+    "iosAppId": "92LYFY28ZA.video.like",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "linktr.ee",
+    "appName": "Linktree",
+    "category": "social",
+    "iosAppId": "N5PHCTWK29.ee.linktr.admin",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "mastodon.social",
+    "appName": "Mastodon",
+    "category": "social",
+    "iosAppId": "5Z4GVSS33P.org.joinmastodon.app",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "meetup.com",
+    "appName": "Meetup",
+    "category": "social",
+    "iosAppId": "PGZ9UEB42C.com.meetup.iphone",
+    "schemes": [
+      {
+        "scheme": "meetup",
+        "evidence": "first-party-web",
+        "sourceUrl": "https://meetup.com/"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "moises.ai",
+    "appName": "Moises",
+    "category": "music",
+    "iosAppId": "DZA2L753SZ.ai.moises",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "musixmatch.com",
+    "appName": "Musixmatch",
+    "category": "music",
+    "iosAppId": "27CS5H9W94.com.musixmatch.lyrics",
+    "schemes": [
+      {
+        "scheme": "mxm",
+        "evidence": "first-party-web",
+        "sourceUrl": "https://musixmatch.com/"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "nebula.tv",
+    "appName": "Nebula",
+    "category": "video",
+    "iosAppId": "6F3598MKGR.tv.standard.watch",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "netflix.com",
+    "appName": "Netflix",
+    "category": "video",
+    "iosAppId": "YXNLG53YV4.com.netflix.Netflix",
+    "schemes": [
+      {
+        "scheme": "nflx",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/bhagyas/app-urls",
+        "urlPassthroughClaim": "nflx://www.netflix.com/title/<id> \u2014 host-preserving; nflx://title/<id> also cited"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "nextdoor.com",
+    "appName": "Nextdoor",
+    "category": "social",
+    "iosAppId": "97UX9W5BN3.com.nextdoor.ios.debug",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "overcast.fm",
+    "appName": "Overcast",
+    "category": "podcasts",
+    "iosAppId": "7QXYLT27C4.fm.overcast.overcast",
+    "schemes": [
+      {
+        "scheme": "overcast",
+        "evidence": "first-party-web",
+        "sourceUrl": "https://overcast.fm/",
+        "urlPassthroughClaim": "appends an RSS feedURL"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "pandora.com",
+    "appName": "Pandora",
+    "category": "music",
+    "iosAppId": "TZL3PBMFB2.com.pandora.ent",
+    "schemes": [
+      {
+        "scheme": "pandora",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/nathangathright/podcast-platform-links/blob/main/schemes.md"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "paramountplus.com",
+    "appName": "Paramount+",
+    "category": "video",
+    "iosAppId": "H443NM7F8H.com.cbsvideo.app",
+    "schemes": [
+      {
+        "scheme": "pplus",
+        "evidence": "first-party-web",
+        "sourceUrl": "https://paramountplus.com/"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "patreon.com",
+    "appName": "Patreon",
+    "category": "livestreaming",
+    "iosAppId": "KGU8RNSN6W.com.patreon.iphone.debug",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "peacocktv.com",
+    "appName": "Peacock",
+    "category": "video",
+    "iosAppId": "W76B757YRY.com.peacocktv.peacock",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "philo.com",
+    "appName": "Philo",
+    "category": "video",
+    "iosAppId": "43CJZE7V3R.com.philo.tv.philo",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "pluto.tv",
+    "appName": "Pluto TV",
+    "category": "video",
+    "iosAppId": "8J2UZ42BMU.tv.pluto.ios",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "pocketcasts.com",
+    "appName": "Pocket Casts",
+    "category": "podcasts",
+    "iosAppId": "PZYM8XX95Q.au.com.shiftyjelly.podcasts",
+    "schemes": [
+      {
+        "scheme": "pktc",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/nathangathright/podcast-platform-links/blob/main/schemes.md",
+        "urlPassthroughClaim": "appends an RSS feedURL"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "podbean.com",
+    "appName": "Podbean",
+    "category": "podcasts",
+    "iosAppId": "D254M6HU7A.com.podbean.app.business.slalom.sipa",
+    "schemes": [
+      {
+        "scheme": "podbean",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/nathangathright/podcast-platform-links/blob/main/schemes.md"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "primevideo.com",
+    "appName": "Prime Video",
+    "category": "video",
+    "iosAppId": "J7P34ALZ5R.com.amazon.aiv.AIVApp",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "quora.com",
+    "appName": "Quora",
+    "category": "social",
+    "iosAppId": "FGJBMX4XZF.com.quora.app.mobile",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "viki.com",
+    "appName": "Rakuten Viki",
+    "category": "video",
+    "iosAppId": "SNU9N24VYW.com.viki.viki-ios",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "reelshort.com",
+    "appName": "Reelshort",
+    "category": "video",
+    "iosAppId": "6DYJ82YMKF.com.newleaf.app.ios.vic",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "rumble.com",
+    "appName": "Rumble",
+    "category": "social",
+    "iosAppId": "ML9GQV73M6.com.rumble.battles",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "shazam.com",
+    "appName": "Shazam",
+    "category": "music",
+    "iosAppId": "4GWDBCF5A4.com.shazam.Shazam",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "siriusxm.com",
+    "appName": "SiriusXM",
+    "category": "music",
+    "iosAppId": "4L737EPYBG.com.siriusxm.siriusxmonline",
+    "schemes": [
+      {
+        "scheme": "sxm",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/nathangathright/podcast-platform-links/blob/main/schemes.md"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "smule.com",
+    "appName": "Smule",
+    "category": "music",
+    "iosAppId": "9H24ATQZRS.com.smule.sing",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "soundcloud.com",
+    "appName": "SoundCloud",
+    "category": "music",
+    "iosAppId": "33KQ7TW725.com.soundcloud.TouchApp",
+    "schemes": [
+      {
+        "scheme": "soundcloud",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/nathangathright/podcast-platform-links/blob/main/schemes.md"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "soundhound.com",
+    "appName": "SoundHound",
+    "category": "music",
+    "iosAppId": "U9TM6KT8KN.com.melodis.midomi",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "spreaker.com",
+    "appName": "Spreaker",
+    "category": "podcasts",
+    "iosAppId": "GG64U8YQ23.com.spreaker.Spreaker",
+    "schemes": [
+      {
+        "scheme": "spreaker",
+        "evidence": "first-party-web",
+        "sourceUrl": "https://spreaker.com/"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "starz.com",
+    "appName": "Starz",
+    "category": "video",
+    "iosAppId": "X688N6C5W3.com.starz.starzplay",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "streamyard.com",
+    "appName": "StreamYard",
+    "category": "livestreaming",
+    "iosAppId": "4YUTR59HDU.com.streamyard.studio",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "suno.com",
+    "appName": "Suno",
+    "category": "music",
+    "iosAppId": "FSA297U4QJ.ai.suno.ios",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "tidal.com",
+    "appName": "Tidal",
+    "category": "music",
+    "iosAppId": "GK2243L7KB.com.aspiro.TIDAL",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "truthsocial.com",
+    "appName": "Truth Social",
+    "category": "social",
+    "iosAppId": "2HAHKXVK67.com.tmediatech.truthsocial",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "tumblr.com",
+    "appName": "Tumblr",
+    "category": "social",
+    "iosAppId": "84Q69XA6W4.com.tumblr.Orangina",
+    "schemes": [
+      {
+        "scheme": "tumblr",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/bhagyas/app-urls"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "tunein.com",
+    "appName": "TuneIn",
+    "category": "music",
+    "iosAppId": "573Q4KYFD5.com.alexanderben.RadioIn",
+    "schemes": [
+      {
+        "scheme": "tunein",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/nathangathright/podcast-platform-links/blob/main/schemes.md"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "udio.com",
+    "appName": "Udio",
+    "category": "music",
+    "iosAppId": "652ZVL92NH.com.udio.app",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "vimeo.com",
+    "appName": "Vimeo",
+    "category": "video",
+    "iosAppId": "35R365FS4Q.com.vimeo.universallinkz",
+    "schemes": [
+      {
+        "scheme": "vimeo",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/bhagyas/app-urls"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "vsco.co",
+    "appName": "VSCO",
+    "category": "social",
+    "iosAppId": "NCGELS6998.co.visualsupply.studionext",
+    "schemes": [
+      {
+        "scheme": "vsco",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/bhagyas/app-urls"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "yubo.live",
+    "appName": "Yubo",
+    "category": "social",
+    "iosAppId": "H6LLY5H5T2.co.yellw.Yellow",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "podcasts.apple.com",
+    "appName": "Apple Podcasts",
+    "category": "podcasts",
+    "schemes": [
+      {
+        "scheme": "podcast",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/nathangathright/podcast-platform-links/blob/main/schemes.md",
+        "urlPassthroughClaim": "appends an RSS feedURL"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "tv.apple.com",
+    "appName": "Apple TV",
+    "category": "video",
+    "schemes": [
+      {
+        "scheme": "videos",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/bhagyas/app-urls"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "beacons.ai",
+    "appName": "Beacons",
+    "category": "social",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "bet.plus",
+    "appName": "BET+",
+    "category": "video",
+    "schemes": [
+      {
+        "scheme": "pplus",
+        "evidence": "first-party-web",
+        "sourceUrl": "https://bet.plus/"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "bigo.tv",
+    "appName": "Bigo Live",
+    "category": "livestreaming",
+    "schemes": [
+      {
+        "scheme": "bigolive",
+        "evidence": "first-party-web",
+        "sourceUrl": "https://bigo.tv/"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "bio.link",
+    "appName": "Bio.link",
+    "category": "social",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "buymeacoffee.com",
+    "appName": "Buy Me a Coffee",
+    "category": "livestreaming",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "cameo.com",
+    "appName": "Cameo",
+    "category": "livestreaming",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "carrd.co",
+    "appName": "Carrd",
+    "category": "social",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "clubhouse.com",
+    "appName": "Clubhouse",
+    "category": "social",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "discoveryplus.com",
+    "appName": "Discovery+",
+    "category": "video",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "dramaboxapp.com",
+    "appName": "DramaBox",
+    "category": "video",
+    "schemes": [
+      {
+        "scheme": "dramabox",
+        "evidence": "first-party-web",
+        "sourceUrl": "https://dramaboxapp.com/"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "fansly.com",
+    "appName": "Fansly",
+    "category": "livestreaming",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "fizz.social",
+    "appName": "Fizz",
+    "category": "social",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "flickr.com",
+    "appName": "Flickr",
+    "category": "social",
+    "schemes": [
+      {
+        "scheme": "flickr",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/bhagyas/app-urls"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "frndlytv.com",
+    "appName": "Frndly TV",
+    "category": "video",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "fubo.tv",
+    "appName": "Fubo",
+    "category": "video",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "funimation.com",
+    "appName": "Funimation",
+    "category": "video",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "geneva.com",
+    "appName": "Geneva",
+    "category": "social",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "goodshort.com",
+    "appName": "GoodShort",
+    "category": "video",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "hulu.com",
+    "appName": "Hulu",
+    "category": "video",
+    "schemes": [
+      {
+        "scheme": "hulu",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/bhagyas/app-urls"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "ko-fi.com",
+    "appName": "Ko-fi",
+    "category": "livestreaming",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "max.com",
+    "appName": "Max",
+    "category": "video",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "mlb.tv",
+    "appName": "MLB.TV",
+    "category": "video",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "watch.nba.com",
+    "appName": "NBA League Pass",
+    "category": "video",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "onlyfans.com",
+    "appName": "OnlyFans",
+    "category": "livestreaming",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "parler.com",
+    "appName": "Parler",
+    "category": "social",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "plex.tv",
+    "appName": "Plex",
+    "category": "video",
+    "schemes": [
+      {
+        "scheme": "plex",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/bhagyas/app-urls"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "qobuz.com",
+    "appName": "Qobuz",
+    "category": "music",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "roku.com",
+    "appName": "Roku",
+    "category": "video",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "sling.com",
+    "appName": "Sling TV",
+    "category": "video",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "snap.com",
+    "appName": "Snapchat Spotlight",
+    "category": "social",
+    "schemes": [
+      {
+        "scheme": "snapchat",
+        "evidence": "community",
+        "sourceUrl": "https://github.com/bhagyas/app-urls"
+      }
+    ],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "stan.store",
+    "appName": "Stan Store",
+    "category": "social",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "starmakerstudios.com",
+    "appName": "StarMaker",
+    "category": "music",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "stitcher.com",
+    "appName": "Stitcher",
+    "category": "podcasts",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "triller.co",
+    "appName": "Triller",
+    "category": "social",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  },
+  {
+    "domain": "tubitv.com",
+    "appName": "Tubi",
+    "category": "video",
+    "schemes": [],
+    "harvestedAt": "2026-07-20T20:10:12.805815+00:00"
+  }
+]

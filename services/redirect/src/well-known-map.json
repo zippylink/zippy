@@ -1,0 +1,3536 @@
+[
+  {
+    "domain": "1password.com",
+    "androidPackage": "com.agilebits.onepassword",
+    "iosAppId": "R96HGCUQ8V.com.agilebits.onepassword-ios",
+    "fetchedAt": "2026-07-20T14:26:00.677Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "500px.com",
+    "androidPackage": "com.fivehundredpx.viewer",
+    "iosAppId": "RV3U5W9EBE.com.500px",
+    "fetchedAt": "2026-07-20T14:25:12.893Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "abcmouse.com",
+    "androidPackage": "mobi.abcmouse.academy_goo",
+    "iosAppId": "Z53E433GAS.mobi.abcmouse.academy",
+    "fetchedAt": "2026-07-20T14:26:11.811Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "abcnews.go.com",
+    "iosAppId": "WZ62FEL3UG.com.abcnews.ABCNews",
+    "fetchedAt": "2026-07-20T14:25:47.791Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "abnb.me",
+    "androidPackage": "com.airbnb.android",
+    "iosAppId": "5LL7P8E8RA.com.airbnb.app",
+    "fetchedAt": "2026-07-20T14:25:37.253Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "account.venmo.com",
+    "androidPackage": "com.venmo.fifa",
+    "iosAppId": "55377VK7X2.net.kortina.labs.Venmo.debug",
+    "fetchedAt": "2026-07-20T14:25:23.894Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "acrobat.adobe.com",
+    "androidPackage": "com.adobe.reader.beta",
+    "iosAppId": "QFRAMDQVL3.com.adobe.Adobe-Reader",
+    "fetchedAt": "2026-07-20T14:26:01.166Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "adobe.com",
+    "androidPackage": "com.adobe.creativeapps.gather",
+    "iosAppId": "JQ525L2MZD.com.adobe.capture.ios",
+    "fetchedAt": "2026-07-20T14:25:57.277Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "affirm.com",
+    "androidPackage": "com.affirm.central",
+    "iosAppId": "YD484U2GCW.com.affirm.Amplify",
+    "fetchedAt": "2026-07-20T14:25:27.879Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "afterpay.com",
+    "androidPackage": "com.afterpaymobile.us",
+    "iosAppId": "A5TLDV6XKH.com.afterpay.afterpay-consumer",
+    "fetchedAt": "2026-07-20T14:25:28.469Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "agoda.com",
+    "androidPackage": "com.agoda.mobile.consumer.debug",
+    "iosAppId": "RQ3559BHHY.com.agoda.consumer",
+    "fetchedAt": "2026-07-20T14:26:19.459Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "airbnb.com",
+    "androidPackage": "com.airbnb.android",
+    "iosAppId": "5LL7P8E8RA.com.airbnb.app",
+    "fetchedAt": "2026-07-20T14:25:37.402Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "airtable.com",
+    "androidPackage": "com.formagrid.airtable.debug",
+    "iosAppId": "E22RZMX62E.com.FormaGrid.Hyperbase",
+    "fetchedAt": "2026-07-20T14:25:59.891Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "alaskaair.com",
+    "androidPackage": "com.alaskaairlines.android",
+    "iosAppId": "CK3424624K.com.asqx.iphoneproduction",
+    "fetchedAt": "2026-07-20T14:25:39.902Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "aldi.us",
+    "androidPackage": "de.apptiv.business.android.aldi_us.debug",
+    "iosAppId": "2238VKTD82.com.aldisued.AldiUS.debug",
+    "fetchedAt": "2026-07-20T14:26:13.168Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "alibaba.com",
+    "androidPackage": "com.alibaba.intl.android.apps.poseidon",
+    "iosAppId": "SY4TQWYLB5.com.alibaba.sourcing",
+    "fetchedAt": "2026-07-20T14:26:19.519Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "aliexpress.com",
+    "androidPackage": "com.alibaba.aliexpresshd",
+    "iosAppId": "T27K5A5ZWD.com.alibaba.iAliexpress",
+    "fetchedAt": "2026-07-20T14:25:21.362Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "alltrails.com",
+    "androidPackage": "com.alltrails.alltrails",
+    "iosAppId": "VPZY3GN83X.com.alltrails.AllTrails",
+    "fetchedAt": "2026-07-20T14:26:05.829Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "ally.com",
+    "androidPackage": "com.ally.MobileBanking.debug",
+    "iosAppId": "N253L8X7DJ.com.ally.MobileBanking",
+    "fetchedAt": "2026-07-20T14:25:29.515Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "amcplus.com",
+    "androidPackage": "com.amcplus.amcfullepisodes",
+    "iosAppId": "72GP743PB7.com.amcplus.amcn",
+    "fetchedAt": "2026-07-20T14:25:19.041Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "americanexpress.com",
+    "androidPackage": "com.americanexpress.android.acctsvcs.uk",
+    "iosAppId": "539KP4FXX7.at.co.americanexpress.amexservice.mi",
+    "fetchedAt": "2026-07-20T14:25:29.762Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "ancestry.com",
+    "iosAppId": "3KMD79W249.com.ancestry.Tree-To-Go",
+    "fetchedAt": "2026-07-20T14:26:21.222Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "angi.com",
+    "androidPackage": "com.angieslist.android.activity",
+    "iosAppId": "5RK895L8G2.com.servicemagic.servicemagicconsumer",
+    "fetchedAt": "2026-07-20T14:26:08.976Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "apnews.com",
+    "androidPackage": "mnn.Android",
+    "iosAppId": "YNFCKR8G6H.com.apnews.ipad.mobilenewsdevel",
+    "fetchedAt": "2026-07-20T14:25:48.868Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "apple.com",
+    "iosAppId": "W74U47NE8E.com.apple.store.Jolly",
+    "fetchedAt": "2026-07-20T14:25:56.394Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "apple.news",
+    "iosAppId": "ZL6BUSYGB3.com.apple.news",
+    "fetchedAt": "2026-07-20T14:25:46.707Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "asana.com",
+    "androidPackage": "com.asana.app",
+    "iosAppId": "A679L395M8.com.asana.Asana-debug",
+    "fetchedAt": "2026-07-20T14:25:59.649Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "att.com",
+    "androidPackage": "com.att.myWirelessTest",
+    "iosAppId": "3PHXS7X29F.com.att.osd.myWireless",
+    "fetchedAt": "2026-07-20T14:26:37.474Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "audible.com",
+    "androidPackage": "com.audible.application",
+    "iosAppId": "5WD9C99DFM.com.audible.iphone",
+    "fetchedAt": "2026-07-20T14:25:16.221Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "audiomack.com",
+    "androidPackage": "com.audiomack",
+    "iosAppId": "UQ772J4224.com.audiomack.iphone.creators",
+    "fetchedAt": "2026-07-20T14:25:14.988Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "axios.com",
+    "androidPackage": "com.axios.dev",
+    "iosAppId": "DGWACG2Y44.com.axios.dev",
+    "fetchedAt": "2026-07-20T14:25:49.102Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "babbel.com",
+    "androidPackage": "com.babbel.mobile.android.en",
+    "iosAppId": "7248DZM5YC.com.babbel.babbelMulti",
+    "fetchedAt": "2026-07-20T14:26:01.634Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "badoo.com",
+    "androidPackage": "com.badoo.mobile",
+    "iosAppId": "KNH8H96PY6.com.badoo.Badoo",
+    "fetchedAt": "2026-07-20T14:25:42.762Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "band.us",
+    "androidPackage": "com.nhn.android.band",
+    "iosAppId": "K9UP278937.com.nhncorp.m2app",
+    "fetchedAt": "2026-07-20T14:25:14.584Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bandcamp.com",
+    "androidPackage": "com.bandcamp.android",
+    "iosAppId": "63Q7VC48MZ.com.bandcamp.iosapp",
+    "fetchedAt": "2026-07-20T14:25:14.993Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bandlab.com",
+    "androidPackage": "com.bandlab.bandlab",
+    "iosAppId": "L2AYX89ARS.com.bandlab.bandlab.iphone.qa",
+    "fetchedAt": "2026-07-20T14:25:15.715Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bandsintown.com",
+    "androidPackage": "com.bandsintown",
+    "iosAppId": "PAKLV2RW9L.com.bandsintown.bit",
+    "fetchedAt": "2026-07-20T14:26:16.432Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bankofamerica.com",
+    "androidPackage": "com.infonow.bofa",
+    "iosAppId": "3A9QHK2F92.com.bankofamerica.iPhoneSIT",
+    "fetchedAt": "2026-07-20T14:25:26.702Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bbc.co.uk",
+    "androidPackage": "bbc.iplayer.android",
+    "iosAppId": "N53624Z834.uk.co.bbc.universallinks",
+    "fetchedAt": "2026-07-20T14:25:48.760Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bbc.com",
+    "androidPackage": "bbc.iplayer.android",
+    "iosAppId": "N53624Z834.uk.co.bbc.universallinks",
+    "fetchedAt": "2026-07-20T14:25:48.674Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bere.al",
+    "androidPackage": "com.bereal.ft",
+    "iosAppId": "SYYHV8RW83.AlexisBarreyat.BeReal",
+    "fetchedAt": "2026-07-20T14:25:11.589Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bestbuy.com",
+    "androidPackage": "com.bestbuy.android",
+    "iosAppId": "J5JXSEDYB3.com.bestbuy.buyphone",
+    "fetchedAt": "2026-07-20T14:25:19.693Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bet365.com",
+    "androidPackage": "com.bet365.authenticator",
+    "iosAppId": "6DYF8FJV35.com.bet365.bet365Wrapper",
+    "fetchedAt": "2026-07-20T14:25:53.146Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "betmgm.com",
+    "androidPackage": "com.playmgmcasino.nj",
+    "iosAppId": "FTCKKZBR2C.",
+    "fetchedAt": "2026-07-20T14:25:53.384Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "betterhelp.com",
+    "androidPackage": "com.betterhelp",
+    "iosAppId": "5QNSPM9EMD.com.ionicframework.betterhelp369708",
+    "fetchedAt": "2026-07-20T14:25:54.966Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "binance.com",
+    "androidPackage": "com.binance.dev",
+    "fetchedAt": "2026-07-20T14:25:24.948Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "binance.us",
+    "androidPackage": "com.binance.us",
+    "iosAppId": "64NAQ4VZMV.us.binance.fiat",
+    "fetchedAt": "2026-07-20T14:25:25.986Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bing.com",
+    "androidPackage": "com.microsoft.bing",
+    "iosAppId": "UBF8T346G9.com.microsoft.bingdebug",
+    "fetchedAt": "2026-07-20T14:26:11.597Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bk.com",
+    "androidPackage": "com.emn8.mobilem8.nativeapp.bk",
+    "iosAppId": "KAL59KW9UN.com.emn8.mobilem8.native.bkrewards.dev",
+    "fetchedAt": "2026-07-20T14:25:33.222Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bleacherreport.com",
+    "androidPackage": "com.bleacherreport.android.teamstream",
+    "iosAppId": "J7642G5743.com.bleacherreport.TeamStream",
+    "fetchedAt": "2026-07-20T14:25:51.866Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "blinkist.com",
+    "androidPackage": "com.blinkslabs.blinkist.android",
+    "iosAppId": "Y68M8S5N3Q.com.blinkslabs.Blinkist",
+    "fetchedAt": "2026-07-20T14:26:05.611Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "blizzard.com",
+    "androidPackage": "com.blizzard.messenger",
+    "iosAppId": "G847MC6JZ5.com.blizzard.social",
+    "fetchedAt": "2026-07-20T14:25:46.430Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "blockchain.com",
+    "androidPackage": "piuk.blockchain.android.dev",
+    "iosAppId": "NZ6PH75U7K.com.rainydayapps.Blockchain",
+    "fetchedAt": "2026-07-20T14:25:30.019Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bloomberg.com",
+    "androidPackage": "com.bloomberg.android.plus",
+    "iosAppId": "YABC3MT28M.com.bloomberg.Bloomberg",
+    "fetchedAt": "2026-07-20T14:25:50.188Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bolt.eu",
+    "androidPackage": "ee.mtakso.client",
+    "fetchedAt": "2026-07-20T14:25:40.664Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "booking.com",
+    "androidPackage": "com.booking",
+    "iosAppId": "8WZRM339HP.com.booking.BookingApp",
+    "fetchedAt": "2026-07-20T14:25:36.620Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "box.com",
+    "androidPackage": "com.box.android",
+    "iosAppId": "K9495WHFU9.com.box.ios.devnotes",
+    "fetchedAt": "2026-07-20T14:25:59.023Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "boxd.it",
+    "androidPackage": "com.letterboxd.letterboxd",
+    "iosAppId": "AET85E74M5.com.letterboxd.LetterboxdApp",
+    "fetchedAt": "2026-07-20T14:26:09.816Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "brave.com",
+    "androidPackage": "com.brave.browser",
+    "fetchedAt": "2026-07-20T14:26:11.716Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "brilliant.org",
+    "androidPackage": "org.brilliant.android",
+    "iosAppId": "9RWS66A38V.com.brilliant.Brilliant",
+    "fetchedAt": "2026-07-20T14:26:03.209Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bsky.app",
+    "androidPackage": "xyz.blueskyweb.app",
+    "iosAppId": "B3LX46C5HS.xyz.blueskyweb.app",
+    "fetchedAt": "2026-07-20T14:25:12.193Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "bumble.com",
+    "androidPackage": "com.bumble.app",
+    "iosAppId": "8QRHA24EHD.com.moxco.bumble",
+    "fetchedAt": "2026-07-20T14:25:41.365Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "businessinsider.com",
+    "androidPackage": "com.freerange360.mpp.businessinsider",
+    "iosAppId": "8CB4CPHLHD.com.businessinsider.iphone",
+    "fetchedAt": "2026-07-20T14:25:50.392Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "busuu.com",
+    "androidPackage": "com.busuu.android.enc",
+    "iosAppId": "HCS5P95J52.com.busuu.english.app",
+    "fetchedAt": "2026-07-20T14:26:01.989Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "buzzfeed.com",
+    "androidPackage": "com.buzzfeed.android",
+    "iosAppId": "H7Q2ABTU9D.com.buzzfeed.buzzfeed",
+    "fetchedAt": "2026-07-20T14:25:49.870Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "caesars.com",
+    "androidPackage": "com.williamhill.us.nj.sports",
+    "iosAppId": "L823EJ2XX5.us.williamhill.nj.sports",
+    "fetchedAt": "2026-07-20T14:25:54.296Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "calai.app",
+    "iosAppId": "CTS75ZMJ5S.com.viraldevelopment.CalAI",
+    "fetchedAt": "2026-07-20T14:26:21.614Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "calendar.google.com",
+    "androidPackage": "com.google.android.calendar",
+    "iosAppId": "EQHXZ8M8AV.com.google.calendar.dev",
+    "fetchedAt": "2026-07-20T14:25:59.962Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "calendly.com",
+    "androidPackage": "com.calendly.app",
+    "iosAppId": "EH6ZF4SRR4.com.calendly.Calendly",
+    "fetchedAt": "2026-07-20T14:26:00.063Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "calm.com",
+    "androidPackage": "com.calm.android",
+    "iosAppId": "C8X658UX3M.com.calm.calmapp",
+    "fetchedAt": "2026-07-20T14:25:55.344Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "canva.com",
+    "androidPackage": "com.canva.editor",
+    "iosAppId": "5HD2ARTBFS.com.canva.canvaeditor",
+    "fetchedAt": "2026-07-20T14:25:56.743Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "capcut.com",
+    "androidPackage": "com.lemon.lvoverseas",
+    "fetchedAt": "2026-07-20T14:25:57.442Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "capitalone.com",
+    "androidPackage": "com.capitalone.autonavigator",
+    "iosAppId": "AQNYKQRTDP.com.capitalone.COAF.AutoNavigator",
+    "fetchedAt": "2026-07-20T14:25:29.441Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "capitaloneshopping.com",
+    "androidPackage": "com.wikibuy.prod.main",
+    "iosAppId": "269SD393KT.com.wikibuy.prod.main",
+    "fetchedAt": "2026-07-20T14:26:15.792Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "cars.com",
+    "androidPackage": "com.cars.android",
+    "iosAppId": "7697HL4J72.com.pointabout.cars",
+    "fetchedAt": "2026-07-20T14:26:14.951Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "cash.app",
+    "androidPackage": "com.squareup.cash",
+    "fetchedAt": "2026-07-20T14:25:23.766Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "cash.me",
+    "androidPackage": "com.squareup.cash",
+    "fetchedAt": "2026-07-20T14:26:17.090Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "castbox.fm",
+    "androidPackage": "fm.castbox.audiobook.radio.podcast",
+    "iosAppId": "8G74YECJ4Z.fm.castbox.audiobook.radio.podcast",
+    "fetchedAt": "2026-07-20T14:25:16.322Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "cbsnews.com",
+    "androidPackage": "com.treemolabs.apps.cbsnews",
+    "iosAppId": "H443NM7F8H.com.H443NM7F8H.CBSNews",
+    "fetchedAt": "2026-07-20T14:25:48.300Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "cbssports.com",
+    "iosAppId": "H443NM7F8H.H443NM7F8H.CBSSportsApp",
+    "fetchedAt": "2026-07-20T14:25:51.839Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "centr.com",
+    "androidPackage": "com.centr.app",
+    "iosAppId": "HWV844ASMA.com.weareloup.hco",
+    "fetchedAt": "2026-07-20T14:26:21.991Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "cerebral.com",
+    "androidPackage": "com.cerebral.cerebral",
+    "iosAppId": "9LMHVT2KQ6.com.cerebral.cerebral",
+    "fetchedAt": "2026-07-20T14:26:35.885Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "character.ai",
+    "androidPackage": "ai.character.app",
+    "iosAppId": "F3455PK7NK.ai.character.app",
+    "fetchedAt": "2026-07-20T14:26:16.006Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "chase.com",
+    "androidPackage": "com.jpm.sig.android",
+    "iosAppId": "G262XGGUKK.com.chase.lifestyle",
+    "fetchedAt": "2026-07-20T14:25:26.749Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "chat.google.com",
+    "androidPackage": "com.google.android.apps.dynamite",
+    "iosAppId": "EQHXZ8M8AV.com.google.Dynamite.dev",
+    "fetchedAt": "2026-07-20T14:25:13.298Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "chat.openai.com",
+    "androidPackage": "com.openai.chatgpt",
+    "iosAppId": "XN94N9AMD4.com.openai.chat.enterprise",
+    "fetchedAt": "2026-07-20T14:26:00.360Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "chatgpt.com",
+    "androidPackage": "com.openai.chatgpt",
+    "iosAppId": "XN94N9AMD4.com.openai.chat.enterprise",
+    "fetchedAt": "2026-07-20T14:26:00.402Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "chegg.com",
+    "androidPackage": "com.chegg",
+    "iosAppId": "CUF5MZX6FG.com.chegg.mobile.consumer",
+    "fetchedAt": "2026-07-20T14:26:03.731Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "chess.com",
+    "androidPackage": "com.chess",
+    "iosAppId": "J58L985NNC.com.chess.iphone",
+    "fetchedAt": "2026-07-20T14:25:44.598Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "chewy.com",
+    "androidPackage": "com.chewy.android",
+    "iosAppId": "37RXVUPAPD.com.chewy.chewy",
+    "fetchedAt": "2026-07-20T14:25:22.112Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "chime.com",
+    "androidPackage": "com.onedebit.chime",
+    "iosAppId": "627C9ZK6ZL.com.1debit.dogfood.ChimeApp",
+    "fetchedAt": "2026-07-20T14:25:24.670Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "chipotle.com",
+    "androidPackage": "com.chipotle.ordering",
+    "iosAppId": "A6SCQ9M7PD.com.chipotle.Chipotle",
+    "fetchedAt": "2026-07-20T14:25:32.862Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "citymapper.com",
+    "androidPackage": "com.citymapper.app.internal",
+    "iosAppId": "UQP7LV7UMT.azdev.citymapper.daily",
+    "fetchedAt": "2026-07-20T14:25:38.197Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "classpass.com",
+    "androidPackage": "com.classpass.classpass.dev",
+    "iosAppId": "KWKHZ6BGJ2.com.classpass.classpass",
+    "fetchedAt": "2026-07-20T14:25:55.736Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "classroom.google.com",
+    "androidPackage": "com.google.android.apps.classroom",
+    "iosAppId": "EQHXZ8M8AV.com.google.Classroom.dev",
+    "fetchedAt": "2026-07-20T14:26:02.780Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "claude.ai",
+    "androidPackage": "com.anthropic.claude",
+    "iosAppId": "Q6L2SF6YDW.com.anthropic.claude",
+    "fetchedAt": "2026-07-20T14:26:00.274Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "clickup.com",
+    "androidPackage": "co.mangotechnologies.clickup",
+    "iosAppId": "5RJWFAUGXQ.com.clickup.mobile",
+    "fetchedAt": "2026-07-20T14:25:59.680Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "clubhouse.com",
+    "androidPackage": "com.clubhouse.app",
+    "fetchedAt": "2026-07-20T14:25:12.423Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "cnn.com",
+    "androidPackage": "com.cnn.mobile.android.phone",
+    "iosAppId": "C4G9LS277J.com.cnn.marvel",
+    "fetchedAt": "2026-07-20T14:25:47.498Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "coinbase.com",
+    "androidPackage": "com.coinbase.android",
+    "iosAppId": "3W8D3S7TCY.com.vilcsak.bitcoin2",
+    "fetchedAt": "2026-07-20T14:25:24.654Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "compass.com",
+    "androidPackage": "com.compass.agent.neutral",
+    "iosAppId": "J5LYW3ZCQZ.com.compass.agent.neutral",
+    "fetchedAt": "2026-07-20T14:26:07.585Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "copilot.microsoft.com",
+    "androidPackage": "com.microsoft.copilot",
+    "iosAppId": "SGGM6D27TK.com.microsoft.copilot",
+    "fetchedAt": "2026-07-20T14:26:01.794Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "copilot.money",
+    "iosAppId": "HC6S5EYZJR.com.copilot.production",
+    "fetchedAt": "2026-07-20T14:26:22.398Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "coursera.org",
+    "androidPackage": "org.coursera.android",
+    "iosAppId": "95YC65VKDU.org.coursera.coursera",
+    "fetchedAt": "2026-07-20T14:26:02.498Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "creditkarma.com",
+    "androidPackage": "com.creditkarma.mobile.nightly.debug",
+    "iosAppId": "6E32BUCV22.com.creditkarma.mobile",
+    "fetchedAt": "2026-07-20T14:25:29.213Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "cronometer.com",
+    "androidPackage": "com.cronometer.android.gold",
+    "iosAppId": "YLE5EK4V88.CRONOMETER-GOLD",
+    "fetchedAt": "2026-07-20T14:25:56.920Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "crumblcookies.com",
+    "androidPackage": "crumbl.cookies",
+    "iosAppId": "95239RC8R3.crumbl.cookies",
+    "fetchedAt": "2026-07-20T14:26:23.656Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "crunchyroll.com",
+    "androidPackage": "com.crunchyroll.crunchyroid",
+    "iosAppId": "GSSZ29HN22.com.crunchyroll.iphone",
+    "fetchedAt": "2026-07-20T14:25:17.492Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "crypto.com",
+    "androidPackage": "co.mona.android",
+    "iosAppId": "72BB5MMJ5Y.co.mona.Monaco",
+    "fetchedAt": "2026-07-20T14:25:24.935Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "culvers.com",
+    "androidPackage": "com.culvers.mobile",
+    "iosAppId": "com.culvers.mobile",
+    "fetchedAt": "2026-07-20T14:26:24.295Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "current.com",
+    "androidPackage": "com.current.app",
+    "iosAppId": "59JG269G8T.com.current.currentapp",
+    "fetchedAt": "2026-07-20T14:25:28.856Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "dai.ly",
+    "androidPackage": "com.dailymotion.dailymotion",
+    "fetchedAt": "2026-07-20T14:25:18.122Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "dailymotion.com",
+    "iosAppId": "2QS9CREZT2.com.dailymotion.dailymotion",
+    "fetchedAt": "2026-07-20T14:25:17.837Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "dave.com",
+    "androidPackage": "com.dave",
+    "iosAppId": "A594HSLR6B.com.trydave.dave",
+    "fetchedAt": "2026-07-20T14:25:28.436Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "dazn.com",
+    "androidPackage": "com.dazn",
+    "iosAppId": "P5TG9EFL5D.com.dazn.theApp",
+    "fetchedAt": "2026-07-20T14:25:17.822Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "deezer.com",
+    "androidPackage": "deezer.android.app",
+    "iosAppId": "GR38B3TNKY.com.deezer.Deezer",
+    "fetchedAt": "2026-07-20T14:25:14.452Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "depop.com",
+    "androidPackage": "com.depop",
+    "iosAppId": "28Y37ESKGC.com.garageitaly.garage",
+    "fetchedAt": "2026-07-20T14:25:20.605Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "dhgate.com",
+    "androidPackage": "com.dhgate.buyermob",
+    "iosAppId": "ZUB3QBN2ZH.com.dhgate.DHgateBuyer",
+    "fetchedAt": "2026-07-20T14:26:18.414Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "dice.fm",
+    "iosAppId": "L7BD3UV75Q.fm.dice.Dice",
+    "fetchedAt": "2026-07-20T14:26:08.975Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "discord.gg",
+    "androidPackage": "com.discord",
+    "iosAppId": "53Q6R32WPB.com.hammerandchisel.discord",
+    "fetchedAt": "2026-07-20T14:26:14.991Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "discord.new",
+    "androidPackage": "com.discord",
+    "iosAppId": "53Q6R32WPB.com.hammerandchisel.discord",
+    "fetchedAt": "2026-07-20T14:26:30.711Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "discordapp.com",
+    "androidPackage": "com.discord",
+    "iosAppId": "53Q6R32WPB.com.hammerandchisel.discord",
+    "fetchedAt": "2026-07-20T14:26:20.509Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "discover.com",
+    "androidPackage": "com.discoverfinancial.mobile",
+    "iosAppId": "29YN73Q226.com.discoverfinancialenterprise.mobile",
+    "fetchedAt": "2026-07-20T14:25:28.081Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "disneyplus.com",
+    "androidPackage": "com.disneyplus.mea",
+    "iosAppId": "379ZM6R63W.in.startv.hotstar.dplus",
+    "fetchedAt": "2026-07-20T14:25:17.073Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "docs.google.com",
+    "androidPackage": "com.google.android.apps.docs.editors.docs",
+    "fetchedAt": "2026-07-20T14:25:58.692Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "docusign.com",
+    "androidPackage": "com.docusign.ink",
+    "iosAppId": "RR65JMWDP3.com.docusign.DocuSignIt",
+    "fetchedAt": "2026-07-20T14:26:02.257Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "dominos.com",
+    "androidPackage": "com.dominospizza",
+    "fetchedAt": "2026-07-20T14:25:32.353Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "doordash.com",
+    "androidPackage": "com.dd.doordash",
+    "iosAppId": "W44ZWC57TC.doordash.DoorDashConsumer",
+    "fetchedAt": "2026-07-20T14:25:30.982Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "draftkings.com",
+    "androidPackage": "com.draftkings.dknativermgGP",
+    "iosAppId": "3UW6QGQDLG.com.draftkings.dknativermg",
+    "fetchedAt": "2026-07-20T14:25:54.472Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "drive.google.com",
+    "androidPackage": "com.google.android.apps.docs.editors.docs",
+    "fetchedAt": "2026-07-20T14:25:58.721Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "dropbox.com",
+    "androidPackage": "com.dropbox.android",
+    "iosAppId": "8KM394JM3R.com.getdropbox.Dropbox",
+    "fetchedAt": "2026-07-20T14:25:59.538Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "duckduckgo.com",
+    "androidPackage": "com.duckduckgo.mobile.android",
+    "iosAppId": "HKE973VLUW.com.duckduckgo.mobile.ios",
+    "fetchedAt": "2026-07-20T14:26:11.072Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "duolingo.com",
+    "androidPackage": "com.duolingo",
+    "iosAppId": "VS2788CQ34.com.duolingo.DuolingoMobile",
+    "fetchedAt": "2026-07-20T14:26:02.037Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "ea.com",
+    "androidPackage": "com.ea.game.starwarscapital_row",
+    "iosAppId": "TSTV75T6Q5.com.ea.ios.fifaultimate",
+    "fetchedAt": "2026-07-20T14:25:43.835Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "ebay.com",
+    "androidPackage": "com.ebay.mobile",
+    "iosAppId": "T4JAZKL6NS.com.ebay.iphone",
+    "fetchedAt": "2026-07-20T14:25:18.734Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "economist.com",
+    "androidPackage": "com.economist.lamarr",
+    "iosAppId": "7JDY6V28TQ.com.economist.lamarr",
+    "fetchedAt": "2026-07-20T14:25:49.357Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "eharmony.com",
+    "androidPackage": "com.eharmony",
+    "iosAppId": "8Z7DMDDH8B.com.eharmony.singles.SinglesRelease",
+    "fetchedAt": "2026-07-20T14:25:42.523Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "en.wikipedia.org",
+    "androidPackage": "org.wikipedia",
+    "iosAppId": "AKK7J2GV64.org.wikimedia.wikipedia.developer",
+    "fetchedAt": "2026-07-20T14:26:20.270Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "enterprise.com",
+    "androidPackage": "com.ehi.enterprise.android",
+    "iosAppId": "TL76Q6ELX9.com.ehi.Enterprise",
+    "fetchedAt": "2026-07-20T14:25:42.817Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "epicgames.com",
+    "androidPackage": "com.epicgames.portal",
+    "iosAppId": "JPKKQ2FLA9.com.epicgames.ega",
+    "fetchedAt": "2026-07-20T14:25:44.931Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "espn.com",
+    "androidPackage": "com.espn.fantasy.lm.football",
+    "iosAppId": "WZ62FEL3UG.com.espn.ScoreCenter",
+    "fetchedAt": "2026-07-20T14:25:17.159Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "etoro.com",
+    "androidPackage": "com.etoro.openbook",
+    "iosAppId": "468K4Q65TK.com.etoro.etoroplus",
+    "fetchedAt": "2026-07-20T14:25:30.600Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "etsy.com",
+    "androidPackage": "com.etsy.android.beta",
+    "iosAppId": "3CUB372VC3.com.etsy.etsyforios",
+    "fetchedAt": "2026-07-20T14:25:18.752Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "etsy.me",
+    "androidPackage": "com.etsy.android.beta",
+    "iosAppId": "F83KNRALC7.com.etsy.corp.dogfood",
+    "fetchedAt": "2026-07-20T14:26:15.265Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "eventbrite.com",
+    "androidPackage": "com.eventbrite.attendee",
+    "iosAppId": "6Q9LU82ADJ.com.eventbrite.attendee-dev",
+    "fetchedAt": "2026-07-20T14:26:08.450Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "expedia.com",
+    "androidPackage": "com.expedia.bookings",
+    "iosAppId": "P3Y8M6JZU8.com.expedia.booking",
+    "fetchedAt": "2026-07-20T14:25:37.518Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "expressvpn.com",
+    "androidPackage": "com.expressvpn.vpn",
+    "iosAppId": "TC292Y5427.com.expressvpn.keys",
+    "fetchedAt": "2026-07-20T14:26:11.963Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "fanatics.com",
+    "androidPackage": "com.fanatics",
+    "fetchedAt": "2026-07-20T14:25:57.770Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "fandango.com",
+    "androidPackage": "com.fandango",
+    "iosAppId": "MFX9CD4PS2.com.fandango.fandango",
+    "fetchedAt": "2026-07-20T14:26:10.571Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "fanduel.com",
+    "androidPackage": "com.fanduel.android.self",
+    "iosAppId": "DPJCBP4XCC.com.fanduel.fd",
+    "fetchedAt": "2026-07-20T14:25:52.593Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "fantasy.espn.com",
+    "androidPackage": "com.espn.fantasy.lm.football",
+    "iosAppId": "WZ62FEL3UG.com.espn.fantasyFootball",
+    "fetchedAt": "2026-07-20T14:25:51.150Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "fedex.com",
+    "iosAppId": "SARSE24G85.com.fedex.mobile.home",
+    "fetchedAt": "2026-07-20T14:26:35.039Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "feeld.co",
+    "androidPackage": "co.feeld",
+    "iosAppId": "ZW52DEQT56.com.3nder.threender",
+    "fetchedAt": "2026-07-20T14:25:42.518Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "fetchrewards.com",
+    "androidPackage": "com.fetchrewards.fetchrewards.hop",
+    "iosAppId": "T3N3AJ6CDC.com.FetchRewards.HopBeta",
+    "fetchedAt": "2026-07-20T14:26:13.463Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "feverup.com",
+    "androidPackage": "com.feverup.fever",
+    "iosAppId": "YJKEGM9Y89.com.feverup.iphone",
+    "fetchedAt": "2026-07-20T14:26:27.705Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "fidelity.com",
+    "androidPackage": "com.fidelity.android",
+    "iosAppId": "J2C42ST93X.com.fidelity.watchlist-Debug",
+    "fetchedAt": "2026-07-20T14:25:25.496Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "figma.com",
+    "androidPackage": "com.figma.figma",
+    "iosAppId": "T8RA8NE3B7.com.figma.FigJam",
+    "fetchedAt": "2026-07-20T14:25:59.436Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "finance.yahoo.com",
+    "androidPackage": "com.yahoo.mobile.client.android.finance",
+    "iosAppId": "QS9LQ3Q4ZB.com.yahoo.finance",
+    "fetchedAt": "2026-07-20T14:26:15.613Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "fitbit.com",
+    "androidPackage": "com.fitbit.FitbitMobile",
+    "iosAppId": "EQHXZ8M8AV.com.fitbit.FitbitMobile",
+    "fetchedAt": "2026-07-20T14:25:54.296Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "fiverr.com",
+    "androidPackage": "com.fiverr.fiverr",
+    "iosAppId": "5GH3QR868T.com.fiverr.fiverr",
+    "fetchedAt": "2026-07-20T14:26:07.928Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "flashscore.com",
+    "androidPackage": "eu.livesport.FlashScore_com",
+    "iosAppId": "R9AYPG35ES.eu.livesport.FlashScore-com",
+    "fetchedAt": "2026-07-20T14:26:14.443Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "flic.kr",
+    "androidPackage": "com.yahoo.mobile.client.android.flickr",
+    "fetchedAt": "2026-07-20T14:25:12.739Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "flickr.com",
+    "androidPackage": "com.yahoo.mobile.client.android.flickr",
+    "fetchedAt": "2026-07-20T14:25:12.878Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "flighty.com",
+    "iosAppId": "S2S5W67TVM.com.flightyapp.flighty",
+    "fetchedAt": "2026-07-20T14:25:41.017Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "flipboard.com",
+    "androidPackage": "flipboard.app",
+    "iosAppId": "GKN98LHTNU.com.flipboard.flipboard-ipad",
+    "fetchedAt": "2026-07-20T14:25:50.327Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "flixbus.com",
+    "androidPackage": "de.flixbus.app",
+    "iosAppId": "ZYSQ942W4A.com.flixbus.ios.Flixbus",
+    "fetchedAt": "2026-07-20T14:26:19.785Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "flo.health",
+    "androidPackage": "org.iggymedia.periodtracker",
+    "iosAppId": "PL43F3STB6.org.iggymedia.periodtracker",
+    "fetchedAt": "2026-07-20T14:25:55.384Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "forms.google.com",
+    "androidPackage": "com.google.android.calendar",
+    "fetchedAt": "2026-07-20T14:26:29.149Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "fortnite.com",
+    "androidPackage": "com.epicgames.fortnite",
+    "iosAppId": "JPKKQ2FLA9.com.epicgames.FortniteGame",
+    "fetchedAt": "2026-07-20T14:25:43.652Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "foxnews.com",
+    "androidPackage": "com.foxnews.android",
+    "iosAppId": "M8F23V7DRN.com.foxnews.foxnews",
+    "fetchedAt": "2026-07-20T14:25:47.479Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "foxsports.com",
+    "androidPackage": "com.foxsports.android",
+    "iosAppId": "RQEWGPBCKN.com.uie.foxsports",
+    "fetchedAt": "2026-07-20T14:25:52.820Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "freeletics.com",
+    "androidPackage": "com.freeletics.lite",
+    "fetchedAt": "2026-07-20T14:26:22.432Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "future.co",
+    "androidPackage": "co.future.future",
+    "iosAppId": "R326997776.fit.future.FutureTrainer",
+    "fetchedAt": "2026-07-20T14:26:21.559Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "gametime.co",
+    "androidPackage": "com.gametime.gametime",
+    "iosAppId": "XRYNDA78J5.com.gametimeunited.gametime",
+    "fetchedAt": "2026-07-20T14:26:09.659Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "gc.com",
+    "iosAppId": "KCS6SA8QRM.com.gamechanger.odyssey.dev",
+    "fetchedAt": "2026-07-20T14:26:14.474Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "gemini.com",
+    "androidPackage": "com.gemini.android.app",
+    "iosAppId": "P4LZFPM2NH.com.gemini.ios",
+    "fetchedAt": "2026-07-20T14:25:25.550Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "gemini.google.com",
+    "androidPackage": "com.google.android.googlequicksearchbox",
+    "fetchedAt": "2026-07-20T14:26:00.478Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "genius.com",
+    "androidPackage": "com.genius.android",
+    "iosAppId": "HV6K4MJNS7.com.rapgenius.RapGenius",
+    "fetchedAt": "2026-07-20T14:25:15.027Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "getepic.com",
+    "androidPackage": "com.getepic.Epic",
+    "iosAppId": "X9J2SG7MB3.com.getepic.Epic",
+    "fetchedAt": "2026-07-20T14:26:10.584Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "gettr.com",
+    "androidPackage": "com.gettr.gettr",
+    "iosAppId": "L2L3MG83L7.org.gsuite.getter",
+    "fetchedAt": "2026-07-20T14:25:12.561Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "getupside.com",
+    "androidPackage": "com.upside.consumer.android",
+    "iosAppId": "UUG8AAG4UJ.com.upside-services.consumer.beta",
+    "fetchedAt": "2026-07-20T14:26:13.765Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "getyourguide.com",
+    "androidPackage": "com.getyourguide.android",
+    "iosAppId": "J6U58DBP3W.com.getyourguide.mobile.GetYourGuide",
+    "fetchedAt": "2026-07-20T14:25:40.278Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "glassdoor.com",
+    "androidPackage": "com.glassdoor.app",
+    "iosAppId": "F5PU4V3PYS.com.glassdoor.glassdoor",
+    "fetchedAt": "2026-07-20T14:26:07.401Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "goat.com",
+    "androidPackage": "com.airgoat.goat",
+    "iosAppId": "CXGSXBF95K.com.airgoat.goat.ios",
+    "fetchedAt": "2026-07-20T14:25:21.316Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "gofundme.com",
+    "androidPackage": "com.GoFundMe.GoFundMe",
+    "iosAppId": "4M4YALCW44.com.GoFundMe.GoFundMeNative",
+    "fetchedAt": "2026-07-20T14:26:13.235Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "golfnow.com",
+    "androidPackage": "com.golfnow.android.teetimes",
+    "iosAppId": "BDV962D9D3.com.golfnow.teetimes",
+    "fetchedAt": "2026-07-20T14:26:14.218Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "goodnotes.com",
+    "androidPackage": "com.goodnotes.android.app.internal",
+    "iosAppId": "5UAR78B6YU.com.goodnotesapp.x",
+    "fetchedAt": "2026-07-20T14:26:29.273Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "goodreads.com",
+    "androidPackage": "com.goodreads",
+    "iosAppId": "5YVYQ4B8Y3.com.goodreads.Goodreads",
+    "fetchedAt": "2026-07-20T14:26:05.565Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "goodrx.com",
+    "androidPackage": "com.goodrx",
+    "iosAppId": "YUV7GJ58WM.com.goodrx.iphone",
+    "fetchedAt": "2026-07-20T14:25:58.608Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "google.com",
+    "androidPackage": "com.google.android.calendar",
+    "iosAppId": "EQHXZ8M8AV.com.google.Dzimuth",
+    "fetchedAt": "2026-07-20T14:25:38.046Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "grab.com",
+    "androidPackage": "com.grabtaxi.passenger",
+    "iosAppId": "C9YMA892DM.com.grabtaxi.iphone",
+    "fetchedAt": "2026-07-20T14:25:42.762Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "grailed.com",
+    "iosAppId": "4KAP7RVPUM.com.grailed.production",
+    "fetchedAt": "2026-07-20T14:26:14.279Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "grammarly.com",
+    "iosAppId": "W8F64X92K3.com.grammarly.keyboard",
+    "fetchedAt": "2026-07-20T14:26:00.602Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "grindr.com",
+    "androidPackage": "com.grindrapp.android",
+    "iosAppId": "FPRFH6UX32.com.grindrguy.grindrx",
+    "fetchedAt": "2026-07-20T14:25:42.138Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "grok.com",
+    "androidPackage": "ai.x.grok",
+    "iosAppId": "N66CZ3Y3BX.ai.x.GrokApp",
+    "fetchedAt": "2026-07-20T14:26:16.669Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "ground.news",
+    "androidPackage": "com.checkitt",
+    "iosAppId": "L4UQTVFQ8H.com.checkitt.fivedotzero",
+    "fetchedAt": "2026-07-20T14:25:51.234Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "groupme.com",
+    "androidPackage": "com.groupme.android",
+    "iosAppId": "AL798K98FX.com.groupme.staging.ios",
+    "fetchedAt": "2026-07-20T14:25:13.549Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "groupon.com",
+    "androidPackage": "com.groupon",
+    "iosAppId": "88Z927TPUG.com.groupon.enterprise.iosgroupon",
+    "fetchedAt": "2026-07-20T14:25:22.679Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "grubhub.com",
+    "androidPackage": "com.grubhub.android",
+    "iosAppId": "R8P2F5WUB5.com.grubhub.search",
+    "fetchedAt": "2026-07-20T14:25:31.488Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "gymshark.com",
+    "androidPackage": "com.gymshark.store",
+    "fetchedAt": "2026-07-20T14:26:18.456Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "headspace.com",
+    "androidPackage": "com.getsomeheadspace.android",
+    "iosAppId": "8U4L6KPLY8.com.getsomeheadspace.headspace",
+    "fetchedAt": "2026-07-20T14:25:54.666Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "hertz.com",
+    "androidPackage": "com.hertz.android.digital",
+    "iosAppId": "A4VWQP4BG8.com.hertz.HertzDigital",
+    "fetchedAt": "2026-07-20T14:25:40.535Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "high5casino.com",
+    "iosAppId": "TAEF2WNX6P.H5G.High5GamesLobby",
+    "fetchedAt": "2026-07-20T14:26:24.534Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "hilton.com",
+    "androidPackage": "com.hilton.android.hhonors",
+    "iosAppId": "GGMC2N2QG3.com.hilton.hhonors-uat",
+    "fetchedAt": "2026-07-20T14:25:43.584Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "hily.com",
+    "androidPackage": "com.hily.app",
+    "iosAppId": "P8CGRS82R9.com.hily.ios",
+    "fetchedAt": "2026-07-20T14:26:29.657Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "hinge.co",
+    "androidPackage": "co.hinge.app",
+    "iosAppId": "ZJ7R546CUS.co.hinge.mobile.ios",
+    "fetchedAt": "2026-07-20T14:25:41.306Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "home.google.com",
+    "androidPackage": "com.google.android.apps.chromecast.app",
+    "iosAppId": "EQHXZ8M8AV.com.google.Chromecast.dev",
+    "fetchedAt": "2026-07-20T14:26:32.427Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "homedepot.com",
+    "androidPackage": "com.thehomedepot",
+    "iosAppId": "Z7KK6K4Z85.com.thehomedepot.inhouse",
+    "fetchedAt": "2026-07-20T14:25:19.536Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "hopper.com",
+    "androidPackage": "com.hopper.mountainview.play",
+    "iosAppId": "T3Y7AH67CB.com.hopper.flights",
+    "fetchedAt": "2026-07-20T14:25:37.799Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "hostelworld.com",
+    "androidPackage": "com.hostelworld.app",
+    "iosAppId": "US876KJUYE.MW4X37V37K.com.webreservationsinternational.hostelworld",
+    "fetchedAt": "2026-07-20T14:26:18.936Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "hotpads.com",
+    "androidPackage": "com.hotpads.mobile",
+    "iosAppId": "UNRDVTU5G4.com.hotpads.hotpadsapp",
+    "fetchedAt": "2026-07-20T14:26:07.604Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "huffpost.com",
+    "androidPackage": "com.huffingtonpost.android",
+    "iosAppId": "N9DY7ZBXC.com.huffingtonpost.HuffingtonPost",
+    "fetchedAt": "2026-07-20T14:25:49.880Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "ibotta.com",
+    "androidPackage": "com.ibotta.android",
+    "iosAppId": "G65CZ2W53U.com.ibotta.Ibotta",
+    "fetchedAt": "2026-07-20T14:26:13.341Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "icloud.com",
+    "iosAppId": "D7A76P9MXY.com.apple.business-essentials",
+    "fetchedAt": "2026-07-20T14:26:01.635Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "iheart.com",
+    "androidPackage": "com.clearchannel.iheartradio.controller",
+    "iosAppId": "4GM6SC34JU.com.clearchannel.iheartradio",
+    "fetchedAt": "2026-07-20T14:25:15.501Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "ikea.com",
+    "androidPackage": "com.ingka.ikea.app.debug",
+    "iosAppId": "V8C63AZFLW.com.ingka.ikea.app",
+    "fetchedAt": "2026-07-20T14:25:23.363Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "imdb.com",
+    "androidPackage": "com.imdb.mobile",
+    "fetchedAt": "2026-07-20T14:26:10.060Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "indeed.com",
+    "iosAppId": "FWTCJ36629.com.indeed.JobSearch",
+    "fetchedAt": "2026-07-20T14:26:07.028Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "inshot.com",
+    "androidPackage": "com.camerasideas.instashot",
+    "iosAppId": "95Z329CVDQ.com.camerasideas.InstaShot",
+    "fetchedAt": "2026-07-20T14:25:57.737Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "insighttimer.com",
+    "androidPackage": "co.insight.circles",
+    "iosAppId": "3PKHQ2J9C9.co.insight.flutter.internal",
+    "fetchedAt": "2026-07-20T14:25:56.916Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "instacart.com",
+    "androidPackage": "com.instacart.client",
+    "iosAppId": "US7L9B4PT3.com.instacart",
+    "fetchedAt": "2026-07-20T14:25:31.752Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "intuit.com",
+    "androidPackage": "com.intuit.spc.authorization.demo",
+    "fetchedAt": "2026-07-20T14:25:31.239Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "jerseymikes.com",
+    "androidPackage": "com.seattleapplab.jerseymikes",
+    "iosAppId": "K4QFLAS6MT.com.splickit.jerseymikes",
+    "fetchedAt": "2026-07-20T14:26:24.196Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "jetblue.com",
+    "androidPackage": "com.jetblue.JetBlueAndroid",
+    "iosAppId": "WFTGUDV3AL.com.jetblue.jetBlueiPhone",
+    "fetchedAt": "2026-07-20T14:25:39.100Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "joinhandshake.com",
+    "androidPackage": "com.joinhandshake.student.debug",
+    "iosAppId": "GM4XG8L2EG.com.joinhandshake.Handshake.student",
+    "fetchedAt": "2026-07-20T14:26:07.927Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "joinhoney.com",
+    "androidPackage": "com.joinhoney.honeyandroid",
+    "iosAppId": "4NREU46PA6.com.joinhoney.honey",
+    "fetchedAt": "2026-07-20T14:26:13.572Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "justwatch.com",
+    "androidPackage": "com.justwatch.justwatch",
+    "iosAppId": "3X2KFVEL8W.com.justwatch.justwatch",
+    "fetchedAt": "2026-07-20T14:26:09.683Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "kahoot.it",
+    "androidPackage": "no.mobitroll.kahoot.android",
+    "iosAppId": "F26GGDGPN9.no.mobitroll.kahoot.controller",
+    "fetchedAt": "2026-07-20T14:26:03.058Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "kayak.com",
+    "androidPackage": "com.kayak.android",
+    "iosAppId": "3B4NQZ2AF9.com.kayak.travel",
+    "fetchedAt": "2026-07-20T14:25:37.732Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "keep.google.com",
+    "androidPackage": "com.google.android.keep",
+    "iosAppId": "EQHXZ8M8AV.com.google.Keep.dev",
+    "fetchedAt": "2026-07-20T14:26:00.977Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "khanacademy.org",
+    "androidPackage": "org.khanacademy.android",
+    "iosAppId": "VAEW37C5T2.org.khanacademy.Khan-Academy",
+    "fetchedAt": "2026-07-20T14:26:02.420Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "kick.com",
+    "androidPackage": "com.kick.mobile",
+    "iosAppId": "3FQ3GVMB8M.com.kick.mobile",
+    "fetchedAt": "2026-07-20T14:25:22.305Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "kidsa-z.com",
+    "iosAppId": "SE229W5FUT.com.learningaz.learningaz",
+    "fetchedAt": "2026-07-20T14:26:32.042Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "kik.me",
+    "androidPackage": "kik.android",
+    "iosAppId": "NNXL87L6MJ.com.kik.chat",
+    "fetchedAt": "2026-07-20T14:25:13.061Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "klarna.com",
+    "androidPackage": "com.myklarnamobile",
+    "iosAppId": "UEGP57UW3K.com.klarna.app",
+    "fetchedAt": "2026-07-20T14:25:28.091Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "kleinanzeigen.de",
+    "androidPackage": "com.ebay.kleinanzeigen",
+    "iosAppId": "ZK8CUL6MAB.com.ebaykleinanzeigen.ebc",
+    "fetchedAt": "2026-07-20T14:25:22.960Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "kraken.com",
+    "androidPackage": "com.kraken.invest.app",
+    "iosAppId": "DTZ67286B9.com.kraken.invest.app",
+    "fetchedAt": "2026-07-20T14:25:24.819Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "kucoin.com",
+    "androidPackage": "com.kubi.kucoin",
+    "iosAppId": "7FT36QAGY5.com.kucoin.KuCoin.iOS",
+    "fetchedAt": "2026-07-20T14:26:21.113Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "kwai.com",
+    "androidPackage": "com.smile.gifmaker",
+    "iosAppId": "482229B692.com.kwai.bulldog",
+    "fetchedAt": "2026-07-20T14:26:18.066Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "lastpass.com",
+    "iosAppId": "GFNFVT632V.com.lastpass.ilastpass",
+    "fetchedAt": "2026-07-20T14:26:01.198Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "lemon8-app.com",
+    "androidPackage": "com.bd.nproject",
+    "iosAppId": "T5C4RC54A6.com.bd.nproject",
+    "fetchedAt": "2026-07-20T14:25:12.660Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "letterboxd.com",
+    "androidPackage": "com.letterboxd.letterboxd",
+    "iosAppId": "AET85E74M5.com.letterboxd.LetterboxdApp",
+    "fetchedAt": "2026-07-20T14:26:09.836Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "libbyapp.com",
+    "androidPackage": "com.overdrive.mobile.android.libby",
+    "iosAppId": "KESSA68L6X.com.overdrive.dewey",
+    "fetchedAt": "2026-07-20T14:26:05.129Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "life360.com",
+    "iosAppId": "JZ9NFD7EET.com.life360.safetymap",
+    "fetchedAt": "2026-07-20T14:26:11.667Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "lightroom.adobe.com",
+    "androidPackage": "com.adobe.lrmobile",
+    "iosAppId": "FD8MZA7LCQ.com.adobe.lrmobilephone-enterprise",
+    "fetchedAt": "2026-07-20T14:25:57.442Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "likee.video",
+    "androidPackage": "video.like",
+    "iosAppId": "92LYFY28ZA.video.like",
+    "fetchedAt": "2026-07-20T14:26:15.912Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "liketoknow.it",
+    "iosAppId": "4WQP329G4K.com.rewardstyle.ltk",
+    "fetchedAt": "2026-07-20T14:26:27.032Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "line.me",
+    "androidPackage": "jp.naver.line.android",
+    "iosAppId": "ZW4U99SQQ3.jp.naver.line",
+    "fetchedAt": "2026-07-20T14:25:14.021Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "linktr.ee",
+    "androidPackage": "ee.linktr.admin",
+    "iosAppId": "N5PHCTWK29.ee.linktr.admin",
+    "fetchedAt": "2026-07-20T14:26:27.324Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "loom.com",
+    "androidPackage": "com.loom.android",
+    "iosAppId": "QGD2ZPXZZG.com.loom.LoomApp",
+    "fetchedAt": "2026-07-20T14:26:26.985Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "loseit.com",
+    "androidPackage": "com.fitnow.loseit",
+    "iosAppId": "E7845U7667.com.fitnow.loseit",
+    "fetchedAt": "2026-07-20T14:26:21.849Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "lowes.com",
+    "iosAppId": "M9JWF6L2BA.com.lowes.consumer.m9",
+    "fetchedAt": "2026-07-20T14:25:19.705Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "lu.ma",
+    "androidPackage": "com.luma.studio.dev",
+    "iosAppId": "RVS4KQ8A32.com.luma.mobile",
+    "fetchedAt": "2026-07-20T14:26:09.534Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "lyft.com",
+    "androidPackage": "me.lyft.android",
+    "iosAppId": "45SNFQQ3JX.com.lyft.ios.rc",
+    "fetchedAt": "2026-07-20T14:25:36.110Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "m.me",
+    "androidPackage": "com.facebook.orca",
+    "iosAppId": "T84QZS65DQ.com.facebook.MessengerDev",
+    "fetchedAt": "2026-07-20T14:25:12.889Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "mail.google.com",
+    "androidPackage": "com.google.android.apps.dynamite",
+    "iosAppId": "EQHXZ8M8AV.com.google.Dzimuth",
+    "fetchedAt": "2026-07-20T14:26:00.072Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "mail.yahoo.com",
+    "androidPackage": "com.yahoo.mobile.client.android.mail",
+    "iosAppId": "QS9LQ3Q4ZB.com.yahoo.Aerogram",
+    "fetchedAt": "2026-07-20T14:26:14.927Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "marcopolo.me",
+    "androidPackage": "co.happybits.marcopolo",
+    "iosAppId": "6L379HCV5Q.co.happybits.marcopolo",
+    "fetchedAt": "2026-07-20T14:26:15.156Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "marriott.com",
+    "androidPackage": "com.marriott.mrt",
+    "iosAppId": "GZDDXE66N4.com.marriott.iphoneprod",
+    "fetchedAt": "2026-07-20T14:25:39.801Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "mastodon.social",
+    "androidPackage": "org.joinmastodon.android",
+    "iosAppId": "5Z4GVSS33P.org.joinmastodon.app",
+    "fetchedAt": "2026-07-20T14:25:11.831Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "match.com",
+    "androidPackage": "com.match.android.matchmobile.debug",
+    "fetchedAt": "2026-07-20T14:25:41.515Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "mcluck.com",
+    "iosAppId": "3CW565P27P.com.mcluck.app",
+    "fetchedAt": "2026-07-20T14:26:25.607Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "medium.com",
+    "androidPackage": "com.medium.reader",
+    "fetchedAt": "2026-07-20T14:25:50.693Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "meet.google.com",
+    "androidPackage": "com.google.android.apps.meetings",
+    "iosAppId": "EQHXZ8M8AV.com.google.Tachyon.dev",
+    "fetchedAt": "2026-07-20T14:25:13.593Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "meetup.com",
+    "androidPackage": "com.meetup",
+    "iosAppId": "PGZ9UEB42C.com.meetup.iphone",
+    "fetchedAt": "2026-07-20T14:25:11.906Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "memrise.com",
+    "androidPackage": "com.memrise.android.memrisecompanion",
+    "iosAppId": "6QB3FE4XX8.com.memrise.ios.memrisecompanion",
+    "fetchedAt": "2026-07-20T14:26:03.209Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "mercari.com",
+    "androidPackage": "com.kouzoh.mercari",
+    "iosAppId": "2CCV6DZ29E.com.kouzoh.ios.mercari",
+    "fetchedAt": "2026-07-20T14:25:21.072Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "messenger.com",
+    "androidPackage": "com.facebook.orca",
+    "iosAppId": "T84QZS65DQ.com.facebook.MessengerDev",
+    "fetchedAt": "2026-07-20T14:25:13.098Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "miro.com",
+    "androidPackage": "com.realtimeboard",
+    "fetchedAt": "2026-07-20T14:26:27.162Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "mlb.com",
+    "androidPackage": "com.bamnetworks.mobile.android.ballpark",
+    "iosAppId": "826DJ6Z2F6.com.mlb.AtBatUniversal",
+    "fetchedAt": "2026-07-20T14:25:52.516Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "moises.ai",
+    "androidPackage": "ai.moises",
+    "iosAppId": "DZA2L753SZ.ai.moises",
+    "fetchedAt": "2026-07-20T14:26:25.601Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "monday.com",
+    "androidPackage": "com.dapulse.dapulse",
+    "iosAppId": "XWKDRVV69Q.com.monday.monday",
+    "fetchedAt": "2026-07-20T14:26:00.064Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "moneygram.com",
+    "androidPackage": "com.mgi.moneygram",
+    "iosAppId": "E6ZBU4PQ4X.com.moneygram.us",
+    "fetchedAt": "2026-07-20T14:25:29.730Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "monopolygo.com",
+    "androidPackage": "com.scopely.monopolygo",
+    "fetchedAt": "2026-07-20T14:26:33.115Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "moomoo.com",
+    "androidPackage": "com.moomoo.trade",
+    "iosAppId": "ML4NZ93QE4.cn.futu.beta.MooMoo",
+    "fetchedAt": "2026-07-20T14:25:31.901Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "music.amazon.com",
+    "androidPackage": "com.amazon.mp3",
+    "iosAppId": "J7P34ALZ5R.com.amazon.mp3.AmazonCloudPlayer",
+    "fetchedAt": "2026-07-20T14:25:14.731Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "musixmatch.com",
+    "androidPackage": "com.musixmatch.android.lyrify",
+    "iosAppId": "27CS5H9W94.com.musixmatch.lyrics",
+    "fetchedAt": "2026-07-20T14:26:25.524Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "myfitnesspal.com",
+    "iosAppId": "67J3X6WE9S.com.myfitnesspal.mfp",
+    "fetchedAt": "2026-07-20T14:25:58.514Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "myradar.com",
+    "androidPackage": "com.acmeaom.android.myradar",
+    "iosAppId": "PAJ97769R6.com.fboweb.MyRadar",
+    "fetchedAt": "2026-07-20T14:26:04.782Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "nba.com",
+    "androidPackage": "com.nbaimd.gametime.nba2011",
+    "iosAppId": "R82Z59VL4K.com.nbaimd.gametime.universal",
+    "fetchedAt": "2026-07-20T14:25:51.959Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "nbcnews.com",
+    "androidPackage": "com.zumobi.msnbc",
+    "iosAppId": "6B3RPZJG5Q.com.nbcnews.news.debug",
+    "fetchedAt": "2026-07-20T14:25:48.543Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "nebula.tv",
+    "androidPackage": "tv.standard.nebula",
+    "iosAppId": "6F3598MKGR.tv.standard.watch",
+    "fetchedAt": "2026-07-20T14:26:16.476Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "netflix.com",
+    "androidPackage": "com.netflix.mediaclient",
+    "iosAppId": "YXNLG53YV4.com.netflix.Netflix",
+    "fetchedAt": "2026-07-20T14:25:16.279Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "newegg.com",
+    "androidPackage": "com.newegg.app",
+    "iosAppId": "9V9727G2SL.com.newegg.iphone",
+    "fetchedAt": "2026-07-20T14:25:23.430Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "news.google.com",
+    "androidPackage": "com.google.android.apps.magazines",
+    "iosAppId": "EQHXZ8M8AV.com.google.GoogleDigitalEditions.dev",
+    "fetchedAt": "2026-07-20T14:25:45.990Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "newsbreak.com",
+    "androidPackage": "com.particlenews.newsbreak",
+    "iosAppId": "4PEHUZX8QH.com.particlenews.newsbreak",
+    "fetchedAt": "2026-07-20T14:26:28.897Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "nextdoor.co.uk",
+    "androidPackage": "com.nextdoor.android.developer",
+    "iosAppId": "97UX9W5BN3.com.nextdoor.ios.debug",
+    "fetchedAt": "2026-07-20T14:26:20.042Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "nextdoor.com",
+    "androidPackage": "com.nextdoor.android.developer",
+    "iosAppId": "97UX9W5BN3.com.nextdoor.ios.debug",
+    "fetchedAt": "2026-07-20T14:25:12.354Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "nfl.com",
+    "androidPackage": "com.gotv.nflgamecenter.us.lite.debug",
+    "fetchedAt": "2026-07-20T14:25:52.323Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "nhl.com",
+    "androidPackage": "com.nhl.mobile.android.dev",
+    "iosAppId": "W2BAY7NQY9.com.nhl.gc1112.free",
+    "fetchedAt": "2026-07-20T14:25:52.796Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "nightout.com",
+    "iosAppId": "F6Z65UUZZ6.com.DustyynStutsman.NightOut",
+    "fetchedAt": "2026-07-20T14:26:28.025Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "nike.com",
+    "androidPackage": "com.nike.omega.debug",
+    "iosAppId": "TUAY2R77EV.com.nike.pass",
+    "fetchedAt": "2026-07-20T14:25:23.020Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "nintendo.com",
+    "androidPackage": "com.nintendo.deepen.qa",
+    "iosAppId": "7W6L9J77EJ.com.dena.deepen.proto",
+    "fetchedAt": "2026-07-20T14:25:46.430Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "nordstrom.com",
+    "androidPackage": "com.nordstrom.app",
+    "iosAppId": "JA4N2HK74D.com.nordstrom.shopping",
+    "fetchedAt": "2026-07-20T14:25:20.794Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "notability.com",
+    "androidPackage": "com.gingerlabs.notability",
+    "iosAppId": "ZP9ZJ4EF3S.com.gingerlabs.Notability",
+    "fetchedAt": "2026-07-20T14:26:28.586Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "notion.com",
+    "androidPackage": "notion.id",
+    "iosAppId": "LBQJ96FQ8D.so.notion.NotionAI.Prod",
+    "fetchedAt": "2026-07-20T14:25:58.916Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "notion.so",
+    "androidPackage": "notion.id",
+    "iosAppId": "LBQJ96FQ8D.so.notion.NotionAI.Prod",
+    "fetchedAt": "2026-07-20T14:25:58.519Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "nytimes.com",
+    "androidPackage": "com.nytimes.crossword",
+    "iosAppId": "FL458598BU.com.nytimes.wordgame",
+    "fetchedAt": "2026-07-20T14:25:47.004Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "offerup.com",
+    "iosAppId": "MUW89EBTSQ.com.offerup.iphone.consumer",
+    "fetchedAt": "2026-07-20T14:25:21.276Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "okcupid.com",
+    "androidPackage": "com.okcupid.okcupid",
+    "iosAppId": "UW93SC9KA8.com.okcupid.app",
+    "fetchedAt": "2026-07-20T14:25:41.827Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "okx.com",
+    "androidPackage": "com.okinc.okex",
+    "iosAppId": "D5G53B2K3T.com.okex.OKExAppstoreFull",
+    "fetchedAt": "2026-07-20T14:26:21.463Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "on.soundcloud.com",
+    "androidPackage": "com.soundcloud.android",
+    "iosAppId": "33KQ7TW725.com.soundcloud.TouchApp",
+    "fetchedAt": "2026-07-20T14:25:14.285Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "onedrive.live.com",
+    "androidPackage": "com.microsoft.skydrive",
+    "iosAppId": "9KBH5RKYEW.com.microsoft.Office.Word-dogfood",
+    "fetchedAt": "2026-07-20T14:26:03.694Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "onefootball.com",
+    "androidPackage": "de.motain.iliga",
+    "iosAppId": "8NPKSQD57J.de.motain.iliga",
+    "fetchedAt": "2026-07-20T14:26:14.542Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "onepeloton.com",
+    "androidPackage": "com.onepeloton.callisto.dev",
+    "iosAppId": "N8XX8N8753.com.Peloton.PelotonApp",
+    "fetchedAt": "2026-07-20T14:25:54.446Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "opensea.io",
+    "androidPackage": "io.opensea",
+    "iosAppId": "PFN3HX3K64.io.opensea",
+    "fetchedAt": "2026-07-20T14:26:21.033Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "opentable.com",
+    "iosAppId": "LNB245835Z.com.contextoptional.OpenTable-Beta",
+    "fetchedAt": "2026-07-20T14:25:38.582Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "opera.com",
+    "androidPackage": "com.opera.browser.beta",
+    "fetchedAt": "2026-07-20T14:26:11.597Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "outlook.com",
+    "androidPackage": "com.microsoft.office.outlook",
+    "iosAppId": "9KBH5RKYEW.com.microsoft.Office.Outlook-dev",
+    "fetchedAt": "2026-07-20T14:26:00.950Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "outlook.live.com",
+    "androidPackage": "com.microsoft.office.outlook",
+    "iosAppId": "9KBH5RKYEW.com.microsoft.Office.Outlook-dev",
+    "fetchedAt": "2026-07-20T14:26:00.099Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "overcast.fm",
+    "iosAppId": "7QXYLT27C4.fm.overcast.overcast",
+    "fetchedAt": "2026-07-20T14:25:15.695Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "pandora.com",
+    "androidPackage": "com.pandora.android",
+    "iosAppId": "TZL3PBMFB2.com.pandora.ent",
+    "fetchedAt": "2026-07-20T14:25:14.613Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "paramountplus.com",
+    "androidPackage": "com.cbs.app",
+    "iosAppId": "H443NM7F8H.com.cbsvideo.app",
+    "fetchedAt": "2026-07-20T14:25:16.913Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "partiful.com",
+    "androidPackage": "com.partiful.partiful",
+    "iosAppId": "Z9A649Q6W9.com.partiful.partiful",
+    "fetchedAt": "2026-07-20T14:26:09.220Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "patreon.com",
+    "androidPackage": "com.patreon.android",
+    "iosAppId": "KGU8RNSN6W.com.patreon.iphone.debug",
+    "fetchedAt": "2026-07-20T14:26:06.016Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "pay.google.com",
+    "androidPackage": "com.google.android.gms",
+    "iosAppId": "EQHXZ8M8AV.com.google.paisa.dev",
+    "fetchedAt": "2026-07-20T14:26:11.988Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "paypal.com",
+    "androidPackage": "com.paypal.android.p2pmobile",
+    "iosAppId": "7JMU3EK8QX.com.yourcompany.PPClient",
+    "fetchedAt": "2026-07-20T14:25:25.558Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "paypal.me",
+    "androidPackage": "com.paypal.android.p2pmobile",
+    "iosAppId": "7JMU3EK8QX.com.yourcompany.PPClient",
+    "fetchedAt": "2026-07-20T14:25:24.844Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "pbskids.org",
+    "androidPackage": "org.pbskids.video",
+    "iosAppId": "RFW7J6JK4D.org.pbskids.ipadplayer",
+    "fetchedAt": "2026-07-20T14:26:10.547Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "pca.st",
+    "androidPackage": "au.com.shiftyjelly.pocketcasts",
+    "iosAppId": "PZYM8XX95Q.au.com.shiftyjelly.podcasts",
+    "fetchedAt": "2026-07-20T14:25:15.499Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "peacocktv.com",
+    "androidPackage": "com.peacocktv.peacockandroid",
+    "iosAppId": "W76B757YRY.com.peacocktv.peacock",
+    "fetchedAt": "2026-07-20T14:25:16.547Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "perplexity.ai",
+    "androidPackage": "ai.perplexity.app.android",
+    "iosAppId": "7S8W4W365S.ai.perplexity.app",
+    "fetchedAt": "2026-07-20T14:26:00.604Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "philo.com",
+    "androidPackage": "com.philo.philo.google",
+    "iosAppId": "43CJZE7V3R.com.philo.tv.philo",
+    "fetchedAt": "2026-07-20T14:26:18.052Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "photomath.com",
+    "androidPackage": "com.microblink.photomath",
+    "iosAppId": "7MJF7439SG.com.microblink.PhotoMath",
+    "fetchedAt": "2026-07-20T14:26:02.748Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "photos.google.com",
+    "androidPackage": "com.google.android.apps.photos",
+    "iosAppId": "EQHXZ8M8AV.com.google.photos",
+    "fetchedAt": "2026-07-20T14:26:01.320Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "picsart.com",
+    "androidPackage": "com.picsart.studio",
+    "iosAppId": "LLSV39R9YJ.com.picsart.studio",
+    "fetchedAt": "2026-07-20T14:25:57.247Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "pixlr.com",
+    "androidPackage": "com.pixlr.suite",
+    "iosAppId": "55H6492P44.com.autodesk.ios.pixlrexpressplus",
+    "fetchedAt": "2026-07-20T14:25:58.363Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "playstation.com",
+    "androidPackage": "com.playstation.ohana.android",
+    "iosAppId": "M6K7LRU4YT.com.playstation.ohana.ios",
+    "fetchedAt": "2026-07-20T14:25:46.664Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "pluto.tv",
+    "androidPackage": "tv.pluto.android",
+    "iosAppId": "8J2UZ42BMU.tv.pluto.ios",
+    "fetchedAt": "2026-07-20T14:25:17.072Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "pocketcasts.com",
+    "androidPackage": "au.com.shiftyjelly.pocketcasts",
+    "iosAppId": "PZYM8XX95Q.au.com.shiftyjelly.podcasts",
+    "fetchedAt": "2026-07-20T14:25:15.690Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "podbean.com",
+    "androidPackage": "com.podbean.app.podcast",
+    "iosAppId": "D254M6HU7A.com.podbean.app.business.slalom.sipa",
+    "fetchedAt": "2026-07-20T14:25:16.311Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "poe.com",
+    "androidPackage": "com.poe.android",
+    "iosAppId": "FGJBMX4XZF.com.quora.app.Experts",
+    "fetchedAt": "2026-07-20T14:26:15.961Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "pof.com",
+    "androidPackage": "com.pof.android",
+    "iosAppId": "25DBB538FQ.com.pof.mobileapp.iphone",
+    "fetchedAt": "2026-07-20T14:25:41.824Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "politico.com",
+    "androidPackage": "com.politico.android",
+    "fetchedAt": "2026-07-20T14:25:49.661Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "polymarket.com",
+    "iosAppId": "6M3F56SRFC.com.polymarket.dev",
+    "fetchedAt": "2026-07-20T14:26:24.822Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "popeyes.com",
+    "androidPackage": "com.emn8.mobilem8.nativeapp.popeyes",
+    "iosAppId": "MV75HK3DF3.com.bk.pop-us-mobile.dev",
+    "fetchedAt": "2026-07-20T14:25:34.528Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "posh.vip",
+    "androidPackage": "com.posh.mobile",
+    "iosAppId": "Y7CNZDVSFL.com.poshgroup.POSH",
+    "fetchedAt": "2026-07-20T14:26:27.624Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "poshmark.ca",
+    "androidPackage": "com.poshmark.app",
+    "iosAppId": "3QD76D4AYV.com.poshmark.poshmark",
+    "fetchedAt": "2026-07-20T14:26:24.957Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "poshmark.com",
+    "androidPackage": "com.poshmark.app",
+    "iosAppId": "3QD76D4AYV.com.poshmark.poshmark",
+    "fetchedAt": "2026-07-20T14:25:20.374Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "postmates.com",
+    "androidPackage": "com.ubercab.eats",
+    "iosAppId": "5F83KRY2FH.com.postmates.getitnow",
+    "fetchedAt": "2026-07-20T14:25:31.254Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "preply.com",
+    "androidPackage": "com.preply",
+    "iosAppId": "882TCFU8LB.com.preply",
+    "fetchedAt": "2026-07-20T14:26:03.581Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "priceline.com",
+    "androidPackage": "com.priceline.android.negotiator",
+    "iosAppId": "WEJSSWAG7Y.com.priceline.negotiator",
+    "fetchedAt": "2026-07-20T14:25:37.831Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "primevideo.com",
+    "androidPackage": "com.amazon.avod",
+    "iosAppId": "J7P34ALZ5R.com.amazon.aiv.AIVApp",
+    "fetchedAt": "2026-07-20T14:25:16.097Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "proton.me",
+    "androidPackage": "me.proton.android.calendar",
+    "fetchedAt": "2026-07-20T14:26:00.487Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "pubgmobile.com",
+    "androidPackage": "com.tencent.ig",
+    "iosAppId": "5A4RE8SF68.com.tencent.ig",
+    "fetchedAt": "2026-07-20T14:25:43.810Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "public.com",
+    "androidPackage": "com.public.app",
+    "iosAppId": "UJ49A3947U.com.t3securities.matador",
+    "fetchedAt": "2026-07-20T14:25:30.772Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "quizlet.com",
+    "androidPackage": "com.quizlet.quizletandroid",
+    "iosAppId": "RG76J9B7LZ.com.quizlet.quizlet",
+    "fetchedAt": "2026-07-20T14:26:02.459Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "quora.com",
+    "androidPackage": "com.quora.android",
+    "iosAppId": "FGJBMX4XZF.com.quora.app.mobile",
+    "fetchedAt": "2026-07-20T14:25:12.529Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "rakuten.com",
+    "androidPackage": "com.ebates",
+    "iosAppId": "8SV35BWXT7.com.ebates.EbatesMobile",
+    "fetchedAt": "2026-07-20T14:25:24.470Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "rayatheapp.com",
+    "iosAppId": "774AWVLED8.com.raya.raya",
+    "fetchedAt": "2026-07-20T14:25:42.761Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "read.amazon.com",
+    "androidPackage": "com.amazon.kindle",
+    "iosAppId": "QP4U8H62JL.com.amazon.LassenDev",
+    "fetchedAt": "2026-07-20T14:26:04.648Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "realtor.com",
+    "androidPackage": "com.move.realtor",
+    "iosAppId": "E572G2PKA9.com.move.Realtor.debugClassic",
+    "fetchedAt": "2026-07-20T14:26:07.290Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "redfin.com",
+    "androidPackage": "com.redfin.android",
+    "fetchedAt": "2026-07-20T14:26:06.426Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "reelshort.com",
+    "androidPackage": "com.newleaf.app.android.victor",
+    "iosAppId": "6DYJ82YMKF.com.newleaf.app.ios.vic",
+    "fetchedAt": "2026-07-20T14:26:18.410Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "remini.ai",
+    "androidPackage": "com.bigwinepot.nwdn.international",
+    "iosAppId": "NTDXMJ87SF.com.bigwinepot.nwdn.international",
+    "fetchedAt": "2026-07-20T14:25:58.143Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "rent.com",
+    "androidPackage": "com.rent",
+    "iosAppId": "QTWPSC4W56.com.rent.mobile.iphone.app.internal",
+    "fetchedAt": "2026-07-20T14:26:26.800Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "rentalcars.com",
+    "androidPackage": "com.rentalcars.handset",
+    "iosAppId": "TUY6S497N8.com.rentalcars.RentalCarsTest",
+    "fetchedAt": "2026-07-20T14:26:18.639Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "replika.com",
+    "iosAppId": "CB8NVQ8UT6.ai.replika.app",
+    "fetchedAt": "2026-07-20T14:26:16.494Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "resy.com",
+    "androidPackage": "com.resy.android.prod",
+    "iosAppId": "2N3U3PD693.com.resy.ResyApp",
+    "fetchedAt": "2026-07-20T14:25:34.214Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "reuters.com",
+    "androidPackage": "com.thomsonreuters.reuters",
+    "iosAppId": "388GFW3H7U.com.thomsonreuters.Reuters",
+    "fetchedAt": "2026-07-20T14:25:50.345Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "revolut.com",
+    "androidPackage": "com.revolut.revolut",
+    "iosAppId": "QUZEZSEARC.com.revolut.revolut",
+    "fetchedAt": "2026-07-20T14:25:30.040Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "ring.com",
+    "androidPackage": "com.ringapp",
+    "iosAppId": "F7FKQLB2H9.com.ring",
+    "fetchedAt": "2026-07-20T14:26:32.574Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "riteaid.com",
+    "iosAppId": "M2326J9ZUQ.com.privatemdlabs.ios",
+    "fetchedAt": "2026-07-20T14:26:12.451Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "roadtrippers.com",
+    "androidPackage": "com.roadtrippers",
+    "iosAppId": "LQSS4896YJ.com.roadtrippers.roadtrippersinc",
+    "fetchedAt": "2026-07-20T14:26:19.459Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "robinhood.com",
+    "androidPackage": "com.robinhood.android",
+    "iosAppId": "3M6D9LJW67.com.robinhood.release.Robinhood",
+    "fetchedAt": "2026-07-20T14:25:25.580Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "roblox.com",
+    "androidPackage": "com.roblox.client.vnggames",
+    "iosAppId": "4TC9J43J85.com.roblox.robloxmobile.vnggames",
+    "fetchedAt": "2026-07-20T14:25:43.285Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "rocketmoney.com",
+    "androidPackage": "com.truebill",
+    "iosAppId": "U6BDYM5G56.com.truebill.truebillnative",
+    "fetchedAt": "2026-07-20T14:25:30.862Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "rome2rio.com",
+    "iosAppId": "YL4M37VVQZ.com.rome2rio.Rome2Rio",
+    "fetchedAt": "2026-07-20T14:25:40.140Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "rosettastone.com",
+    "iosAppId": "V52XAGXN5T.com.rosettastone.totale.companionhd",
+    "fetchedAt": "2026-07-20T14:26:02.683Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "rottentomatoes.com",
+    "androidPackage": "com.rottentomatoes.android",
+    "iosAppId": "H22YQMH4RJ.com.rottentomatoes.ios",
+    "fetchedAt": "2026-07-20T14:26:10.218Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "rumble.com",
+    "androidPackage": "com.rumble.battles",
+    "iosAppId": "ML9GQV73M6.com.rumble.battles",
+    "fetchedAt": "2026-07-20T14:25:12.748Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "sameday.costco.com",
+    "androidPackage": "com.costco.app.android",
+    "iosAppId": "MCL67DL73Q.com.costco.costco",
+    "fetchedAt": "2026-07-20T14:25:24.121Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "samsclub.com",
+    "androidPackage": "com.rfi.sams.android",
+    "iosAppId": "TH8KCQF4BE.com.samsclub.samsapp",
+    "fetchedAt": "2026-07-20T14:26:12.906Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "samsung.com",
+    "androidPackage": "com.samsung.android.spay",
+    "iosAppId": "3JU72Z7Y3J.com.samsung.ShopSamsung",
+    "fetchedAt": "2026-07-20T14:26:13.694Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "schwab.com",
+    "androidPackage": "com.schwab.mobile",
+    "iosAppId": "H2NM6D5QNR.com.schwab.schwabmobile",
+    "fetchedAt": "2026-07-20T14:25:27.033Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "scribd.com",
+    "androidPackage": "com.scribd.app.reader0",
+    "iosAppId": "B4X2WQC6F8.com.scribd.iscribd",
+    "fetchedAt": "2026-07-20T14:26:04.921Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "seamless.com",
+    "androidPackage": "com.seamlessweb.android.view",
+    "iosAppId": "3A3THS5CTC.com.seamlessweb.aramarkCustomer",
+    "fetchedAt": "2026-07-20T14:25:31.954Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "seatgeek.com",
+    "androidPackage": "com.seatgeek.android",
+    "iosAppId": "9B3QY9WBZ5.com.seatgeek.SeatGeek",
+    "fetchedAt": "2026-07-20T14:26:08.599Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "shakeshack.com",
+    "androidPackage": "com.shakeshack.android",
+    "iosAppId": "33W8TV4FP8.com.halickman.ShackHQ",
+    "fetchedAt": "2026-07-20T14:26:23.907Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "shazam.com",
+    "androidPackage": "com.shazam.android",
+    "iosAppId": "4GWDBCF5A4.com.shazam.Shazam",
+    "fetchedAt": "2026-07-20T14:25:15.003Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "shein.com",
+    "androidPackage": "com.zzkko",
+    "iosAppId": "HV95DQGN23.zzkko.com.ZZKKO",
+    "fetchedAt": "2026-07-20T14:25:18.891Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "shop.app",
+    "androidPackage": "com.shopify.arrive.debug",
+    "iosAppId": "A7XGC83MZE.com.shopify.arrive-dev",
+    "fetchedAt": "2026-07-20T14:25:20.104Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "shopify.com",
+    "androidPackage": "com.shopify.mobile",
+    "iosAppId": "A7XGC83MZE.com.jadedpixel.shopify",
+    "fetchedAt": "2026-07-20T14:25:23.225Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "shopltk.com",
+    "androidPackage": "com.rewardstyle.liketoknowit",
+    "iosAppId": "4WQP329G4K.com.rewardstyle.ltk",
+    "fetchedAt": "2026-07-20T14:26:26.799Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "shopmy.us",
+    "iosAppId": "TY6PCKS95S.shopmy.development",
+    "fetchedAt": "2026-07-20T14:26:26.581Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "shoppremiumoutlets.com",
+    "androidPackage": "com.shoppremiumoutlets.shoppremiumoutlets",
+    "iosAppId": "YXBS3J86RW.com.shoppremiumoutlets.shoppremiumoutlets.dev",
+    "fetchedAt": "2026-07-20T14:26:22.607Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "signal.group",
+    "androidPackage": "org.thoughtcrime.securesms",
+    "iosAppId": "U68MSDN6DR.org.whispersystems.signal",
+    "fetchedAt": "2026-07-20T14:25:12.965Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "signal.me",
+    "androidPackage": "org.thoughtcrime.securesms",
+    "iosAppId": "U68MSDN6DR.org.whispersystems.signal",
+    "fetchedAt": "2026-07-20T14:25:12.953Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "siriusxm.com",
+    "androidPackage": "com.sirius",
+    "iosAppId": "4L737EPYBG.com.siriusxm.siriusxmonline",
+    "fetchedAt": "2026-07-20T14:25:16.548Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "skillshare.com",
+    "iosAppId": "6F8M5ARDT4.com.skillshare.Skillshare",
+    "fetchedAt": "2026-07-20T14:26:02.689Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "skyscanner.com",
+    "androidPackage": "net.skyscanner.android.main",
+    "iosAppId": "9HPHN9X3R8.net.skyscanner.iphone",
+    "fetchedAt": "2026-07-20T14:25:38.072Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "slack.com",
+    "androidPackage": "com.Slack",
+    "iosAppId": "BQR82RBBHL.com.tinyspeck.chatlyio",
+    "fetchedAt": "2026-07-20T14:25:13.264Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "sleeper.com",
+    "androidPackage": "com.sleeperbot",
+    "iosAppId": "K258NNHCUC.com.blitzstudios.sleeperbot",
+    "fetchedAt": "2026-07-20T14:25:52.916Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "slicelife.com",
+    "iosAppId": "Y223BHAF53.com.mypizza.myi",
+    "fetchedAt": "2026-07-20T14:26:22.944Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "smartnews.com",
+    "androidPackage": "jp.gocro.smartnews.android.debug",
+    "iosAppId": "4WN7GJNZXF.jp.gocro.SmartNewsBeta",
+    "fetchedAt": "2026-07-20T14:25:52.569Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "smartthings.com",
+    "androidPackage": "com.samsung.android.oneconnect",
+    "iosAppId": "EH2N5ZJEGB.com.samsung.smartthings.partnertestapp",
+    "fetchedAt": "2026-07-20T14:26:33.898Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "smule.com",
+    "iosAppId": "9H24ATQZRS.com.smule.sing",
+    "fetchedAt": "2026-07-20T14:26:26.104Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "snackpass.co",
+    "iosAppId": "*",
+    "fetchedAt": "2026-07-20T14:26:35.855Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "sofascore.com",
+    "iosAppId": "ACPF4233H8.com.SofaScore.iOS",
+    "fetchedAt": "2026-07-20T14:26:14.947Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "songkick.com",
+    "androidPackage": "com.songkick",
+    "iosAppId": "UW5WP4H3UJ.com.songkick.iphone",
+    "fetchedAt": "2026-07-20T14:26:15.431Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "soundcloud.com",
+    "androidPackage": "com.soundcloud.android",
+    "iosAppId": "33KQ7TW725.com.soundcloud.TouchApp",
+    "fetchedAt": "2026-07-20T14:25:14.073Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "soundhound.com",
+    "androidPackage": "com.melodis.midomiMusicIdentifier.dev",
+    "iosAppId": "U9TM6KT8KN.com.melodis.midomi",
+    "fetchedAt": "2026-07-20T14:26:26.052Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "southwest.com",
+    "androidPackage": "com.southwestairlines.mobile",
+    "iosAppId": "2QHT4F69Y7.com.southwest.iphone.qa1",
+    "fetchedAt": "2026-07-20T14:25:40.140Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "sparkmailapp.com",
+    "androidPackage": "com.readdle.spark",
+    "iosAppId": "3L68KQB4HG.com.readdle.smartemail",
+    "fetchedAt": "2026-07-20T14:26:00.761Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "spectrum.net",
+    "androidPackage": "com.brighthouse.mybhn",
+    "iosAppId": "94A8R3BGJ2.com.bhn.careapp",
+    "fetchedAt": "2026-07-20T14:26:34.417Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "speedtest.net",
+    "androidPackage": "org.zwanoo.android.speedtest",
+    "iosAppId": "T7285ECWW9.com.ookla.speedtest",
+    "fetchedAt": "2026-07-20T14:26:11.784Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "spirit.com",
+    "iosAppId": "U33TFKH78H.com.spirit.customerapp",
+    "fetchedAt": "2026-07-20T14:25:40.190Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "splitwise.com",
+    "androidPackage": "com.Splitwise.SplitwiseMobile",
+    "iosAppId": "PNVC5FHCQS.com.Splitwise.SplitwiseMobile",
+    "fetchedAt": "2026-07-20T14:26:22.653Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "sports.yahoo.com",
+    "androidPackage": "com.yahoo.mobile.client.android.sportacular",
+    "iosAppId": "QS9LQ3Q4ZB.com.yahoo.ffootball2009",
+    "fetchedAt": "2026-07-20T14:25:51.677Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "spothero.com",
+    "androidPackage": "com.spothero.spothero",
+    "iosAppId": "ZW7QWR628D.com.spothero.spothero",
+    "fetchedAt": "2026-07-20T14:26:20.508Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "spotify.com",
+    "androidPackage": "com.spotify.music",
+    "iosAppId": "8W66MEA7DD.com.spotify.client",
+    "fetchedAt": "2026-07-20T14:25:14.149Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "spreaker.com",
+    "androidPackage": "com.spreaker.android.studio",
+    "iosAppId": "GG64U8YQ23.com.spreaker.Spreaker",
+    "fetchedAt": "2026-07-20T14:25:16.241Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "squareup.com",
+    "androidPackage": "com.squareup",
+    "iosAppId": "V929Z995WP.com.squareup.go.manifest",
+    "fetchedAt": "2026-07-20T14:26:12.137Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "starbucks.com",
+    "androidPackage": "com.starbucks.mobilecard",
+    "iosAppId": "A42UP9V574.com.starbucks.mystarbucks",
+    "fetchedAt": "2026-07-20T14:25:33.441Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "starz.com",
+    "androidPackage": "com.bydeluxe.d3.android.program.starz",
+    "iosAppId": "X688N6C5W3.com.starz.starzplay",
+    "fetchedAt": "2026-07-20T14:25:19.232Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "steamcommunity.com",
+    "androidPackage": "com.valvesoftware.android.steam.friendsui",
+    "iosAppId": "TWKR2QMXJV.com.valvesoftware.Steam",
+    "fetchedAt": "2026-07-20T14:25:43.899Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "steampowered.com",
+    "androidPackage": "com.valvesoftware.steamlink",
+    "iosAppId": "TWKR2QMXJV.com.valvesoftware.SteamLink17",
+    "fetchedAt": "2026-07-20T14:25:44.173Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "step.com",
+    "androidPackage": "com.step.step",
+    "iosAppId": "M7FNG7XMR8.com.step.step",
+    "fetchedAt": "2026-07-20T14:26:17.065Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "stockx.com",
+    "androidPackage": "com.stockx.stockx",
+    "iosAppId": "HNK2965NW5.com.Campless.CamplessDebug",
+    "fetchedAt": "2026-07-20T14:25:20.944Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "store.playstation.com",
+    "androidPackage": "com.scee.psxandroid",
+    "iosAppId": "M6K7LRU4YT.com.playstation.eu.playstationadhoc",
+    "fetchedAt": "2026-07-20T14:26:31.645Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "strava.app.link",
+    "androidPackage": "com.strava",
+    "iosAppId": "5Y955GXQC4.com.strava.stravaride",
+    "fetchedAt": "2026-07-20T14:25:53.579Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "strava.com",
+    "androidPackage": "com.strava",
+    "iosAppId": "5Y955GXQC4.com.strava.stravaride",
+    "fetchedAt": "2026-07-20T14:25:54.330Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "streamyard.com",
+    "iosAppId": "4YUTR59HDU.com.streamyard.studio",
+    "fetchedAt": "2026-07-20T14:26:06.779Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "stubhub.com",
+    "androidPackage": "com.stubhub",
+    "iosAppId": "SQDGL9TDH9.com.stubhub.stubhub",
+    "fetchedAt": "2026-07-20T14:26:08.486Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "substack.com",
+    "androidPackage": "com.substack.app",
+    "iosAppId": "7DGN24C3GR.com.substack.Substack",
+    "fetchedAt": "2026-07-20T14:25:50.397Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "subway.com",
+    "iosAppId": "ZN6FS758HV.com.subway.mobile.subwayapp03",
+    "fetchedAt": "2026-07-20T14:25:37.863Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "suno.com",
+    "androidPackage": "com.suno.android",
+    "iosAppId": "FSA297U4QJ.ai.suno.ios",
+    "fetchedAt": "2026-07-20T14:26:25.565Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "sweatco.in",
+    "androidPackage": "in.sweatco.app",
+    "iosAppId": "3K666JG497.swc",
+    "fetchedAt": "2026-07-20T14:25:56.187Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "target.com",
+    "androidPackage": "com.target.ui",
+    "iosAppId": "D9LCY75JDG.com.target.Target",
+    "fetchedAt": "2026-07-20T14:25:18.541Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "taskrabbit.com",
+    "iosAppId": "65742EK7UT.com.taskrabbit.site",
+    "fetchedAt": "2026-07-20T14:26:09.224Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "teams.microsoft.com",
+    "iosAppId": "SGGM6D27TK.com.microsoft.skype.teams",
+    "fetchedAt": "2026-07-20T14:25:13.123Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "telegram.org",
+    "androidPackage": "org.telegram.messenger",
+    "iosAppId": "X834Q8SBVP.org.telegram.TelegramEnterprise",
+    "fetchedAt": "2026-07-20T14:26:14.816Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "temu.com",
+    "androidPackage": "com.einnovation.temu",
+    "iosAppId": "7UUJS488DP.com.einnovation.temu",
+    "fetchedAt": "2026-07-20T14:25:19.334Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "temu.to",
+    "androidPackage": "com.einnovation.temu",
+    "iosAppId": "7UUJS488DP.com.einnovation.temu",
+    "fetchedAt": "2026-07-20T14:26:17.982Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "theathletic.com",
+    "iosAppId": "X5U5MPSSEX.com.theathletic.news",
+    "fetchedAt": "2026-07-20T14:25:51.321Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "theatlantic.com",
+    "androidPackage": "com.theatlantic.newsstand",
+    "iosAppId": "J3UKB6VR3G.com.rarewire.TheAtlanticNewstand",
+    "fetchedAt": "2026-07-20T14:25:50.101Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "theguardian.com",
+    "androidPackage": "com.guardian",
+    "iosAppId": "Y49PCLYNMG.com.theguardian.jobs",
+    "fetchedAt": "2026-07-20T14:25:48.530Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "theinfatuation.com",
+    "androidPackage": "com.infatuation",
+    "iosAppId": "GK23WF3U33.com.immaculateinfatuation.development",
+    "fetchedAt": "2026-07-20T14:26:29.421Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "theinformation.com",
+    "iosAppId": "94C7LC2D8S.com.theinformation.ticker",
+    "fetchedAt": "2026-07-20T14:26:28.570Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "therealreal.com",
+    "androidPackage": "com.therealreal.app",
+    "iosAppId": "7B4U8KGJ7U.com.realreal.shop",
+    "fetchedAt": "2026-07-20T14:25:22.217Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "thescore.com",
+    "androidPackage": "com.fivemobile.thescore",
+    "iosAppId": "VZJ9RF2P6P.iphone.thescore.com",
+    "fetchedAt": "2026-07-20T14:25:53.512Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "thredup.com",
+    "androidPackage": "com.thredup.android",
+    "iosAppId": "Q22Y59J3RW.com.thredup.thredup",
+    "fetchedAt": "2026-07-20T14:25:21.993Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "ticketmaster.com",
+    "androidPackage": "com.ticketmaster.purchase",
+    "iosAppId": "8A6W445CNR.com.ticketmaster.ios.TicketmasterApp",
+    "fetchedAt": "2026-07-20T14:26:08.668Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "tidal.com",
+    "androidPackage": "com.aspiro.tidal",
+    "iosAppId": "GK2243L7KB.com.aspiro.TIDAL",
+    "fetchedAt": "2026-07-20T14:25:14.796Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "tinder.com",
+    "androidPackage": "com.tinder",
+    "iosAppId": "825DDA558L.com.cardify.tinder",
+    "fetchedAt": "2026-07-20T14:25:41.050Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "toasttab.com",
+    "iosAppId": "Z9U7L58H3Y.com.toasttab.consumer",
+    "fetchedAt": "2026-07-20T14:25:35.652Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "tocaboca.com",
+    "iosAppId": "482VFW4WKQ.com.tocaboca.tocalifeworld",
+    "fetchedAt": "2026-07-20T14:26:11.397Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "todaytix.com",
+    "androidPackage": "com.todaytix.TodayTix",
+    "iosAppId": "7F56JARZV4.com.todaytix.TodayTix",
+    "fetchedAt": "2026-07-20T14:26:09.502Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "todoist.com",
+    "androidPackage": "com.todoist.debug",
+    "iosAppId": "S3DD273774.com.todoist.ios",
+    "fetchedAt": "2026-07-20T14:25:59.546Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "transitapp.com",
+    "androidPackage": "com.thetransitapp.droid",
+    "iosAppId": "55F3M8Q72J.com.thetransitapp.TransitUAT",
+    "fetchedAt": "2026-07-20T14:25:38.214Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "translate.google.com",
+    "androidPackage": "com.google.android.apps.translate",
+    "fetchedAt": "2026-07-20T14:26:11.707Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "trello.com",
+    "androidPackage": "com.trello",
+    "iosAppId": "E398N47F4R.com.fogcreek.trello",
+    "fetchedAt": "2026-07-20T14:25:59.346Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "trip.com",
+    "androidPackage": "ctrip.english",
+    "iosAppId": "9KQ7J6W2H8.com.ctrip.EBooking",
+    "fetchedAt": "2026-07-20T14:25:39.164Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "tripadvisor.com",
+    "androidPackage": "com.tripadvisor.tripadvisor",
+    "iosAppId": "Z74TT3V354.com.tripadvisor.LocalPicks",
+    "fetchedAt": "2026-07-20T14:25:37.852Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "tripit.com",
+    "androidPackage": "com.tripit",
+    "iosAppId": "DV48X9KEJW.com.tripit.tripitmobile",
+    "fetchedAt": "2026-07-20T14:26:19.655Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "trulia.com",
+    "androidPackage": "com.trulia.android",
+    "iosAppId": "9QV5QN2J8K.com.trulia.Trulia",
+    "fetchedAt": "2026-07-20T14:26:06.774Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "trustwallet.com",
+    "androidPackage": "com.wallet.crypto.trustapp",
+    "fetchedAt": "2026-07-20T14:26:20.873Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "truthsocial.com",
+    "androidPackage": "com.truthsocial.android.app",
+    "iosAppId": "2HAHKXVK67.com.tmediatech.truthsocial",
+    "fetchedAt": "2026-07-20T14:25:12.433Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "trycaviar.com",
+    "androidPackage": "com.trycaviar.customer",
+    "iosAppId": "3EDZGXNK2U.com.trycaviar.consumer",
+    "fetchedAt": "2026-07-20T14:25:32.446Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "tumblr.com",
+    "androidPackage": "com.celray",
+    "iosAppId": "84Q69XA6W4.com.tumblr.Orangina",
+    "fetchedAt": "2026-07-20T14:25:12.354Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "tunein.com",
+    "androidPackage": "tunein.player",
+    "iosAppId": "573Q4KYFD5.com.alexanderben.RadioIn",
+    "fetchedAt": "2026-07-20T14:25:15.226Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "turbotax.intuit.com",
+    "androidPackage": "com.intuit.mobile.taxcaster",
+    "iosAppId": "G4SSPX3CBL.com.intuit.turbotax",
+    "fetchedAt": "2026-07-20T14:25:31.040Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "turo.com",
+    "androidPackage": "com.relayrides.android.relayrides",
+    "iosAppId": "2MFS2Q8WAW.com.relayrides.ios.RelayRides",
+    "fetchedAt": "2026-07-20T14:25:39.617Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "tv.apple.com",
+    "androidPackage": "com.apple.atve.androidtv.appletv.internal",
+    "fetchedAt": "2026-07-20T14:25:17.664Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "uber.com",
+    "androidPackage": "com.ubercab",
+    "iosAppId": "5F83KRY2FH.com.ubercab.UberClient.development",
+    "fetchedAt": "2026-07-20T14:25:36.257Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "ubereats.com",
+    "androidPackage": "com.ubercab.eats",
+    "iosAppId": "5F83KRY2FH.com.ubercab.UberDriver.development",
+    "fetchedAt": "2026-07-20T14:25:31.030Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "udio.com",
+    "iosAppId": "652ZVL92NH.com.udio.app",
+    "fetchedAt": "2026-07-20T14:26:26.332Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "ulta.com",
+    "androidPackage": "com.ulta.android.beta",
+    "iosAppId": "RPTNPZP8XG.com.ulta.UltaMcommerceApp",
+    "fetchedAt": "2026-07-20T14:25:21.790Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "ups.com",
+    "androidPackage": "com.ups.mobile.android",
+    "iosAppId": "A4RKX576G3.com.ups.m.beta",
+    "fetchedAt": "2026-07-20T14:26:34.139Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "upside.com",
+    "androidPackage": "com.upside.consumer.android",
+    "iosAppId": "UUG8AAG4UJ.com.upside-services.consumer.beta",
+    "fetchedAt": "2026-07-20T14:26:13.963Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "upwork.com",
+    "androidPackage": "com.upwork.android.apps.main",
+    "iosAppId": "ZS7EHQ26T2.com.upwork.ios.apps.bolt",
+    "fetchedAt": "2026-07-20T14:26:08.804Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "us.shein.com",
+    "iosAppId": "HV95DQGN23.zzkko.com.ZZKKO",
+    "fetchedAt": "2026-07-20T14:25:21.871Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "usatoday.com",
+    "androidPackage": "com.usatoday.android.news",
+    "iosAppId": "JY35TWSU5F.com.usatoday.iPhone20",
+    "fetchedAt": "2026-07-20T14:25:48.140Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "usbank.com",
+    "androidPackage": "com.usbank.mobilebanking",
+    "iosAppId": "EJYWG5SDM6.com.usbank.OmniMobileApp.dev",
+    "fetchedAt": "2026-07-20T14:25:29.250Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "venmo.com",
+    "androidPackage": "com.venmo.fifa",
+    "iosAppId": "55377VK7X2.net.kortina.labs.Venmo.debug",
+    "fetchedAt": "2026-07-20T14:25:23.658Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "vestiairecollective.com",
+    "iosAppId": "5TP5ZB68CC.com.vestiairedecopines.vestiaire",
+    "fetchedAt": "2026-07-20T14:26:13.694Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "viator.com",
+    "androidPackage": "com.viator.mobile.android.debug",
+    "iosAppId": "7H2E22K3FN.com.viator",
+    "fetchedAt": "2026-07-20T14:25:40.868Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "viki.com",
+    "androidPackage": "com.viki.android",
+    "iosAppId": "SNU9N24VYW.com.viki.viki-ios",
+    "fetchedAt": "2026-07-20T14:25:17.599Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "vimeo.com",
+    "androidPackage": "com.vimeo.android.videoapp",
+    "iosAppId": "35R365FS4Q.com.vimeo.universallinkz",
+    "fetchedAt": "2026-07-20T14:25:17.304Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "vinted.com",
+    "androidPackage": "fr.vinted",
+    "iosAppId": "4Y2CNF6C99.lt.manodrabuziai.fr",
+    "fetchedAt": "2026-07-20T14:25:21.096Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "vividseats.com",
+    "androidPackage": "com.vividseats.android",
+    "iosAppId": "6L45ZMRB4E.com.vividseats.VividSeatsMobile",
+    "fetchedAt": "2026-07-20T14:26:08.494Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "vlognow.me",
+    "androidPackage": "com.frontrow.vlog",
+    "iosAppId": "V33R949468.com.frontrow.vlog",
+    "fetchedAt": "2026-07-20T14:25:58.078Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "vrbo.com",
+    "androidPackage": "com.vrbo.android",
+    "iosAppId": "FX75JAZVGL.com.vrbo.traveler",
+    "fetchedAt": "2026-07-20T14:25:37.161Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "vsco.co",
+    "androidPackage": "com.vsco.cam",
+    "iosAppId": "NCGELS6998.co.visualsupply.studionext",
+    "fetchedAt": "2026-07-20T14:25:11.831Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "wagwalking.com",
+    "androidPackage": "com.ionicframework.wagandroid554504",
+    "iosAppId": "YU5J7XN7D7.com.wagwalking.wagapp",
+    "fetchedAt": "2026-07-20T14:26:19.983Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "walgreens.com",
+    "androidPackage": "com.usablenet.mobile.walgreen",
+    "iosAppId": "FD2Y87AU5T.com.walgreens.universal",
+    "fetchedAt": "2026-07-20T14:26:13.032Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "walmart.com",
+    "androidPackage": "com.walmart.beta",
+    "iosAppId": "74G6H8XY8B.com.walmart.electronics",
+    "fetchedAt": "2026-07-20T14:25:18.686Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "wanderlog.com",
+    "androidPackage": "com.wanderlog.android",
+    "iosAppId": "4DUK9H8PQU.com.wanderlog.ios",
+    "fetchedAt": "2026-07-20T14:26:19.363Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "washingtonpost.com",
+    "androidPackage": "com.washingtonpost.android",
+    "iosAppId": "2829339WJT.com.pointabout.washingtonpost",
+    "fetchedAt": "2026-07-20T14:25:51.431Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "wattpad.com",
+    "androidPackage": "wp.wattpad",
+    "iosAppId": "ASCV9UT9Y6.com.fivemobile.wattpad",
+    "fetchedAt": "2026-07-20T14:26:05.078Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "wayfair.com",
+    "androidPackage": "com.wayfair.wayfair",
+    "iosAppId": "YB42T69E5P.com.wayfair.WayfairApp",
+    "fetchedAt": "2026-07-20T14:25:20.627Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "waze.com",
+    "androidPackage": "com.waze",
+    "iosAppId": "UM5AE5Q8GC.com.waze.iphone",
+    "fetchedAt": "2026-07-20T14:25:38.569Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "we.tl",
+    "androidPackage": "com.wetransfer.transfer",
+    "iosAppId": "HDE72H7JV2.com.wetransfer.transfer",
+    "fetchedAt": "2026-07-20T14:26:01.434Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "weareher.com",
+    "androidPackage": "com.weareher.her",
+    "iosAppId": "HPP4AZ423W.com.dattch.dattch",
+    "fetchedAt": "2026-07-20T14:25:42.983Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "weather.com",
+    "iosAppId": "54VVTD24DT.com.weather.TWCRadar",
+    "fetchedAt": "2026-07-20T14:26:04.153Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "weatherbug.com",
+    "iosAppId": "MC8A83DRNH.com.aws.weatherbug.elite",
+    "fetchedAt": "2026-07-20T14:26:05.018Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "webull.com",
+    "androidPackage": "org.dayup.stocks",
+    "fetchedAt": "2026-07-20T14:25:26.721Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "weightwatchers.com",
+    "androidPackage": "com.weightwatchers.mobile",
+    "fetchedAt": "2026-07-20T14:25:57.298Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "wetransfer.com",
+    "iosAppId": "HDE72H7JV2.com.wetransfer.transfer",
+    "fetchedAt": "2026-07-20T14:26:00.926Z",
+    "source": "aasa"
+  },
+  {
+    "domain": "whatnot.com",
+    "androidPackage": "com.whatnot_mobile",
+    "iosAppId": "C485U9S45B.com.whatnot",
+    "fetchedAt": "2026-07-20T14:25:23.363Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "wikipedia.org",
+    "androidPackage": "org.wikipedia",
+    "iosAppId": "AKK7J2GV64.org.wikimedia.wikipedia.developer",
+    "fetchedAt": "2026-07-20T14:26:20.387Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "windy.com",
+    "androidPackage": "com.windyty.android",
+    "iosAppId": "8L2TN9C6ES.com.windytv.ios",
+    "fetchedAt": "2026-07-20T14:26:04.336Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "wingstop.com",
+    "androidPackage": "com.mobilaurus.wingstopandroid",
+    "fetchedAt": "2026-07-20T14:26:24.328Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "wise.com",
+    "androidPackage": "com.transferwise.android",
+    "iosAppId": "W53MTDV45J.com.transferwise.Transferwise",
+    "fetchedAt": "2026-07-20T14:25:28.741Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "wish.com",
+    "androidPackage": "com.contextlogic.wish",
+    "iosAppId": "9D4Q2GL4GM.com.contextlogic.Wish",
+    "fetchedAt": "2026-07-20T14:25:19.584Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "wsj.com",
+    "androidPackage": "wsj.reader_sp",
+    "iosAppId": "CQJ3Y9H9UE.com.dowjones.WSJ.ipad",
+    "fetchedAt": "2026-07-20T14:25:47.859Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "xbox.com",
+    "androidPackage": "com.microsoft.xboxone.smartglass.beta.internal",
+    "iosAppId": "UBF8T346G9.com.microsoft.smartglass",
+    "fetchedAt": "2026-07-20T14:25:48.654Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "xfinity.com",
+    "androidPackage": "com.comcast.aiqsdk.shell",
+    "iosAppId": "2R93GQ2RWE.com.xfinity.digitalhome",
+    "fetchedAt": "2026-07-20T14:26:34.664Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "yahoo.com",
+    "androidPackage": "com.yahoo.mobile.client.android.yahoo",
+    "fetchedAt": "2026-07-20T14:26:15.652Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "yelp.com",
+    "androidPackage": "com.yelp.android",
+    "iosAppId": "BAES6XU9E4.com.yelp.yelpiphone",
+    "fetchedAt": "2026-07-20T14:25:34.706Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "yelp.to",
+    "androidPackage": "com.yelp.android",
+    "iosAppId": "SBSSF9BESA.com.yelp.yelpiphone",
+    "fetchedAt": "2026-07-20T14:25:34.967Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "yubo.live",
+    "androidPackage": "co.yellw.yellowapp",
+    "iosAppId": "H6LLY5H5T2.co.yellw.Yellow",
+    "fetchedAt": "2026-07-20T14:25:14.452Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "zerolongevity.com",
+    "androidPackage": "com.zerofasting.zero",
+    "iosAppId": "S99W36KX87.com.courtneycircle.Radiant",
+    "fetchedAt": "2026-07-20T14:26:21.939Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "zillow.com",
+    "androidPackage": "com.zillow.android.zillowmap",
+    "fetchedAt": "2026-07-20T14:26:07.082Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "ziprecruiter.com",
+    "androidPackage": "com.ziprecruiter.android.release",
+    "iosAppId": "3MRBUEDX87.com.ziprecruiter.jobs",
+    "fetchedAt": "2026-07-20T14:26:07.535Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "zocdoc.com",
+    "androidPackage": "com.zocdoc.android",
+    "iosAppId": "7EU7R459UX.com.zocdoc.zocdociphone",
+    "fetchedAt": "2026-07-20T14:26:35.189Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "zoom.us",
+    "androidPackage": "us.zoom.pwa.twa",
+    "iosAppId": "BJ4HAAB9B3.us.zoom.videomeetings",
+    "fetchedAt": "2026-07-20T14:25:13.777Z",
+    "source": "assetlinks"
+  },
+  {
+    "domain": "zwift.com",
+    "androidPackage": "com.zwift.android.alpha",
+    "iosAppId": "C2GM8Y9VFM.com.zwift.Zwift",
+    "fetchedAt": "2026-07-20T14:25:56.147Z",
+    "source": "assetlinks"
+  }
+]

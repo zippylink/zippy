@@ -1,0 +1,467 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Zippy iOS scheme test sheet (34 QRs)</title>
+<style>
+ body{font-family:-apple-system,sans-serif;background:#FAF7F2;color:#1A1033;margin:24px}
+ h1{font-size:22px} .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+ .card{border:2px solid #1A1033;border-radius:10px;background:#fff;padding:12px;text-align:center}
+ .card h3{margin:8px 0 2px;font-size:14px} .card code{font-size:10px;word-break:break-all}
+ .ev{font-size:10px;color:#777;margin:4px 0}
+ .verdicts button{margin:2px;padding:4px 8px;border:2px solid #1A1033;border-radius:999px;background:#fff;cursor:pointer;font-size:11px}
+ .verdicts button.on{background:#EEFF00}
+ .qr svg{width:140px;height:140px}
+ #bar{position:sticky;top:0;background:#FAF7F2;padding:8px 0;display:flex;gap:12px;align-items:center}
+ #export{padding:8px 14px;border:2px solid #1A1033;border-radius:999px;background:#EEFF00;font-weight:bold;cursor:pointer}
+</style></head><body>
+<h1>⚡ Zippy iOS scheme test — scan each QR with the iPhone camera</h1>
+<p>Tap the banner iOS shows. Then record: did the app open <b>with the content</b>, only to its <b>home screen</b>, or <b>nothing</b> happened? Results save locally; export when done.</p>
+<div id="bar"><button id="export">Export results JSON</button><span id="count"></span></div>
+<div class="grid">
+  <div class="card" id="card-0">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h1m2 0h2m1 0h7M1 2.5h1m5 0h1m7 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h4m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h2m4 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M12 8.5h1M1 9.5h1m1 0h1m3 0h2m1 0h1m1 0h2m2 0h1m2 0h1m1 0h1M1 10.5h2m1 0h3m1 0h1m1 0h1m4 0h5m1 0h1M2 11.5h1m1 0h2m1 0h2m2 0h1m2 0h1m1 0h2m1 0h1m1 0h1M3 12.5h1m4 0h4m1 0h1m2 0h3m1 0h1M3 13.5h3m1 0h1m1 0h1m1 0h1m2 0h1m1 0h2m2 0h2M9 14.5h2m1 0h1m1 0h4m1 0h1m1 0h1M1 15.5h7m1 0h1m1 0h3m2 0h3m2 0h1M1 16.5h1m5 0h1m2 0h3m5 0h1m2 0h1M1 17.5h1m1 0h3m1 0h1m2 0h1m1 0h3m1 0h3m1 0h1M1 18.5h1m1 0h3m1 0h1m6 0h6M1 19.5h1m1 0h3m1 0h1m1 0h3m5 0h2m1 0h2M1 20.5h1m5 0h1m2 0h2m1 0h1m2 0h1m1 0h1M1 21.5h7m1 0h1m1 0h1m2 0h2m2 0h1m2 0h1"/></svg>
+</div>
+    <h3>Amazon Music</h3>
+    <code>amznmp3://</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="music.amazon.com|amznmp3">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-1">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 39 39" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h39v39H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h2m4 0h1m1 0h1m1 0h2m2 0h1m3 0h1m3 0h7M1 2.5h1m5 0h1m1 0h1m3 0h2m1 0h1m4 0h3m1 0h2m4 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h5m1 0h1m1 0h4m1 0h2m3 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h1m1 0h5m1 0h1m1 0h3m1 0h3m1 0h2m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m4 0h2m1 0h3m6 0h1m3 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m7 0h5m1 0h4m1 0h2m1 0h1m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h4m1 0h1m1 0h1m2 0h1m2 0h1m2 0h1M1 9.5h1m2 0h7m3 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h3m2 0h1m1 0h3M2 10.5h3m1 0h1m3 0h1m3 0h1m3 0h1m2 0h4m2 0h2m3 0h2m2 0h1M1 11.5h1m1 0h2m2 0h3m1 0h1m2 0h1m3 0h2m2 0h1m1 0h1m3 0h2m1 0h1m2 0h1m2 0h1M1 12.5h1m1 0h4m2 0h1m1 0h1m2 0h1m1 0h1m1 0h1m5 0h2m3 0h3m2 0h4M1 13.5h4m2 0h1m4 0h1m4 0h1m2 0h2m9 0h1m2 0h1m1 0h2M1 14.5h3m1 0h2m3 0h1m1 0h2m1 0h5m1 0h4m1 0h4m3 0h1M1 15.5h3m1 0h1m1 0h1m2 0h2m3 0h4m1 0h1m1 0h2m1 0h2m1 0h5m1 0h4M1 16.5h4m1 0h1m1 0h4m1 0h1m1 0h1m2 0h2m5 0h1m1 0h1m1 0h3m1 0h3m1 0h1M1 17.5h1m1 0h1m2 0h3m3 0h7m1 0h3m1 0h3m1 0h1m2 0h2m1 0h3M1 18.5h1m3 0h2m1 0h3m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m3 0h1m1 0h1M2 19.5h1m4 0h2m2 0h3m1 0h2m4 0h1m2 0h2m2 0h3m1 0h2m3 0h1M2 20.5h2m7 0h2m1 0h1m4 0h1m6 0h1m1 0h2m1 0h4m1 0h2M3 21.5h3m1 0h2m1 0h1m4 0h2m1 0h1m5 0h2m1 0h2m1 0h4m3 0h1M1 22.5h1m3 0h2m1 0h1m1 0h3m3 0h1m2 0h2m1 0h4m1 0h2m4 0h3M2 23.5h1m1 0h1m1 0h2m2 0h4m2 0h4m3 0h3m2 0h5m3 0h2M6 24.5h1m3 0h1m1 0h4m1 0h2m3 0h2m5 0h1m4 0h4M1 25.5h2m4 0h2m1 0h3m1 0h1m1 0h5m1 0h1m2 0h1m2 0h1m2 0h1m2 0h1m1 0h2M1 26.5h1m6 0h1m1 0h3m1 0h2m1 0h2m1 0h2m5 0h3m3 0h1M1 27.5h2m1 0h2m1 0h2m1 0h3m1 0h2m1 0h6m2 0h7m4 0h2M1 28.5h1m1 0h2m1 0h1m2 0h2m1 0h2m2 0h1m4 0h1m3 0h1m2 0h5m1 0h4M1 29.5h1m2 0h1m1 0h6m2 0h1m4 0h1m1 0h1m1 0h4m1 0h6m1 0h1m1 0h1M9 30.5h1m1 0h6m2 0h3m7 0h1m3 0h2m1 0h1M1 31.5h7m1 0h1m1 0h4m1 0h2m2 0h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h2m1 0h2M1 32.5h1m5 0h1m1 0h1m1 0h1m2 0h2m2 0h2m1 0h1m1 0h1m1 0h2m1 0h2m3 0h2m2 0h1M1 33.5h1m1 0h3m1 0h1m1 0h3m1 0h1m2 0h1m3 0h1m1 0h3m2 0h8M1 34.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m4 0h1m2 0h1m1 0h1m1 0h2m1 0h2m1 0h1M1 35.5h1m1 0h3m1 0h1m2 0h2m1 0h1m2 0h6m2 0h1m2 0h2m1 0h1m1 0h3m2 0h1M1 36.5h1m5 0h1m4 0h2m1 0h1m1 0h5m1 0h2m2 0h2m2 0h1m3 0h3M1 37.5h7m1 0h1m1 0h2m2 0h2m7 0h2m3 0h1m1 0h1m1 0h2m2 0h1"/></svg>
+</div>
+    <h3>Audible Podcasts</h3>
+    <code>appends the app-domain universal-link path (host…</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="audible.com|audible">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-2">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m3 0h1m1 0h1m1 0h7M1 2.5h1m5 0h1m3 0h3m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h1m1 0h1m1 0h1m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m2 0h2M1 9.5h1m1 0h5m3 0h1m1 0h1m1 0h5M1 10.5h1m2 0h1m1 0h1m1 0h1m2 0h1m1 0h1m2 0h6M2 11.5h6m1 0h2m1 0h1m1 0h2m2 0h3M1 12.5h3m1 0h1m2 0h2m4 0h1m3 0h3M2 13.5h4m1 0h1m1 0h2m1 0h1m2 0h2M9 14.5h2m2 0h1m1 0h5m1 0h1M1 15.5h7m2 0h1m2 0h3m3 0h2M1 16.5h1m5 0h1m1 0h4m5 0h2M1 17.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h2m1 0h1m2 0h2M1 18.5h1m1 0h3m1 0h1m1 0h1m5 0h3M1 19.5h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h1m2 0h2M1 20.5h1m5 0h1m2 0h3m4 0h3M1 21.5h7m1 0h1m2 0h1m2 0h1m1 0h1m2 0h1"/></svg>
+</div>
+    <h3>Audiomack</h3>
+    <code>audiomack://</code>
+    <p class="ev">first-party-web</p>
+    <div class="verdicts" data-key="audiomack.com|audiomack">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-3">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m3 0h3m1 0h7M1 2.5h1m5 0h1m1 0h1m1 0h1m3 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m5 0h1m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h3m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h2M1 9.5h1m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m3 0h1m2 0h1M1 10.5h2m2 0h2m5 0h1m1 0h2m1 0h2m1 0h2M1 11.5h1m2 0h1m2 0h2m2 0h2m4 0h5M2 12.5h2m1 0h1m3 0h1m1 0h4m1 0h1m3 0h2M2 13.5h1m1 0h2m1 0h3m2 0h1m4 0h1m3 0h1M9 14.5h2m4 0h1m1 0h1m1 0h3M1 15.5h7m2 0h2m1 0h2m1 0h2m2 0h2M1 16.5h1m5 0h1m2 0h2m2 0h1m1 0h1m3 0h2M1 17.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m3 0h1M1 18.5h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m2 0h1M1 19.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1M1 20.5h1m5 0h1m3 0h4m5 0h1M1 21.5h7m1 0h1m1 0h2m2 0h1m1 0h1m2 0h2"/></svg>
+</div>
+    <h3>Band</h3>
+    <code>bandapp://</code>
+    <p class="ev">first-party-web</p>
+    <div class="verdicts" data-key="band.us|bandapp">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-4">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h1m1 0h2m2 0h7M1 2.5h1m5 0h1m3 0h1m3 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h2m2 0h1m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h2M1 9.5h1m3 0h1m1 0h4m2 0h6m2 0h1M2 10.5h1m3 0h1m1 0h2m1 0h1m1 0h2m1 0h2m1 0h2M1 11.5h5m1 0h1m1 0h2m2 0h1m1 0h3m2 0h1M1 12.5h2m1 0h2m2 0h1m1 0h4m2 0h2m2 0h2M1 13.5h2m4 0h2m3 0h1m1 0h1m2 0h2m1 0h2M9 14.5h1m2 0h2m2 0h2m1 0h2M1 15.5h7m1 0h1m2 0h1m1 0h2m1 0h1m1 0h2M1 16.5h1m5 0h1m2 0h2m9 0h1M1 17.5h1m1 0h3m1 0h1m1 0h3m1 0h2m1 0h3m1 0h1M1 18.5h1m1 0h3m1 0h1m3 0h1m1 0h1m3 0h5M1 19.5h1m1 0h3m1 0h1m3 0h1m1 0h3m1 0h2M1 20.5h1m5 0h1m2 0h1m1 0h2m2 0h1M1 21.5h7m1 0h1m2 0h1m1 0h2m5 0h1"/></svg>
+</div>
+    <h3>Castbox</h3>
+    <code>castbox://</code>
+    <p class="ev">first-party-web</p>
+    <div class="verdicts" data-key="castbox.fm|castbox">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-5">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 39 39" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h39v39H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h2m4 0h1m1 0h1m1 0h2m2 0h1m3 0h1m3 0h7M1 2.5h1m5 0h1m1 0h1m3 0h2m1 0h1m4 0h3m1 0h2m4 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h5m1 0h1m1 0h4m1 0h2m3 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h1m1 0h5m1 0h1m1 0h3m1 0h3m1 0h2m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m4 0h2m1 0h3m6 0h1m3 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m7 0h5m1 0h4m1 0h2m1 0h1m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h4m1 0h1m1 0h1m2 0h1m2 0h1m2 0h1M1 9.5h1m2 0h7m3 0h2m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h3m2 0h1m1 0h3M2 10.5h3m1 0h1m3 0h1m3 0h1m3 0h1m2 0h4m2 0h2m3 0h2m2 0h1M1 11.5h1m1 0h2m2 0h3m1 0h1m2 0h1m3 0h2m2 0h1m1 0h1m3 0h2m1 0h1m2 0h1m2 0h1M1 12.5h1m1 0h4m2 0h1m1 0h1m2 0h1m1 0h1m1 0h1m5 0h2m3 0h3m2 0h4M1 13.5h4m2 0h1m4 0h1m4 0h1m2 0h2m9 0h1m2 0h1m1 0h2M1 14.5h3m1 0h2m3 0h1m1 0h2m1 0h5m1 0h4m1 0h4m3 0h1M1 15.5h3m1 0h1m1 0h1m2 0h2m3 0h4m1 0h1m1 0h2m1 0h2m1 0h5m1 0h4M1 16.5h4m1 0h1m1 0h4m1 0h1m1 0h1m2 0h2m5 0h1m1 0h1m1 0h3m1 0h3m1 0h1M1 17.5h1m1 0h1m2 0h3m3 0h7m1 0h3m1 0h3m1 0h1m2 0h2m1 0h3M1 18.5h1m3 0h2m1 0h3m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m3 0h1m1 0h1M2 19.5h1m4 0h2m2 0h3m1 0h2m4 0h1m2 0h2m2 0h3m1 0h2m3 0h1M2 20.5h2m7 0h2m1 0h1m4 0h1m6 0h1m1 0h2m1 0h4m1 0h2M3 21.5h3m1 0h2m1 0h1m4 0h2m1 0h1m5 0h2m1 0h2m1 0h4m3 0h1M1 22.5h1m3 0h2m1 0h1m1 0h3m3 0h1m2 0h2m1 0h4m1 0h2m4 0h3M2 23.5h1m1 0h1m1 0h2m2 0h4m2 0h4m3 0h3m2 0h5m3 0h2M6 24.5h1m3 0h1m1 0h4m1 0h2m3 0h2m5 0h1m4 0h4M1 25.5h2m4 0h2m1 0h3m1 0h1m1 0h5m1 0h1m2 0h1m2 0h1m2 0h1m2 0h1m1 0h2M1 26.5h1m6 0h1m1 0h3m1 0h2m1 0h2m1 0h2m5 0h3m3 0h1M1 27.5h2m1 0h2m1 0h2m1 0h3m1 0h2m1 0h6m2 0h7m4 0h2M1 28.5h1m1 0h2m1 0h1m2 0h2m1 0h2m2 0h1m4 0h1m3 0h1m2 0h5m1 0h4M1 29.5h1m2 0h1m1 0h6m2 0h1m4 0h1m1 0h1m1 0h4m1 0h6m1 0h1m1 0h1M9 30.5h1m1 0h6m2 0h3m7 0h1m3 0h2m1 0h1M1 31.5h7m1 0h1m1 0h4m1 0h2m2 0h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h2m1 0h2M1 32.5h1m5 0h1m1 0h1m1 0h1m2 0h2m2 0h2m1 0h1m1 0h1m1 0h2m1 0h2m3 0h2m2 0h1M1 33.5h1m1 0h3m1 0h1m1 0h3m1 0h1m2 0h1m3 0h1m1 0h3m2 0h8M1 34.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m4 0h1m2 0h1m1 0h1m1 0h2m1 0h2m1 0h1M1 35.5h1m1 0h3m1 0h1m2 0h2m1 0h1m2 0h6m2 0h1m2 0h2m1 0h1m1 0h3m2 0h1M1 36.5h1m5 0h1m4 0h2m1 0h1m1 0h5m1 0h2m2 0h2m2 0h1m3 0h3M1 37.5h7m1 0h1m1 0h2m2 0h2m7 0h2m3 0h1m1 0h1m1 0h2m2 0h1"/></svg>
+</div>
+    <h3>Deezer</h3>
+    <code>appends the app-domain universal-link path (host…</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="deezer.com|deezer">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-6">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m2 0h1m4 0h7M1 2.5h1m5 0h1m3 0h1m3 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h2m1 0h1m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m1 0h1M1 9.5h1m1 0h5m4 0h1m2 0h5M2 10.5h2m1 0h2m1 0h1m2 0h1m1 0h5m3 0h1M5 11.5h1m1 0h1m2 0h2m1 0h1m4 0h3M1 12.5h2m1 0h2m2 0h5m1 0h1m1 0h1m1 0h2M5 13.5h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m1 0h1M9 14.5h1m1 0h1m2 0h1m2 0h1m1 0h1m1 0h1M1 15.5h7m5 0h2m3 0h1m1 0h1M1 16.5h1m5 0h1m1 0h1m2 0h1m1 0h1m3 0h3M1 17.5h1m1 0h3m1 0h1m1 0h4m1 0h4m2 0h2M1 18.5h1m1 0h3m1 0h1m1 0h3m5 0h2M1 19.5h1m1 0h3m1 0h1m1 0h3m1 0h3M1 20.5h1m5 0h1m3 0h1m6 0h2M1 21.5h7m1 0h1m1 0h1m2 0h2m4 0h1"/></svg>
+</div>
+    <h3>Disney+</h3>
+    <code>disneyplus://</code>
+    <p class="ev">first-party-web</p>
+    <div class="verdicts" data-key="disneyplus.com|disneyplus">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-7">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m7 0h7M1 2.5h1m5 0h1m2 0h2m3 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h1m1 0h1m1 0h1m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m1 0h3M1 9.5h1m1 0h5m3 0h1m1 0h1m1 0h5M8 10.5h3m2 0h1m2 0h1m4 0h1M2 11.5h1m1 0h1m1 0h5m1 0h1m1 0h1m2 0h1m1 0h2M1 12.5h2m2 0h2m1 0h1m1 0h1m5 0h5M1 13.5h3m3 0h2m2 0h2m1 0h1m2 0h2m2 0h1M9 14.5h8m2 0h1m1 0h1M1 15.5h7m2 0h2m1 0h1m1 0h2m3 0h1M1 16.5h1m5 0h1m1 0h7m1 0h1m1 0h1m1 0h1M1 17.5h1m1 0h3m1 0h1m1 0h2m2 0h1m3 0h2m1 0h1M1 18.5h1m1 0h3m1 0h1m1 0h2m2 0h1m2 0h2M1 19.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1M1 20.5h1m5 0h1m3 0h1m5 0h1m1 0h1M1 21.5h7m1 0h4m1 0h1m2 0h1m2 0h1"/></svg>
+</div>
+    <h3>iHeartRadio</h3>
+    <code>ihr://</code>
+    <p class="ev">first-party-web</p>
+    <div class="verdicts" data-key="iheart.com|ihr">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-8">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m3 0h3m1 0h7M1 2.5h1m5 0h1m1 0h1m1 0h1m1 0h1m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m2 0h2m3 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h1m1 0h1m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h2m1 0h1M1 9.5h1m1 0h1m1 0h1m1 0h1m4 0h1m4 0h1m2 0h1M1 10.5h2m1 0h3m3 0h5m1 0h6M1 11.5h4m1 0h2m5 0h5m1 0h3M1 12.5h1m3 0h2m1 0h1m4 0h1m2 0h2M3 13.5h2m2 0h1m1 0h1m2 0h1m4 0h1M9 14.5h1m2 0h2m3 0h1m2 0h2M1 15.5h7m5 0h1m1 0h7M1 16.5h1m5 0h1m2 0h1m1 0h2m2 0h1m3 0h2M1 17.5h1m1 0h3m1 0h1m1 0h1m1 0h1m4 0h2m2 0h1M1 18.5h1m1 0h3m1 0h1m3 0h1m1 0h3m1 0h2m1 0h1M1 19.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h7m1 0h1M1 20.5h1m5 0h1m2 0h2m1 0h1m2 0h2m2 0h1M1 21.5h7m1 0h1m1 0h2m4 0h2m1 0h2"/></svg>
+</div>
+    <h3>iHeartRadio</h3>
+    <code>iheartradio://</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="iheart.com|iheartradio">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-9">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m2 0h1m1 0h1m2 0h7M1 2.5h1m5 0h1m5 0h1m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h4m2 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h2m1 0h1m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h2M1 9.5h1m1 0h5m3 0h2m2 0h5M2 10.5h1m7 0h1m2 0h1m1 0h1m1 0h2m2 0h1M2 11.5h2m2 0h2m2 0h2m1 0h1m2 0h1m3 0h1M3 12.5h1m5 0h1m1 0h1m1 0h2m1 0h1m1 0h4M2 13.5h2m1 0h1m1 0h2m2 0h1m1 0h1m1 0h2m1 0h1M9 14.5h1m1 0h2m3 0h2m1 0h3M1 15.5h7m2 0h1m5 0h1m1 0h1m1 0h1M1 16.5h1m5 0h1m1 0h1m7 0h3m1 0h1M1 17.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m1 0h3m1 0h1M1 18.5h1m1 0h3m1 0h1m1 0h1m2 0h6m1 0h1M1 19.5h1m1 0h3m1 0h1m1 0h2m3 0h1m3 0h1M1 20.5h1m5 0h1m2 0h1m1 0h1m3 0h1m1 0h2M1 21.5h7m1 0h1m2 0h1m1 0h1m5 0h1"/></svg>
+</div>
+    <h3>Lemon8</h3>
+    <code>snssdk2657://</code>
+    <p class="ev">first-party-web</p>
+    <div class="verdicts" data-key="lemon8-app.com|snssdk2657">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-10">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h1m1 0h3m1 0h7M1 2.5h1m5 0h1m1 0h1m2 0h2m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m3 0h2m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h4m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m1 0h3M1 9.5h1m1 0h2m1 0h3m1 0h4m1 0h1m2 0h1m1 0h2M2 10.5h4m6 0h8m1 0h1M1 11.5h1m2 0h1m1 0h5m1 0h1m1 0h1m5 0h2M1 12.5h6m1 0h3m1 0h1m1 0h1m3 0h1M1 13.5h1m3 0h3m1 0h3m1 0h1m1 0h3m2 0h2M9 14.5h1m2 0h1m1 0h1m1 0h2M1 15.5h7m1 0h1m2 0h2m1 0h1m1 0h2M1 16.5h1m5 0h1m1 0h2m5 0h1m1 0h3M1 17.5h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h1m3 0h1M1 18.5h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h2m1 0h1m1 0h1M1 19.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m3 0h1M1 20.5h1m5 0h1m2 0h1m3 0h1m1 0h1m4 0h1M1 21.5h7m1 0h1m1 0h1m2 0h1m1 0h4"/></svg>
+</div>
+    <h3>Meetup</h3>
+    <code>meetup://</code>
+    <p class="ev">first-party-web</p>
+    <div class="verdicts" data-key="meetup.com|meetup">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-11">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m3 0h1m3 0h7M1 2.5h1m5 0h1m1 0h1m3 0h1m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m2 0h2m3 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m4 0h2m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m4 0h1m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h2M1 9.5h1m1 0h1m1 0h1m1 0h1m2 0h1m2 0h1m3 0h1m2 0h1M4 10.5h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h2m1 0h1M1 11.5h2m2 0h4m1 0h1m1 0h1m1 0h3m2 0h3M6 12.5h1m1 0h2m1 0h4m1 0h2M1 13.5h1m1 0h2m1 0h2m1 0h1m2 0h1m1 0h3m3 0h1M9 14.5h2m4 0h2m2 0h3M1 15.5h7m3 0h1m1 0h1m3 0h5M1 16.5h1m5 0h1m7 0h1m1 0h2m1 0h2M1 17.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h2M1 18.5h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h5M1 19.5h1m1 0h3m1 0h1m1 0h4m1 0h2m1 0h1m3 0h1M1 20.5h1m5 0h1m3 0h4m2 0h2m1 0h1M1 21.5h7m1 0h1m1 0h2m1 0h3m3 0h2"/></svg>
+</div>
+    <h3>Musixmatch</h3>
+    <code>mxm://</code>
+    <p class="ev">first-party-web</p>
+    <div class="verdicts" data-key="musixmatch.com|mxm">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-12">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 39 39" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h39v39H0z"/><path stroke="#000000" d="M1 1.5h7m2 0h4m1 0h1m3 0h3m2 0h4m1 0h1m1 0h7M1 2.5h1m5 0h1m3 0h1m2 0h2m3 0h1m1 0h2m4 0h2m2 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m2 0h4m1 0h2m4 0h2m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h2m2 0h1m4 0h1m4 0h1m1 0h3m3 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m2 0h1m3 0h1m1 0h3m2 0h2m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h1m2 0h1m3 0h1m1 0h1m4 0h1m1 0h1m2 0h1m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h2m1 0h1m1 0h1m2 0h1m2 0h4m5 0h1M1 9.5h1m1 0h5m3 0h1m1 0h1m2 0h1m1 0h4m3 0h2m1 0h1m2 0h5M2 10.5h2m4 0h1m1 0h1m2 0h5m1 0h6m1 0h2m1 0h1m2 0h1m1 0h1M1 11.5h3m2 0h2m1 0h4m1 0h1m3 0h2m2 0h2m1 0h1m2 0h1m1 0h3m1 0h4M4 12.5h1m1 0h1m4 0h2m2 0h1m1 0h3m1 0h2m4 0h1m1 0h2m2 0h1M1 13.5h1m5 0h5m1 0h3m1 0h1m1 0h3m1 0h2m1 0h3m1 0h8M4 14.5h2m2 0h4m1 0h1m3 0h1m1 0h2m3 0h1m1 0h2m1 0h2m1 0h1m2 0h2M3 15.5h1m3 0h2m5 0h1m1 0h2m1 0h1m2 0h2m2 0h1m1 0h1m1 0h1m1 0h3m1 0h2M1 16.5h2m1 0h3m3 0h3m1 0h1m4 0h1m1 0h2m1 0h1m3 0h2m2 0h1m4 0h1M1 17.5h2m1 0h5m2 0h3m1 0h2m1 0h1m4 0h4m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1M3 18.5h2m1 0h1m2 0h1m1 0h2m1 0h1m1 0h1m2 0h3m2 0h1m1 0h1m2 0h1m2 0h1M2 19.5h8m2 0h2m1 0h2m2 0h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h1m2 0h2M1 20.5h1m2 0h1m1 0h1m1 0h12m2 0h1m6 0h2m1 0h1M4 21.5h1m1 0h3m2 0h2m2 0h3m1 0h1m3 0h1m1 0h2m2 0h1m1 0h3m1 0h2M4 22.5h2m2 0h1m1 0h3m1 0h2m1 0h1m2 0h2m2 0h3m2 0h1m2 0h1m1 0h3M2 23.5h7m2 0h1m4 0h4m1 0h2m3 0h9m1 0h2M1 24.5h3m2 0h1m1 0h4m3 0h1m1 0h1m4 0h2m3 0h4m1 0h3m1 0h2M2 25.5h2m1 0h8m1 0h2m2 0h1m1 0h1m2 0h2m1 0h1m1 0h1m2 0h3m1 0h2M1 26.5h1m1 0h2m1 0h1m1 0h1m2 0h2m2 0h1m1 0h1m1 0h4m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1M1 27.5h1m1 0h1m2 0h2m1 0h1m2 0h2m2 0h2m4 0h2m2 0h3m1 0h1m2 0h1m1 0h3M1 28.5h1m1 0h1m1 0h2m2 0h1m6 0h2m1 0h1m2 0h2m1 0h1m2 0h1m7 0h1M1 29.5h1m2 0h1m2 0h7m1 0h2m1 0h2m4 0h12m1 0h1M9 30.5h3m5 0h6m1 0h1m1 0h1m1 0h2m3 0h3M1 31.5h7m4 0h1m3 0h1m2 0h1m2 0h2m2 0h2m1 0h1m1 0h1m1 0h3m1 0h1M1 32.5h1m5 0h1m1 0h1m1 0h1m1 0h1m2 0h1m4 0h2m1 0h1m2 0h1m1 0h1m3 0h2m2 0h1M1 33.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h3m2 0h1m1 0h1m3 0h14M1 34.5h1m1 0h3m1 0h1m1 0h2m2 0h1m3 0h1m2 0h1m2 0h2m2 0h5m1 0h1m2 0h2M1 35.5h1m1 0h3m1 0h1m1 0h8m2 0h1m3 0h1m1 0h2m2 0h1m6 0h2M1 36.5h1m5 0h1m2 0h1m2 0h1m2 0h2m1 0h5m3 0h3m2 0h2m3 0h1M1 37.5h7m1 0h1m5 0h2m1 0h1m1 0h2m3 0h4m1 0h1m1 0h2m1 0h3"/></svg>
+</div>
+    <h3>Netflix</h3>
+    <code>nflx://www.netflix.com/title/<id> — host-preserv…</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="netflix.com|nflx">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-13">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 27 27" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h27v27H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h2m1 0h1m1 0h4m1 0h7M1 2.5h1m5 0h1m4 0h3m2 0h1m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m3 0h1m3 0h2m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h2m1 0h6m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h4m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h2m1 0h3m4 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m1 0h3M1 9.5h1m3 0h1m1 0h6m1 0h1m3 0h5m2 0h1M3 10.5h4m2 0h1m4 0h1m1 0h2m3 0h1m2 0h1M2 11.5h1m1 0h2m1 0h6m2 0h3m1 0h2m1 0h2M1 12.5h3m1 0h2m4 0h1m1 0h1m1 0h5m3 0h2M2 13.5h1m3 0h6m2 0h1m4 0h2m2 0h1m1 0h1M1 14.5h1m3 0h2m2 0h1m1 0h1m1 0h2m1 0h1m4 0h2m1 0h1M3 15.5h1m1 0h1m1 0h1m1 0h1m2 0h3m1 0h1m1 0h1m4 0h1M4 16.5h2m3 0h1m2 0h1m4 0h2m4 0h1M1 17.5h3m1 0h4m1 0h1m2 0h2m2 0h5m1 0h1m1 0h1M9 18.5h3m3 0h3m3 0h3M1 19.5h7m1 0h3m3 0h3m1 0h1m1 0h2M1 20.5h1m5 0h1m5 0h1m3 0h1m3 0h1m1 0h3M1 21.5h1m1 0h3m1 0h1m1 0h4m1 0h2m1 0h5m1 0h3M1 22.5h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h6m1 0h1m1 0h2M1 23.5h1m1 0h3m1 0h1m2 0h8m4 0h3M1 24.5h1m5 0h1m2 0h3m1 0h1m2 0h2m1 0h2m1 0h2M1 25.5h7m1 0h3m1 0h2m1 0h1m3 0h6"/></svg>
+</div>
+    <h3>Overcast</h3>
+    <code>appends an RSS feedURL</code>
+    <p class="ev">first-party-web</p>
+    <div class="verdicts" data-key="overcast.fm|overcast">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-14">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m2 0h1m4 0h7M1 2.5h1m5 0h1m1 0h2m1 0h1m2 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h3m2 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h3m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h1M1 9.5h1m1 0h1m1 0h1m1 0h1m3 0h1m1 0h1m3 0h1m2 0h1M1 10.5h1m1 0h4m2 0h1m2 0h1m1 0h2m1 0h2m1 0h2M1 11.5h1m1 0h2m1 0h2m2 0h3m4 0h5M1 12.5h2m1 0h1m4 0h1m1 0h4m5 0h1M1 13.5h1m1 0h2m1 0h2m1 0h1m1 0h2m4 0h1m3 0h1M9 14.5h1m5 0h3m1 0h1m1 0h1M1 15.5h7m5 0h2m1 0h2m2 0h2M1 16.5h1m5 0h1m2 0h2m2 0h1m1 0h2m2 0h2M1 17.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m3 0h1M1 18.5h1m1 0h3m1 0h1m3 0h2m2 0h1m1 0h1m2 0h1M1 19.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1M1 20.5h1m5 0h1m2 0h1m1 0h3m2 0h1m2 0h1M1 21.5h7m1 0h1m1 0h2m2 0h2m3 0h2"/></svg>
+</div>
+    <h3>Pandora</h3>
+    <code>pandora://</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="pandora.com|pandora">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-15">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m3 0h3m1 0h7M1 2.5h1m5 0h1m1 0h3m1 0h1m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m2 0h3m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m3 0h2m2 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h1m1 0h1m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M1 9.5h1m1 0h1m1 0h1m1 0h1m2 0h2m1 0h1m3 0h1m2 0h1M2 10.5h1m6 0h2m1 0h1m2 0h4m2 0h1M2 11.5h4m1 0h1m4 0h1m1 0h1m2 0h1m1 0h3M2 12.5h2m1 0h2m1 0h1m1 0h1m1 0h3m2 0h1m2 0h1M1 13.5h3m3 0h2m3 0h1m2 0h2m4 0h1M9 14.5h3m3 0h3m1 0h1m1 0h1M1 15.5h7m2 0h1m2 0h1m3 0h1m1 0h3M1 16.5h1m5 0h1m2 0h2m3 0h3m2 0h1M1 17.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m2 0h1M1 18.5h1m1 0h3m1 0h1m2 0h3m1 0h1m2 0h1m2 0h1M1 19.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h2m1 0h3m1 0h1M1 20.5h1m5 0h1m2 0h5m2 0h1m2 0h1M1 21.5h7m1 0h1m1 0h2m1 0h2m1 0h2m1 0h2"/></svg>
+</div>
+    <h3>Paramount+</h3>
+    <code>pplus://</code>
+    <p class="ev">first-party-web</p>
+    <div class="verdicts" data-key="paramountplus.com|pplus">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-16">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 27 27" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h27v27H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h2m1 0h1m1 0h4m1 0h7M1 2.5h1m5 0h1m4 0h3m2 0h1m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m3 0h1m3 0h2m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h2m1 0h6m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h4m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h2m1 0h3m4 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m1 0h3M1 9.5h1m3 0h1m1 0h6m1 0h1m3 0h5m2 0h1M3 10.5h4m2 0h1m4 0h1m1 0h2m3 0h1m2 0h1M2 11.5h1m1 0h2m1 0h6m2 0h3m1 0h2m1 0h2M1 12.5h3m1 0h2m4 0h1m1 0h1m1 0h5m3 0h2M2 13.5h1m3 0h6m2 0h1m4 0h2m2 0h1m1 0h1M1 14.5h1m3 0h2m2 0h1m1 0h1m1 0h2m1 0h1m4 0h2m1 0h1M3 15.5h1m1 0h1m1 0h1m1 0h1m2 0h3m1 0h1m1 0h1m4 0h1M4 16.5h2m3 0h1m2 0h1m4 0h2m4 0h1M1 17.5h3m1 0h4m1 0h1m2 0h2m2 0h5m1 0h1m1 0h1M9 18.5h3m3 0h3m3 0h3M1 19.5h7m1 0h3m3 0h3m1 0h1m1 0h2M1 20.5h1m5 0h1m5 0h1m3 0h1m3 0h1m1 0h3M1 21.5h1m1 0h3m1 0h1m1 0h4m1 0h2m1 0h5m1 0h3M1 22.5h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h6m1 0h1m1 0h2M1 23.5h1m1 0h3m1 0h1m2 0h8m4 0h3M1 24.5h1m5 0h1m2 0h3m1 0h1m2 0h2m1 0h2m1 0h2M1 25.5h7m1 0h3m1 0h2m1 0h1m3 0h6"/></svg>
+</div>
+    <h3>Pocket Casts</h3>
+    <code>appends an RSS feedURL</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="pocketcasts.com|pktc">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-17">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m5 0h1m1 0h7M1 2.5h1m5 0h1m2 0h2m1 0h1m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h1m3 0h1m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m2 0h2M1 9.5h1m1 0h5m2 0h1m2 0h1m1 0h5M1 10.5h4m1 0h1m3 0h1m2 0h1m1 0h1m1 0h2m2 0h1M1 11.5h1m1 0h3m1 0h1m1 0h4m2 0h2m1 0h1m1 0h1M1 12.5h1m1 0h2m1 0h1m4 0h1m4 0h4M1 13.5h2m1 0h2m1 0h1m4 0h1m2 0h1m1 0h1M9 14.5h2m1 0h10M1 15.5h7m2 0h1m2 0h3m3 0h2M1 16.5h1m5 0h1m1 0h1m2 0h2m4 0h2m1 0h1M1 17.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h2m4 0h1M1 18.5h1m1 0h3m1 0h1m1 0h3m1 0h5m1 0h1M1 19.5h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h2M1 20.5h1m5 0h1m2 0h2m6 0h2M1 21.5h7m1 0h1m2 0h1m7 0h1"/></svg>
+</div>
+    <h3>Podbean</h3>
+    <code>podbean://</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="podbean.com|podbean">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-18">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h1m3 0h1m1 0h7M1 2.5h1m5 0h1m1 0h1m1 0h1m1 0h1m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h4m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m4 0h2m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h1m1 0h2M1 9.5h1m2 0h6m3 0h2m2 0h1m1 0h3M4 10.5h3m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m2 0h1M2 11.5h3m1 0h3m2 0h1m2 0h2m1 0h5M1 12.5h1m2 0h3m2 0h1m2 0h1m6 0h3M3 13.5h3m1 0h1m1 0h1m1 0h1m3 0h1m2 0h1m1 0h2M9 14.5h5m4 0h1M1 15.5h7m1 0h3m1 0h7M1 16.5h1m5 0h1m1 0h6m1 0h1m2 0h1M1 17.5h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h1m1 0h1m2 0h2M1 18.5h1m1 0h3m1 0h1m1 0h1m1 0h3m4 0h1M1 19.5h1m1 0h3m1 0h1m3 0h1m3 0h4m1 0h2M1 20.5h1m5 0h1m6 0h4m1 0h3M1 21.5h7m1 0h4"/></svg>
+</div>
+    <h3>SiriusXM</h3>
+    <code>sxm://</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="siriusxm.com|sxm">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-19">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m4 0h1m2 0h7M1 2.5h1m5 0h1m1 0h1m3 0h1m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m2 0h4m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h4m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h2m1 0h1m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M11 8.5h3M1 9.5h1m1 0h1m1 0h1m1 0h1m3 0h2m4 0h1m2 0h1M1 10.5h1m1 0h4m4 0h2m2 0h3m1 0h3M1 11.5h1m1 0h1m1 0h3m3 0h1m1 0h2m1 0h3m1 0h2M3 12.5h2m1 0h1m3 0h1m2 0h1m2 0h1m4 0h1M1 13.5h1m2 0h5m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1M9 14.5h2m1 0h2m2 0h2m3 0h1M1 15.5h7m2 0h1m2 0h9M1 16.5h1m5 0h1m3 0h1m1 0h1m3 0h1M1 17.5h1m1 0h3m1 0h1m1 0h1m1 0h2m4 0h1m2 0h1M1 18.5h1m1 0h3m1 0h1m2 0h1m1 0h2m2 0h2m1 0h2M1 19.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m3 0h1M1 20.5h1m5 0h1m4 0h3m1 0h1m3 0h1M1 21.5h7m1 0h1m4 0h1m1 0h2m2 0h2"/></svg>
+</div>
+    <h3>SoundCloud</h3>
+    <code>soundcloud://</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="soundcloud.com|soundcloud">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-20">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h3m3 0h7M1 2.5h1m5 0h1m1 0h2m2 0h1m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m3 0h1m3 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h2M1 9.5h1m2 0h6m2 0h1m1 0h1m2 0h1m1 0h3M2 10.5h5m1 0h1m1 0h4m1 0h2m2 0h2M1 11.5h2m1 0h2m1 0h2m1 0h1m1 0h2m4 0h4M1 12.5h1m1 0h2m4 0h3m1 0h1m2 0h2m1 0h3M2 13.5h4m1 0h1m2 0h4m3 0h1m2 0h2M9 14.5h1m1 0h1m1 0h2m2 0h1m1 0h1M1 15.5h7m1 0h1m2 0h1m1 0h2m1 0h1M1 16.5h1m5 0h1m1 0h1m1 0h1m3 0h2m1 0h3M1 17.5h1m1 0h3m1 0h1m1 0h3m4 0h3M1 18.5h1m1 0h3m1 0h1m1 0h2m1 0h4m3 0h1M1 19.5h1m1 0h3m1 0h1m2 0h4m3 0h1m1 0h3M1 20.5h1m5 0h1m2 0h1m1 0h1m1 0h3m1 0h4M1 21.5h7m1 0h1m2 0h1m1 0h4"/></svg>
+</div>
+    <h3>Spreaker</h3>
+    <code>spreaker://</code>
+    <p class="ev">first-party-web</p>
+    <div class="verdicts" data-key="spreaker.com|spreaker">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-21">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m2 0h3m2 0h7M1 2.5h1m5 0h1m2 0h1m1 0h1m2 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h1m1 0h2m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h2M1 9.5h1m1 0h5m2 0h1m1 0h1m2 0h5M1 10.5h1m2 0h1m4 0h2m1 0h10M3 11.5h1m3 0h3m3 0h4m1 0h3M1 12.5h4m3 0h1m3 0h2m2 0h4M3 13.5h1m1 0h1m1 0h2m4 0h1m1 0h3m2 0h1M9 14.5h1m3 0h3m1 0h2m1 0h2M1 15.5h7m2 0h3m1 0h3m1 0h3M1 16.5h1m5 0h1m1 0h1m6 0h5M1 17.5h1m1 0h3m1 0h1m1 0h4m3 0h1m4 0h1M1 18.5h1m1 0h3m1 0h1m1 0h2m1 0h4m1 0h1m1 0h1M1 19.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1M1 20.5h1m5 0h1m2 0h7m1 0h2M1 21.5h7m1 0h1m3 0h1m3 0h1m2 0h1"/></svg>
+</div>
+    <h3>Tumblr</h3>
+    <code>tumblr://</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="tumblr.com|tumblr">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-22">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m4 0h1m2 0h7M1 2.5h1m5 0h1m1 0h1m1 0h2m2 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m2 0h2m3 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m5 0h1m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h1m2 0h1m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h4M1 9.5h1m1 0h1m1 0h1m1 0h1m3 0h2m4 0h1m2 0h1M1 10.5h2m1 0h3m2 0h1m5 0h3m3 0h1M4 11.5h2m1 0h3m1 0h1m1 0h2m2 0h5M3 12.5h1m1 0h2m1 0h2m4 0h1m1 0h2m2 0h1M2 13.5h2m1 0h1m1 0h2m2 0h1m1 0h1m6 0h2M9 14.5h4m2 0h1m1 0h1m1 0h1m1 0h1M1 15.5h7m3 0h2m1 0h1m2 0h1m2 0h2M1 16.5h1m5 0h1m2 0h1m1 0h3m1 0h2M1 17.5h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h2M1 18.5h1m1 0h3m1 0h1m3 0h1m3 0h3m2 0h1M1 19.5h1m1 0h3m1 0h1m1 0h3m1 0h1m2 0h4m1 0h1M1 20.5h1m5 0h1m2 0h1m4 0h1m4 0h1M1 21.5h7m1 0h3m1 0h1m1 0h1m4 0h2"/></svg>
+</div>
+    <h3>TuneIn</h3>
+    <code>tunein://</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="tunein.com|tunein">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-23">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m2 0h1m1 0h1m2 0h7M1 2.5h1m5 0h1m2 0h4m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h1m1 0h1m1 0h1m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m2 0h2M1 9.5h1m1 0h5m5 0h1m1 0h5M1 10.5h1m1 0h2m1 0h1m2 0h3m1 0h5m3 0h1M2 11.5h1m1 0h7m1 0h1m1 0h3m1 0h3M1 12.5h4m12 0h3m1 0h1M1 13.5h2m2 0h1m1 0h2m1 0h3m4 0h1m2 0h1M9 14.5h2m1 0h7m1 0h2M1 15.5h7m2 0h1m2 0h1m1 0h2m1 0h3M1 16.5h1m5 0h1m1 0h1m2 0h8M1 17.5h1m1 0h3m1 0h1m1 0h3m1 0h1m2 0h2m3 0h1M1 18.5h1m1 0h3m1 0h1m1 0h1m3 0h1m3 0h3M1 19.5h1m1 0h3m1 0h1m1 0h4m1 0h1m1 0h1m1 0h2M1 20.5h1m5 0h1m2 0h2m5 0h3M1 21.5h7m1 0h4m1 0h1m2 0h1m2 0h1"/></svg>
+</div>
+    <h3>Vimeo</h3>
+    <code>vimeo://</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="vimeo.com|vimeo">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-24">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m3 0h1m3 0h7M1 2.5h1m5 0h1m2 0h1m4 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h1m2 0h1m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m1 0h1M1 9.5h1m1 0h5m4 0h1m2 0h5M8 10.5h1m3 0h5m2 0h3M1 11.5h1m2 0h1m2 0h5m1 0h1m1 0h2m1 0h1m1 0h1M1 12.5h1m2 0h2m6 0h4m1 0h3m1 0h1M1 13.5h1m1 0h1m2 0h3m2 0h1m1 0h1m3 0h1m2 0h1M9 14.5h3m1 0h1m2 0h2m1 0h3M1 15.5h7m3 0h2m1 0h1m1 0h1m1 0h1m1 0h1M1 16.5h1m5 0h1m1 0h3m5 0h5M1 17.5h1m1 0h3m1 0h1m1 0h4m1 0h1m2 0h1m2 0h1M1 18.5h1m1 0h3m1 0h1m1 0h1m1 0h8M1 19.5h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h2m1 0h1M1 20.5h1m5 0h1m4 0h6m1 0h1M1 21.5h7m1 0h3m1 0h1m2 0h3m1 0h1"/></svg>
+</div>
+    <h3>VSCO</h3>
+    <code>vsco://</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="vsco.co|vsco">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-25">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 27 27" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h27v27H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h2m1 0h1m1 0h4m1 0h7M1 2.5h1m5 0h1m4 0h3m2 0h1m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m3 0h1m3 0h2m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h2m1 0h6m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h4m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h2m1 0h3m4 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m1 0h3M1 9.5h1m3 0h1m1 0h6m1 0h1m3 0h5m2 0h1M3 10.5h4m2 0h1m4 0h1m1 0h2m3 0h1m2 0h1M2 11.5h1m1 0h2m1 0h6m2 0h3m1 0h2m1 0h2M1 12.5h3m1 0h2m4 0h1m1 0h1m1 0h5m3 0h2M2 13.5h1m3 0h6m2 0h1m4 0h2m2 0h1m1 0h1M1 14.5h1m3 0h2m2 0h1m1 0h1m1 0h2m1 0h1m4 0h2m1 0h1M3 15.5h1m1 0h1m1 0h1m1 0h1m2 0h3m1 0h1m1 0h1m4 0h1M4 16.5h2m3 0h1m2 0h1m4 0h2m4 0h1M1 17.5h3m1 0h4m1 0h1m2 0h2m2 0h5m1 0h1m1 0h1M9 18.5h3m3 0h3m3 0h3M1 19.5h7m1 0h3m3 0h3m1 0h1m1 0h2M1 20.5h1m5 0h1m5 0h1m3 0h1m3 0h1m1 0h3M1 21.5h1m1 0h3m1 0h1m1 0h4m1 0h2m1 0h5m1 0h3M1 22.5h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h6m1 0h1m1 0h2M1 23.5h1m1 0h3m1 0h1m2 0h8m4 0h3M1 24.5h1m5 0h1m2 0h3m1 0h1m2 0h2m1 0h2m1 0h2M1 25.5h7m1 0h3m1 0h2m1 0h1m3 0h6"/></svg>
+</div>
+    <h3>Apple Podcasts</h3>
+    <code>appends an RSS feedURL</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="podcasts.apple.com|podcast">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-26">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m4 0h1m2 0h7M1 2.5h1m5 0h1m1 0h2m1 0h2m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m2 0h3m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h2m3 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h2m1 0h1m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M12 8.5h2M1 9.5h1m1 0h1m1 0h1m1 0h1m3 0h2m4 0h1m2 0h1M6 10.5h1m2 0h2m4 0h7M2 11.5h1m1 0h7m2 0h2m2 0h5M3 12.5h1m1 0h1m2 0h1m1 0h2m2 0h1m1 0h2m2 0h2M1 13.5h1m2 0h5m2 0h1m1 0h1m6 0h2M9 14.5h1m2 0h1m2 0h1m1 0h1m3 0h1M1 15.5h7m2 0h3m1 0h1m2 0h1m1 0h3M1 16.5h1m5 0h1m2 0h1m1 0h3m2 0h1M1 17.5h1m1 0h3m1 0h1m1 0h4m2 0h1m1 0h1M1 18.5h1m1 0h3m1 0h1m3 0h1m3 0h1m1 0h1m2 0h1M1 19.5h1m1 0h3m1 0h1m1 0h1m3 0h1m2 0h4m1 0h1M1 20.5h1m5 0h1m2 0h1m4 0h1m1 0h1m2 0h1M1 21.5h7m1 0h1m1 0h1m1 0h1m1 0h2m3 0h2"/></svg>
+</div>
+    <h3>Apple TV</h3>
+    <code>videos://</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="tv.apple.com|videos">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-27">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m3 0h3m1 0h7M1 2.5h1m5 0h1m1 0h3m1 0h1m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m2 0h3m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m3 0h2m2 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h5m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h1m1 0h1m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M1 9.5h1m1 0h1m1 0h1m1 0h1m2 0h2m1 0h1m3 0h1m2 0h1M2 10.5h1m6 0h2m1 0h1m2 0h4m2 0h1M2 11.5h4m1 0h1m4 0h1m1 0h1m2 0h1m1 0h3M2 12.5h2m1 0h2m1 0h1m1 0h1m1 0h3m2 0h1m2 0h1M1 13.5h3m3 0h2m3 0h1m2 0h2m4 0h1M9 14.5h3m3 0h3m1 0h1m1 0h1M1 15.5h7m2 0h1m2 0h1m3 0h1m1 0h3M1 16.5h1m5 0h1m2 0h2m3 0h3m2 0h1M1 17.5h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m2 0h1M1 18.5h1m1 0h3m1 0h1m2 0h3m1 0h1m2 0h1m2 0h1M1 19.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h2m1 0h3m1 0h1M1 20.5h1m5 0h1m2 0h5m2 0h1m2 0h1M1 21.5h7m1 0h1m1 0h2m1 0h2m1 0h2m1 0h2"/></svg>
+</div>
+    <h3>BET+</h3>
+    <code>pplus://</code>
+    <p class="ev">first-party-web</p>
+    <div class="verdicts" data-key="bet.plus|pplus">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-28">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m2 0h1m1 0h1m2 0h7M1 2.5h1m5 0h1m2 0h3m2 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h3m3 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m3 0h1m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h1m1 0h2m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h3M1 9.5h1m1 0h5m2 0h1m1 0h1m2 0h5M2 10.5h4m3 0h2m1 0h3m1 0h2m3 0h1M1 11.5h2m1 0h4m3 0h1m1 0h2m3 0h3M1 12.5h3m2 0h1m2 0h5m2 0h4m1 0h1M1 13.5h7m1 0h1m3 0h3M9 14.5h2m2 0h1m1 0h1m1 0h3m1 0h1M1 15.5h7m4 0h1m2 0h1m2 0h1m1 0h1M1 16.5h1m5 0h1m1 0h2m7 0h4M1 17.5h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h3m3 0h1M1 18.5h1m1 0h3m1 0h1m1 0h1m3 0h6M1 19.5h1m1 0h3m1 0h1m1 0h2m2 0h3m2 0h1M1 20.5h1m5 0h1m4 0h1m3 0h1m1 0h2M1 21.5h7m1 0h1m1 0h2m2 0h1m1 0h1m2 0h1"/></svg>
+</div>
+    <h3>Bigo Live</h3>
+    <code>bigolive://</code>
+    <p class="ev">first-party-web</p>
+    <div class="verdicts" data-key="bigo.tv|bigolive">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-29">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m7 0h7M1 2.5h1m5 0h1m2 0h3m2 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m1 0h1m2 0h1m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h2M1 9.5h1m1 0h5m4 0h1m2 0h5M6 10.5h1m1 0h1m1 0h4m1 0h1m1 0h1m1 0h3M5 11.5h1m1 0h4m2 0h1m6 0h1M3 12.5h2m1 0h1m3 0h4m3 0h3M1 13.5h1m3 0h1m1 0h4m2 0h3m1 0h1m2 0h1M9 14.5h1m1 0h1m1 0h1m1 0h3m1 0h1m1 0h1M1 15.5h7m2 0h1m1 0h1m2 0h1m2 0h3M1 16.5h1m5 0h1m1 0h1m1 0h1m4 0h6M1 17.5h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h2m4 0h1M1 18.5h1m1 0h3m1 0h1m1 0h3m1 0h6M1 19.5h1m1 0h3m1 0h1m1 0h1m3 0h3m2 0h2M1 20.5h1m5 0h1m4 0h1m5 0h2M1 21.5h7m1 0h4m2 0h2m3 0h1"/></svg>
+</div>
+    <h3>DramaBox</h3>
+    <code>dramabox://</code>
+    <p class="ev">first-party-web</p>
+    <div class="verdicts" data-key="dramaboxapp.com|dramabox">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-30">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h1m3 0h1m1 0h7M1 2.5h1m5 0h1m1 0h4m2 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h3m3 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m3 0h1m3 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h1m4 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h1M1 9.5h1m2 0h7m1 0h1m1 0h1m2 0h1m1 0h3M3 10.5h3m2 0h3m1 0h3m3 0h1M2 11.5h2m2 0h9m1 0h1m1 0h4M1 12.5h1m3 0h1m5 0h1m1 0h1m5 0h1m1 0h1M3 13.5h8m1 0h3m1 0h1m1 0h1m2 0h1M9 14.5h1m3 0h1m2 0h2m2 0h1M1 15.5h7m1 0h2m1 0h1m2 0h5M1 16.5h1m5 0h1m1 0h1m1 0h1m3 0h1m2 0h4M1 17.5h1m1 0h3m1 0h1m1 0h3m3 0h2m1 0h1M1 18.5h1m1 0h3m1 0h1m1 0h1m3 0h4m1 0h2M1 19.5h1m1 0h3m1 0h1m3 0h4m2 0h1m2 0h2M1 20.5h1m5 0h1m4 0h2m2 0h6M1 21.5h7m1 0h1m1 0h1m1 0h2m1 0h1"/></svg>
+</div>
+    <h3>Flickr</h3>
+    <code>flickr://</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="flickr.com|flickr">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-31">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m7 0h7M1 2.5h1m5 0h1m1 0h1m5 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m3 0h2m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h2m1 0h1m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m3 0h1m1 0h1m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h1m1 0h2M1 9.5h1m1 0h1m1 0h1m1 0h1m4 0h1m4 0h1m2 0h1M1 10.5h1m3 0h1m9 0h2m4 0h1M3 11.5h2m1 0h2m1 0h1m1 0h1m1 0h1m3 0h5M5 12.5h2m1 0h2m1 0h1m3 0h1m1 0h1m2 0h1M2 13.5h2m1 0h1m1 0h2m2 0h1m1 0h1m1 0h2M9 14.5h4m1 0h1m1 0h2m1 0h3M1 15.5h7m2 0h1m1 0h1m1 0h2m1 0h1m1 0h3M1 16.5h1m5 0h1m2 0h1m1 0h3m2 0h1m3 0h1M1 17.5h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h3m1 0h1m1 0h2M1 18.5h1m1 0h3m1 0h1m3 0h1m3 0h3m2 0h1M1 19.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m3 0h3m1 0h1M1 20.5h1m5 0h1m3 0h1m3 0h4m1 0h1M1 21.5h7m1 0h2m2 0h1m1 0h1m2 0h1m1 0h2"/></svg>
+</div>
+    <h3>Hulu</h3>
+    <code>hulu://</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="hulu.com|hulu">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-32">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h1m1 0h2m2 0h7M1 2.5h1m5 0h1m1 0h2m4 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m4 0h1m2 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m7 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M11 8.5h1M1 9.5h1m2 0h6m2 0h1m1 0h1m2 0h1m1 0h3M1 10.5h4m1 0h1m2 0h2m1 0h3m2 0h2M2 11.5h3m1 0h2m1 0h1m1 0h3m2 0h1m1 0h4M2 12.5h5m3 0h1m2 0h4m2 0h1M1 13.5h2m1 0h2m1 0h2m1 0h1m1 0h4m2 0h1m1 0h2M9 14.5h3m1 0h3m1 0h3M1 15.5h7m1 0h2m1 0h1m3 0h4M1 16.5h1m5 0h1m1 0h1m5 0h2m1 0h3M1 17.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h2m1 0h1m2 0h2M1 18.5h1m1 0h3m1 0h1m1 0h1m3 0h3m2 0h1M1 19.5h1m1 0h3m1 0h1m2 0h1m1 0h3m1 0h6M1 20.5h1m5 0h1m2 0h1m1 0h2m3 0h1m1 0h3M1 21.5h7m1 0h3m1 0h2m1 0h1m1 0h1"/></svg>
+</div>
+    <h3>Plex</h3>
+    <code>plex://</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="plex.tv|plex">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div>
+
+  <div class="card" id="card-33">
+    <div class="qr"><svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 23 23" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h23v23H0z"/><path stroke="#000000" d="M1 1.5h7m1 0h1m1 0h3m1 0h7M1 2.5h1m5 0h1m1 0h1m2 0h1m2 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m2 0h3m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h1m1 0h2m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h5M1 9.5h1m1 0h2m1 0h3m3 0h2m1 0h1m2 0h1m1 0h2M1 10.5h1m3 0h2m4 0h4m2 0h2m2 0h1M1 11.5h4m2 0h2m2 0h2m2 0h2m1 0h4M1 12.5h1m2 0h2m4 0h1m1 0h1m1 0h1m1 0h3m2 0h1M3 13.5h2m2 0h1m1 0h3m1 0h4M9 14.5h4m4 0h2m1 0h1M1 15.5h7m1 0h1m1 0h8M1 16.5h1m5 0h1m1 0h1m6 0h1m1 0h4M1 17.5h1m1 0h3m1 0h1m5 0h1m3 0h1m1 0h1M1 18.5h1m1 0h3m1 0h1m1 0h1m5 0h1m4 0h1M1 19.5h1m1 0h3m1 0h1m1 0h2m2 0h3m3 0h1M1 20.5h1m5 0h1m3 0h1m1 0h1m1 0h3m3 0h1M1 21.5h7m1 0h7m1 0h1m1 0h1"/></svg>
+</div>
+    <h3>Snapchat Spotlight</h3>
+    <code>snapchat://</code>
+    <p class="ev">community</p>
+    <div class="verdicts" data-key="snap.com|snapchat">
+      <button data-v="content">✅ content</button>
+      <button data-v="home">🏠 home only</button>
+      <button data-v="nothing">❌ nothing</button>
+    </div>
+  </div></div>
+<script>
+ const KEY="zippy-scheme-verdicts";
+ const state=JSON.parse(localStorage.getItem(KEY)||"{}");
+ function paint(){document.querySelectorAll(".verdicts").forEach(v=>{const k=v.dataset.key;v.querySelectorAll("button").forEach(b=>b.classList.toggle("on",state[k]===b.dataset.v))});
+  document.getElementById("count").textContent=Object.keys(state).length+" / 34 recorded";}
+ document.querySelectorAll(".verdicts button").forEach(b=>b.addEventListener("click",()=>{const k=b.parentElement.dataset.key;state[k]=b.dataset.v;localStorage.setItem(KEY,JSON.stringify(state));paint();}));
+ document.getElementById("export").addEventListener("click",()=>{const blob=new Blob([JSON.stringify(state,null,1)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="scheme-verdicts.json";a.click();});
+ paint();
+</script></body></html>

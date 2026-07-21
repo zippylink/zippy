@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { createHash, pbkdf2Sync, randomBytes } from "node:crypto";
 import worker, { type Env } from "../src/index.js";
+import { bestEffortMatch, bestEffortDomainCount } from "../src/best-effort.js";
 
 const IPHONE = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15";
 const IPHONE_IG =
@@ -851,9 +852,13 @@ describe("one outcome per click (single-send guard)", () => {
     const listeners: Record<string, Array<() => void>> = {};
     const timers: Array<{ fn: () => void; ms: number }> = [];
     const status = { textContent: "Opening the x app..." };
+    const replaced: string[] = [];
     const on = (k: string, f: () => void) => (listeners[k] ??= []).push(f);
     const doc = {
       hidden: false,
+      // A real document always has this; the copy-swap timer reads it so a page that
+      // backgrounded to a launched app never comes back saying "the app didn't open".
+      visibilityState: "visible",
       addEventListener: on,
       getElementById: (id: string) => (id === "status" ? status : null),
     };
@@ -871,7 +876,14 @@ describe("one outcome per click (single-send guard)", () => {
     ) as (...a: unknown[]) => void;
     fn(
       doc,
-      { addEventListener: on, location: { replace() {} } },
+      {
+        addEventListener: on,
+        location: {
+          replace(u: string) {
+            replaced.push(u);
+          },
+        },
+      },
       {
         userAgent: ua,
         sendBeacon: (_u: string, b: string) => sent.push(JSON.parse(b).outcome),
@@ -880,8 +892,18 @@ describe("one outcome per click (single-send guard)", () => {
       () => {},
     );
     const fire = (k: string) => (listeners[k] ?? []).forEach((f) => f());
+    const listenerCount = (k: string) => (listeners[k] ?? []).length;
     // Timers are registered copy-swap first, long-stop second (see interstitial.ts).
-    return { sent, status, doc, fire, tick: (i: number) => timers[i]?.fn(), timers };
+    return {
+      sent,
+      status,
+      doc,
+      fire,
+      listenerCount,
+      replaced,
+      tick: (i: number) => timers[i]?.fn(),
+      timers,
+    };
   };
 
   it("the copy-swap timer rewrites the copy and emits NO beacon", async () => {
@@ -921,6 +943,62 @@ describe("one outcome per click (single-send guard)", () => {
     const p = await runScript();
     expect(p.timers[0]!.ms).toBe(1500);
     expect(p.timers[1]!.ms).toBeGreaterThanOrEqual(8000);
+  });
+
+  // ── ANDROID IS UNMEASURED, AND SAYS SO ──────────────────────────────────────────────
+  // The bug this locks shut: the "opened" listener used to be registered ABOVE the Android
+  // branch while both "browser" emitters sat below it. The branch returns, so on Android
+  // the ONLY reachable outcome was "opened" — a failure could not be recorded as a failure
+  // and the published Android rate read near-100% by construction.
+
+  it("Android records exactly one 'unmeasured' outcome and never a success", async () => {
+    const p = await runScript(ANDROID);
+    expect(p.sent).toEqual(["unmeasured"]);
+    // And it really did hand off to the OS — the row is not a substitute for the redirect.
+    expect(p.replaced).toHaveLength(1);
+    expect(p.replaced[0]).toContain("intent://");
+  });
+
+  it("Android registers NO outcome listener — the structural fix, not just the ordering", async () => {
+    const p = await runScript(ANDROID);
+    // Zero listeners is the guarantee: with none registered, no later event can relabel
+    // this tap. Chrome fires visibilitychange->hidden on UNLOAD as well as on
+    // backgrounding, so an "opened" listener here would score the fallback navigation
+    // (the failure) as an app open.
+    expect(p.listenerCount("visibilitychange")).toBe(0);
+    expect(p.listenerCount("pagehide")).toBe(0);
+    // Fire them anyway: even a stray event cannot add an outcome.
+    p.doc.hidden = true;
+    p.fire("visibilitychange");
+    p.fire("pagehide");
+    expect(p.sent).toEqual(["unmeasured"]);
+  });
+
+  it("Android still gets the copy swap — an intent:// a webview swallows leaves the page up", async () => {
+    const p = await runScript(ANDROID);
+    expect(p.status.textContent).not.toContain("didn't open");
+    p.tick(0);
+    expect(p.status.textContent).toContain("didn't open");
+    expect(p.sent).toEqual(["unmeasured"]); // copy is UX; it never adds an outcome
+  });
+
+  it("the copy swap stays silent on a backgrounded page (it did open)", async () => {
+    const p = await runScript(ANDROID);
+    p.doc.visibilityState = "hidden"; // the app launched; we are in the background
+    p.tick(0);
+    expect(p.status.textContent).not.toContain("didn't open");
+  });
+
+  it("iOS is untouched by the Android branch — it still measures both outcomes", async () => {
+    const opened = await runScript();
+    opened.doc.hidden = true;
+    opened.fire("visibilitychange");
+    expect(opened.sent).toEqual(["opened"]);
+    const stuck = await runScript();
+    stuck.fire("pagehide");
+    expect(stuck.sent).toEqual(["browser"]);
+    // And iOS never writes the Android row.
+    expect(stuck.sent).not.toContain("unmeasured");
   });
 
   it("routes every send through the guard — no bare beacon() call sites remain", async () => {
@@ -1090,7 +1168,7 @@ describe("scheduled destinations (sched)", () => {
       sched(["junk", { from: -5, url: "https://bad.example.com" }]),
     );
     // Emitted verbatim — the runtime no longer appends a trailing slash to a bare origin.
-    expect(res.headers.get("location")).toBe("https://default.com");
+    expect(res.headers.get("location")).toBe("https://default.com/"); // Response.redirect canonicalizes bare origins with a trailing slash
     expect(res.headers.get("cache-control")).toBeNull();
   });
 
@@ -1176,7 +1254,7 @@ describe("password gate", () => {
     );
     // A cloud-managed JSON record is a living link → 302 (editable), not a 301.
     expect(res.status).toBe(302);
-    expect(res.headers.get("location")).toBe("https://secret.example.com");
+    expect(res.headers.get("location")).toBe("https://secret.example.com/"); // Response.redirect canonicalizes bare origins with a trailing slash
   });
 
   it("rejects a forged / mismatched gate cookie (still shows the gate)", async () => {
@@ -1419,7 +1497,7 @@ describe("A/B destination split (ab)", () => {
     for (const ab of bad) {
       const res = await worker.fetch(req("/ab", { headers: { "user-agent": DESKTOP } }), split(ab));
       // no ab → plain living-link redirect; the bare origin is emitted verbatim
-      expect(res.headers.get("location")).toBe("https://default.com");
+      expect(res.headers.get("location")).toBe("https://default.com/"); // Response.redirect canonicalizes bare origins with a trailing slash
     }
   });
 
@@ -1470,5 +1548,385 @@ describe("A/B destination split (ab)", () => {
     expect(res.status).toBe(200);
     expect(await res.text()).toContain("Split");
     expect(points).toHaveLength(0);
+  });
+});
+
+describe("Android intent fallback measurement (ANDROID_FALLBACK_MEASURE)", () => {
+  const DEST = "https://x.com/nasa/status/999";
+  const fbOf = (intentBody: string): string =>
+    decodeURIComponent(/S\.browser_fallback_url=([^;]*);/.exec(intentBody)?.[1] ?? "");
+  /** The `android` intent string the interstitial embedded, straight out of the page. */
+  const intentFrom = (html: string): string =>
+    JSON.parse(/var android = ("(?:[^"\\]|\\.)*");/.exec(html)?.[1] ?? '""');
+
+  function capturing(kv: Record<string, string>, extra: Partial<Env> = {}) {
+    const clicks: Array<{ indexes?: string[]; blobs?: string[] }> = [];
+    const redirects: Array<{ blobs?: string[] }> = [];
+    const e = {
+      ...env(kv),
+      CLICKS: { writeDataPoint: (p: (typeof clicks)[number]) => void clicks.push(p) },
+      REDIRECTS: { writeDataPoint: (p: (typeof redirects)[number]) => void redirects.push(p) },
+      ...extra,
+    } as unknown as Env;
+    return { e, clicks, redirects };
+  }
+
+  it("flag ON: browser_fallback_url is OUR short URL carrying the marker", async () => {
+    const { e } = capturing({ tw: DEST }, { ANDROID_FALLBACK_MEASURE: "1" });
+    const res = await worker.fetch(req("/tw", { headers: { "user-agent": ANDROID } }), e);
+    expect(fbOf(intentFrom(await res.text()))).toBe("https://zipthe.link/tw?fb=1");
+  });
+
+  it("flag ON on a custom domain: the fallback stays on the host that resolves the slug", async () => {
+    const { e } = capturing(
+      { "host:go.acme.com": JSON.stringify({ tenantId: "t_1" }), "t:t_1:tw": DEST },
+      { ANDROID_FALLBACK_MEASURE: "1" },
+    );
+    const res = await worker.fetch(
+      reqOn("go.acme.com", "/tw", { headers: { "user-agent": ANDROID } }),
+      e,
+    );
+    expect(fbOf(intentFrom(await res.text()))).toBe("https://go.acme.com/tw?fb=1");
+  });
+
+  it("flag OFF (default): the fallback is still the destination — Android stays unmeasured", async () => {
+    const { e } = capturing({ tw: DEST });
+    const res = await worker.fetch(req("/tw", { headers: { "user-agent": ANDROID } }), e);
+    const body = await res.text();
+    expect(fbOf(intentFrom(body))).toBe(DEST);
+    expect(body).toContain('send("unmeasured")');
+    // and an unrecognised flag value is OFF, not ON
+    const { e: e2 } = capturing({ tw: DEST }, { ANDROID_FALLBACK_MEASURE: "true" });
+    const res2 = await worker.fetch(req("/tw", { headers: { "user-agent": ANDROID } }), e2);
+    expect(fbOf(intentFrom(await res2.text()))).toBe(DEST);
+  });
+
+  it("the marked request records an observed 'browser' outcome and 302s to the destination", async () => {
+    const { e, clicks } = capturing({ tw: DEST }, { ANDROID_FALLBACK_MEASURE: "1" });
+    const res = await worker.fetch(req("/tw?fb=1", { headers: { "user-agent": ANDROID } }), e);
+    expect(res.status).toBe(302);
+    expect(res.headers.get("location")).toBe(DEST);
+    // uncacheable, or a CDN swallows the hits we are counting
+    expect(res.headers.get("cache-control")).toBe("no-store");
+    expect(clicks).toHaveLength(1);
+    // blobs = [slug, host, outcome, sourceApp, platformKey, country, city, device, abVariant]
+    expect(clicks[0]?.indexes).toEqual(["tw"]);
+    expect(clicks[0]?.blobs?.[0]).toBe("tw");
+    expect(clicks[0]?.blobs?.[2]).toBe("browser");
+    expect(clicks[0]?.blobs?.[4]).toBe("x"); // platform key, server-derived
+    expect(clicks[0]?.blobs?.[7]).toBe("mobile");
+  });
+
+  it("LOOP GUARD: the marked request never renders the interstitial (no second intent)", async () => {
+    const { e } = capturing({ tw: DEST }, { ANDROID_FALLBACK_MEASURE: "1" });
+    const res = await worker.fetch(req("/tw?fb=1", { headers: { "user-agent": ANDROID } }), e);
+    expect(res.status).toBe(302); // not 200
+    const body = await res.text();
+    expect(body).toBe("");
+    expect(body).not.toContain("intent://");
+  });
+
+  it("the fallback hop is the SAME click — it writes no second REDIRECTS row", async () => {
+    const { e, redirects } = capturing({ tw: DEST }, { ANDROID_FALLBACK_MEASURE: "1" });
+    await worker.fetch(req("/tw", { headers: { "user-agent": ANDROID } }), e);
+    expect(redirects).toHaveLength(1);
+    await worker.fetch(req("/tw?fb=1", { headers: { "user-agent": ANDROID } }), e);
+    expect(redirects).toHaveLength(1);
+  });
+
+  it("A/B: the fallback carries the variant, and the hop honours it over a fresh pick", async () => {
+    const A = "https://x.com/a/status/1";
+    const B = "https://x.com/b/status/2";
+    // weights [1,0] → the pick is ALWAYS variant 0, so a landing on B can only come
+    // from the carried ?v=1.
+    const rec = JSON.stringify({
+      url: "https://x.com/default/status/0",
+      ab: [
+        { u: A, w: 1 },
+        { u: B, w: 0 },
+      ],
+    });
+    const { e, clicks } = capturing({ ab: rec }, { ANDROID_FALLBACK_MEASURE: "1" });
+    const page = await worker.fetch(req("/ab", { headers: { "user-agent": ANDROID } }), e);
+    expect(fbOf(intentFrom(await page.text()))).toBe("https://zipthe.link/ab?fb=1&v=0");
+
+    const hop = await worker.fetch(req("/ab?fb=1&v=1", { headers: { "user-agent": ANDROID } }), e);
+    expect(hop.headers.get("location")).toBe(B);
+    expect(clicks[0]?.blobs?.[8]).toBe("1"); // browser row attributed to the carried variant
+
+    // a bogus carried index falls back to the normal pick (variant 0 here), never 500s
+    const bad = await worker.fetch(req("/ab?fb=1&v=9", { headers: { "user-agent": ANDROID } }), e);
+    expect(bad.headers.get("location")).toBe(A);
+    expect(clicks[1]?.blobs?.[8]).toBe("0");
+  });
+
+  it("an unmarked request is untouched by the guard (fb= must be exactly 1)", async () => {
+    const { e, clicks } = capturing({ tw: DEST }, { ANDROID_FALLBACK_MEASURE: "1" });
+    const res = await worker.fetch(req("/tw?fb=0", { headers: { "user-agent": ANDROID } }), e);
+    expect(res.status).toBe(200);
+    expect(clicks).toHaveLength(0);
+  });
+
+  // ── DEFECT A: dark-launch law — flag OFF makes ?fb=1 an ordinary request ──────────────
+  // Pre-change, the short-circuit was unconditional, so a crafted ?fb=1 dropped the click
+  // and minted a phantom `browser` row even with the flag unset. Flag OFF must be
+  // byte-identical to HEAD behaviour: interstitial + one click row + zero outcome rows.
+  it("flag OFF + ?fb=1: serves the interstitial, counts the click, records NO outcome", async () => {
+    const { e, clicks, redirects } = capturing({ tw: DEST }); // flag unset
+    const res = await worker.fetch(req("/tw?fb=1", { headers: { "user-agent": ANDROID } }), e);
+    expect(res.status).toBe(200); // interstitial, not a 302 short-circuit
+    expect(await res.text()).toContain("intent://");
+    expect(redirects).toHaveLength(1); // the click was counted
+    expect(clicks).toHaveLength(0); // and NO browser outcome row
+  });
+
+  // ── DEFECT B: only an Android UA mints a `browser` row ────────────────────────────────
+  // Flag ON, but the recording is gated on an Android UA — the flow the intent was built
+  // for. The redirect still happens for everyone; a phantom row can't deflate the rate.
+  it("flag ON + Android UA + ?fb=1: 302 + exactly one browser row, no click row", async () => {
+    const { e, clicks, redirects } = capturing({ tw: DEST }, { ANDROID_FALLBACK_MEASURE: "1" });
+    const res = await worker.fetch(req("/tw?fb=1", { headers: { "user-agent": ANDROID } }), e);
+    expect(res.status).toBe(302);
+    expect(res.headers.get("location")).toBe(DEST);
+    expect(clicks).toHaveLength(1);
+    expect(clicks[0]?.blobs?.[2]).toBe("browser");
+    expect(redirects).toHaveLength(0); // the fallback hop is the SAME click, no new REDIRECTS row
+  });
+
+  it("flag ON + non-Android UA + ?fb=1: redirects but records ZERO outcome rows", async () => {
+    for (const ua of [DESKTOP, "curl/8.4.0", IPHONE]) {
+      const { e, clicks } = capturing({ tw: DEST }, { ANDROID_FALLBACK_MEASURE: "1" });
+      const res = await worker.fetch(req("/tw?fb=1", { headers: { "user-agent": ua } }), e);
+      expect(res.status, ua).toBe(302); // the redirect is for everyone
+      expect(res.headers.get("location"), ua).toBe(DEST);
+      expect(clicks, ua).toHaveLength(0); // but only Android mints a `browser` row
+    }
+  });
+
+  it("flag ON: 50 curls mint ZERO browser rows (the proven inflation is closed)", async () => {
+    const { e, clicks } = capturing({ tw: DEST }, { ANDROID_FALLBACK_MEASURE: "1" });
+    for (let i = 0; i < 50; i++) {
+      await worker.fetch(req("/tw?fb=1", { headers: { "user-agent": "curl/8.4.0" } }), e);
+    }
+    expect(clicks).toHaveLength(0);
+  });
+});
+
+// ── Best-effort Android tier (Wave 13) ──────────────────────────────────────────────────────
+// soundcloud.com is in the committed well-known-map.json (com.soundcloud.android) and is NOT in
+// the hand-verified table — the stable fixture for this suite. open.spotify.com IS hand-verified.
+const SC_URL = "https://soundcloud.com/flume/never-be-like-you";
+const SC_PKG = "com.soundcloud.android";
+
+describe("best-effort match (bestEffortMatch, pure)", () => {
+  it("builds a package-pinned https intent, path handed to the app verbatim (never guessed)", () => {
+    const m = bestEffortMatch(SC_URL);
+    expect(m).not.toBeNull();
+    expect(m?.key).toBe("soundcloud");
+    expect(m?.android).toContain("intent://soundcloud.com/flume/never-be-like-you#Intent");
+    expect(m?.android).toContain("scheme=https");
+    expect(m?.android).toContain(`package=${SC_PKG}`);
+    // UNMEASURED by construction: the fallback is EXACTLY the destination (anchored to `;end`,
+    // so nothing — e.g. a ?fb=1 marker — is appended), never our measured fb=1 hop.
+    expect(m?.android).toContain(`S.browser_fallback_url=${encodeURIComponent(SC_URL)};end`);
+    // iOS does NOTHING — the ios form is the plain web URL, so the interstitial just serves web.
+    expect(m?.ios).toBe(SC_URL);
+  });
+
+  it("returns null for a hand-verified host (never shadows the verified table)", () => {
+    // discord.gg published assetlinks AND is hand-verified — it IS in well-known-map.json, so
+    // this exercises the VERIFIED_HOSTS exclusion (not merely a map miss).
+    expect(bestEffortMatch("https://discord.gg/abc")).toBeNull();
+    expect(bestEffortMatch("https://open.spotify.com/track/abc")).toBeNull();
+  });
+
+  it("returns null for a host not in the map, and for non-http(s) URLs", () => {
+    expect(bestEffortMatch("https://totally-unknown-1234.example/x")).toBeNull();
+    expect(bestEffortMatch("ftp://soundcloud.com/x")).toBeNull();
+    expect(bestEffortMatch("not a url")).toBeNull();
+  });
+
+  it("loaded a non-trivial map (guards an empty / broken artifact)", () => {
+    expect(bestEffortDomainCount()).toBeGreaterThan(100);
+  });
+});
+
+describe("best-effort Android tier — engine hook (BEST_EFFORT_ANDROID)", () => {
+  const on = (init: Record<string, string> = {}): Env => ({
+    ...env(init),
+    BEST_EFFORT_ANDROID: "1",
+  });
+
+  it('springs the best-effort intent on Android when the flag is exactly "1"', async () => {
+    const res = await worker.fetch(
+      req("/sc", { headers: { "user-agent": ANDROID } }),
+      on({ sc: SC_URL }),
+    );
+    expect(res.status).toBe(200);
+    const body = await res.text();
+    expect(body).toContain(`package=${SC_PKG}`);
+    expect(body).toContain("scheme=https");
+    // Android interstitial path records exactly one unmeasured row — never opened/browser.
+    expect(body).toContain('send("unmeasured")');
+    // fallback stays EXACTLY the destination (anchored to `;end`), not our measured fb=1 hop.
+    expect(body).toContain(`S.browser_fallback_url=${encodeURIComponent(SC_URL)};end`);
+  });
+
+  it('stays OFF unless the flag is exactly "1" (exact-match, like ANDROID_FALLBACK_MEASURE)', async () => {
+    for (const flag of ["0", "true", "yes", "", "1 ", " 1", "11"]) {
+      const res = await worker.fetch(req("/sc", { headers: { "user-agent": ANDROID } }), {
+        ...env({ sc: SC_URL }),
+        BEST_EFFORT_ANDROID: flag,
+      });
+      expect(res.status, `flag=${JSON.stringify(flag)}`).toBe(301); // plain redirect, no interstitial
+    }
+    const unset = await worker.fetch(
+      req("/sc", { headers: { "user-agent": ANDROID } }),
+      env({ sc: SC_URL }),
+    );
+    expect(unset.status).toBe(301);
+  });
+
+  it("never fires for a hand-verified platform, even with the flag on", async () => {
+    const res = await worker.fetch(
+      req("/sp", { headers: { "user-agent": ANDROID } }),
+      on({ sp: "https://open.spotify.com/track/abc123" }),
+    );
+    expect(res.status).toBe(200);
+    const body = await res.text();
+    expect(body).toContain("scheme=spotify"); // the verified scheme, not a schemeless https intent
+    expect(body).toContain("package=com.spotify.music");
+    expect(body).toContain("track:abc123"); // the verified path form (spotify://track:abc123)
+    expect(body).not.toContain("scheme=https"); // i.e. NOT a best-effort schemeless intent
+  });
+
+  it("falls through to today's behaviour for a host not in the map (flag on)", async () => {
+    const res = await worker.fetch(
+      req("/plain", { headers: { "user-agent": ANDROID } }),
+      on({ plain: "https://totally-unknown-1234.example/page" }),
+    );
+    expect(res.status).toBe(301);
+    expect(res.headers.get("location")).toBe("https://totally-unknown-1234.example/page");
+  });
+
+  it("does nothing on iOS or desktop — best-effort is Android-only (flag on, mapped host)", async () => {
+    const ios = await worker.fetch(
+      req("/sc", { headers: { "user-agent": IPHONE } }),
+      on({ sc: SC_URL }),
+    );
+    expect(ios.status).toBe(301);
+    const desktop = await worker.fetch(
+      req("/sc", { headers: { "user-agent": DESKTOP } }),
+      on({ sc: SC_URL }),
+    );
+    expect(desktop.status).toBe(301);
+  });
+});
+
+// No-signup door — the anon FIRST-CLICK PING. An unclaimed anonymous link (KV `anon:true`)
+// tells the cloud a real visitor arrived; the cloud stamps firstClickAt idempotently and
+// the 7-day claim window starts. Fire-and-forget on EVERY anon redirect (dupes are free),
+// never for owned links, never without EVENTS_URL, and it must not break the redirect.
+describe("anon first-click ping (no-signup door)", () => {
+  const ANON = JSON.stringify({ url: "https://example.com/page", anon: true });
+  const ANON_PLATFORM = JSON.stringify({ url: "https://x.com/nasa/status/999", anon: true });
+  const OWNED = JSON.stringify({ url: "https://example.com/page", orgId: "org1" });
+  const pingEnv = (init: Record<string, string>): Env => ({
+    ...env(init),
+    EVENTS_URL: "https://cloud.example/api/events/ingest",
+    EVENTS_TOKEN: "evt-token",
+  });
+
+  function stubCtx() {
+    const waits: Promise<unknown>[] = [];
+    return {
+      waits,
+      ctx: {
+        waitUntil: (p: Promise<unknown>) => void waits.push(p),
+      } as unknown as ExecutionContext,
+    };
+  }
+  function stubFetch() {
+    const calls: { url: string; init?: RequestInit }[] = [];
+    const orig = globalThis.fetch;
+    globalThis.fetch = ((url: string, init?: RequestInit) => {
+      calls.push({ url, init });
+      return Promise.resolve(new Response(null, { status: 204 }));
+    }) as unknown as typeof fetch;
+    return { calls, restore: () => void (globalThis.fetch = orig) };
+  }
+
+  it("fires to /api/events/click with slug + bearer on a plain anon redirect", async () => {
+    const f = stubFetch();
+    const { ctx, waits } = stubCtx();
+    try {
+      const res = await worker.fetch(
+        req("/anon1", { headers: { "user-agent": DESKTOP } }),
+        pingEnv({ anon1: ANON }),
+        ctx,
+      );
+      expect(res.status).toBe(302); // JSON (cloud-managed) records redirect 302
+      await Promise.all(waits);
+      expect(f.calls.length).toBe(1);
+      const call = f.calls[0]!;
+      expect(call.url).toBe("https://cloud.example/api/events/click");
+      const body = JSON.parse(String(call.init?.body)) as { slug: string; host: string };
+      expect(body.slug).toBe("anon1");
+      const headers = (call.init?.headers ?? {}) as Record<string, string>;
+      expect(headers.authorization).toBe("Bearer evt-token");
+    } finally {
+      f.restore();
+    }
+  });
+
+  it("fires on the interstitial branch too (anon + mobile + platform)", async () => {
+    const f = stubFetch();
+    const { ctx, waits } = stubCtx();
+    try {
+      const res = await worker.fetch(
+        req("/anon2", { headers: { "user-agent": IPHONE } }),
+        pingEnv({ anon2: ANON_PLATFORM }),
+        ctx,
+      );
+      expect(res.status).toBe(200); // interstitial
+      await Promise.all(waits);
+      expect(f.calls.filter((c) => c.url.endsWith("/api/events/click")).length).toBe(1);
+    } finally {
+      f.restore();
+    }
+  });
+
+  it("never fires for an owned (claimed) link", async () => {
+    const f = stubFetch();
+    const { ctx, waits } = stubCtx();
+    try {
+      const res = await worker.fetch(
+        req("/own1", { headers: { "user-agent": DESKTOP } }),
+        pingEnv({ own1: OWNED }),
+        ctx,
+      );
+      expect(res.status).toBe(302); // JSON (cloud-managed) records redirect 302
+      await Promise.all(waits);
+      expect(f.calls.length).toBe(0);
+    } finally {
+      f.restore();
+    }
+  });
+
+  it("never fires when EVENTS_URL is unset, and the redirect still works", async () => {
+    const f = stubFetch();
+    const { ctx, waits } = stubCtx();
+    try {
+      const res = await worker.fetch(
+        req("/anon3", { headers: { "user-agent": DESKTOP } }),
+        env({ anon3: ANON }),
+        ctx,
+      );
+      expect(res.status).toBe(302); // JSON (cloud-managed) records redirect 302
+      await Promise.all(waits);
+      expect(f.calls.length).toBe(0);
+    } finally {
+      f.restore();
+    }
   });
 });

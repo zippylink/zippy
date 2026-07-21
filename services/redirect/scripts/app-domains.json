@@ -1,0 +1,5441 @@
+[
+  {
+    "name": "Bluesky",
+    "category": "social",
+    "domains": [
+      "bsky.app"
+    ]
+  },
+  {
+    "name": "Mastodon",
+    "category": "social",
+    "domains": [
+      "mastodon.social"
+    ]
+  },
+  {
+    "name": "Tumblr",
+    "category": "social",
+    "domains": [
+      "tumblr.com"
+    ]
+  },
+  {
+    "name": "Nextdoor",
+    "category": "social",
+    "domains": [
+      "nextdoor.com"
+    ]
+  },
+  {
+    "name": "BeReal",
+    "category": "social",
+    "domains": [
+      "bere.al"
+    ]
+  },
+  {
+    "name": "VSCO",
+    "category": "social",
+    "domains": [
+      "vsco.co"
+    ]
+  },
+  {
+    "name": "Fizz",
+    "category": "social",
+    "domains": [
+      "fizz.social"
+    ]
+  },
+  {
+    "name": "Lemon8",
+    "category": "social",
+    "domains": [
+      "lemon8-app.com"
+    ]
+  },
+  {
+    "name": "Quora",
+    "category": "social",
+    "domains": [
+      "quora.com"
+    ]
+  },
+  {
+    "name": "Meetup",
+    "category": "social",
+    "domains": [
+      "meetup.com"
+    ]
+  },
+  {
+    "name": "Clubhouse",
+    "category": "social",
+    "domains": [
+      "clubhouse.com"
+    ]
+  },
+  {
+    "name": "Truth Social",
+    "category": "social",
+    "domains": [
+      "truthsocial.com"
+    ]
+  },
+  {
+    "name": "Rumble",
+    "category": "social",
+    "domains": [
+      "rumble.com"
+    ]
+  },
+  {
+    "name": "Parler",
+    "category": "social",
+    "domains": [
+      "parler.com"
+    ]
+  },
+  {
+    "name": "Gettr",
+    "category": "social",
+    "domains": [
+      "gettr.com"
+    ]
+  },
+  {
+    "name": "Flickr",
+    "category": "social",
+    "domains": [
+      "flickr.com",
+      "flic.kr"
+    ]
+  },
+  {
+    "name": "500px",
+    "category": "social",
+    "domains": [
+      "500px.com"
+    ]
+  },
+  {
+    "name": "Yubo",
+    "category": "social",
+    "domains": [
+      "yubo.live"
+    ]
+  },
+  {
+    "name": "Geneva",
+    "category": "social",
+    "domains": [
+      "geneva.com"
+    ]
+  },
+  {
+    "name": "Band",
+    "category": "social",
+    "domains": [
+      "band.us"
+    ]
+  },
+  {
+    "name": "Messenger",
+    "category": "messaging",
+    "domains": [
+      "m.me",
+      "messenger.com"
+    ]
+  },
+  {
+    "name": "Signal",
+    "category": "messaging",
+    "domains": [
+      "signal.me",
+      "signal.group"
+    ]
+  },
+  {
+    "name": "GroupMe",
+    "category": "messaging",
+    "domains": [
+      "groupme.com"
+    ]
+  },
+  {
+    "name": "Viber",
+    "category": "messaging",
+    "domains": [
+      "viber.com"
+    ]
+  },
+  {
+    "name": "Kik",
+    "category": "messaging",
+    "domains": [
+      "kik.me"
+    ]
+  },
+  {
+    "name": "Slack",
+    "category": "messaging",
+    "domains": [
+      "slack.com"
+    ]
+  },
+  {
+    "name": "Microsoft Teams",
+    "category": "messaging",
+    "domains": [
+      "teams.microsoft.com"
+    ]
+  },
+  {
+    "name": "Google Chat",
+    "category": "messaging",
+    "domains": [
+      "chat.google.com"
+    ]
+  },
+  {
+    "name": "Line",
+    "category": "messaging",
+    "domains": [
+      "line.me"
+    ]
+  },
+  {
+    "name": "KakaoTalk",
+    "category": "messaging",
+    "domains": [
+      "kakao.com"
+    ]
+  },
+  {
+    "name": "WeChat",
+    "category": "messaging",
+    "domains": [
+      "wechat.com"
+    ]
+  },
+  {
+    "name": "Zoom",
+    "category": "messaging",
+    "domains": [
+      "zoom.us"
+    ]
+  },
+  {
+    "name": "Google Meet",
+    "category": "messaging",
+    "domains": [
+      "meet.google.com"
+    ]
+  },
+  {
+    "name": "Spotify",
+    "category": "music",
+    "domains": [
+      "spotify.com"
+    ]
+  },
+  {
+    "name": "SoundCloud",
+    "category": "music",
+    "domains": [
+      "soundcloud.com",
+      "on.soundcloud.com"
+    ]
+  },
+  {
+    "name": "Pandora",
+    "category": "music",
+    "domains": [
+      "pandora.com"
+    ]
+  },
+  {
+    "name": "Deezer",
+    "category": "music",
+    "domains": [
+      "deezer.com",
+      "dzr.fm"
+    ]
+  },
+  {
+    "name": "Tidal",
+    "category": "music",
+    "domains": [
+      "tidal.com"
+    ]
+  },
+  {
+    "name": "iHeartRadio",
+    "category": "music",
+    "domains": [
+      "iheart.com"
+    ]
+  },
+  {
+    "name": "Amazon Music",
+    "category": "music",
+    "domains": [
+      "music.amazon.com"
+    ]
+  },
+  {
+    "name": "Shazam",
+    "category": "music",
+    "domains": [
+      "shazam.com"
+    ]
+  },
+  {
+    "name": "Bandcamp",
+    "category": "music",
+    "domains": [
+      "bandcamp.com"
+    ]
+  },
+  {
+    "name": "Audiomack",
+    "category": "music",
+    "domains": [
+      "audiomack.com"
+    ]
+  },
+  {
+    "name": "Genius",
+    "category": "music",
+    "domains": [
+      "genius.com"
+    ]
+  },
+  {
+    "name": "Qobuz",
+    "category": "music",
+    "domains": [
+      "qobuz.com"
+    ]
+  },
+  {
+    "name": "TuneIn",
+    "category": "music",
+    "domains": [
+      "tunein.com"
+    ]
+  },
+  {
+    "name": "SiriusXM",
+    "category": "music",
+    "domains": [
+      "siriusxm.com"
+    ]
+  },
+  {
+    "name": "BandLab",
+    "category": "music",
+    "domains": [
+      "bandlab.com"
+    ]
+  },
+  {
+    "name": "Apple Podcasts",
+    "category": "podcasts",
+    "domains": [
+      "podcasts.apple.com"
+    ]
+  },
+  {
+    "name": "Pocket Casts",
+    "category": "podcasts",
+    "domains": [
+      "pocketcasts.com",
+      "pca.st"
+    ]
+  },
+  {
+    "name": "Overcast",
+    "category": "podcasts",
+    "domains": [
+      "overcast.fm"
+    ]
+  },
+  {
+    "name": "Castbox",
+    "category": "podcasts",
+    "domains": [
+      "castbox.fm"
+    ]
+  },
+  {
+    "name": "Podbean",
+    "category": "podcasts",
+    "domains": [
+      "podbean.com"
+    ]
+  },
+  {
+    "name": "Stitcher",
+    "category": "podcasts",
+    "domains": [
+      "stitcher.com"
+    ]
+  },
+  {
+    "name": "Spreaker",
+    "category": "podcasts",
+    "domains": [
+      "spreaker.com"
+    ]
+  },
+  {
+    "name": "Audible Podcasts",
+    "category": "podcasts",
+    "domains": [
+      "audible.com"
+    ]
+  },
+  {
+    "name": "Wondery",
+    "category": "podcasts",
+    "domains": [
+      "wondery.com"
+    ]
+  },
+  {
+    "name": "Netflix",
+    "category": "video",
+    "domains": [
+      "netflix.com"
+    ]
+  },
+  {
+    "name": "Hulu",
+    "category": "video",
+    "domains": [
+      "hulu.com"
+    ]
+  },
+  {
+    "name": "Disney+",
+    "category": "video",
+    "domains": [
+      "disneyplus.com"
+    ]
+  },
+  {
+    "name": "Max",
+    "category": "video",
+    "domains": [
+      "max.com"
+    ]
+  },
+  {
+    "name": "Prime Video",
+    "category": "video",
+    "domains": [
+      "primevideo.com"
+    ]
+  },
+  {
+    "name": "Peacock",
+    "category": "video",
+    "domains": [
+      "peacocktv.com"
+    ]
+  },
+  {
+    "name": "Paramount+",
+    "category": "video",
+    "domains": [
+      "paramountplus.com"
+    ]
+  },
+  {
+    "name": "Apple TV",
+    "category": "video",
+    "domains": [
+      "tv.apple.com"
+    ]
+  },
+  {
+    "name": "ESPN",
+    "category": "video",
+    "domains": [
+      "espn.com"
+    ]
+  },
+  {
+    "name": "Sling TV",
+    "category": "video",
+    "domains": [
+      "sling.com"
+    ]
+  },
+  {
+    "name": "Fubo",
+    "category": "video",
+    "domains": [
+      "fubo.tv"
+    ]
+  },
+  {
+    "name": "Tubi",
+    "category": "video",
+    "domains": [
+      "tubitv.com"
+    ]
+  },
+  {
+    "name": "Pluto TV",
+    "category": "video",
+    "domains": [
+      "pluto.tv"
+    ]
+  },
+  {
+    "name": "Roku",
+    "category": "video",
+    "domains": [
+      "roku.com"
+    ]
+  },
+  {
+    "name": "Crunchyroll",
+    "category": "video",
+    "domains": [
+      "crunchyroll.com"
+    ]
+  },
+  {
+    "name": "Vimeo",
+    "category": "video",
+    "domains": [
+      "vimeo.com"
+    ]
+  },
+  {
+    "name": "Dailymotion",
+    "category": "video",
+    "domains": [
+      "dailymotion.com",
+      "dai.ly"
+    ]
+  },
+  {
+    "name": "Rakuten Viki",
+    "category": "video",
+    "domains": [
+      "viki.com"
+    ]
+  },
+  {
+    "name": "Plex",
+    "category": "video",
+    "domains": [
+      "plex.tv"
+    ]
+  },
+  {
+    "name": "Kick",
+    "category": "video",
+    "domains": [
+      "kick.com"
+    ]
+  },
+  {
+    "name": "DAZN",
+    "category": "video",
+    "domains": [
+      "dazn.com"
+    ]
+  },
+  {
+    "name": "Discovery+",
+    "category": "video",
+    "domains": [
+      "discoveryplus.com"
+    ]
+  },
+  {
+    "name": "Starz",
+    "category": "video",
+    "domains": [
+      "starz.com"
+    ]
+  },
+  {
+    "name": "AMC+",
+    "category": "video",
+    "domains": [
+      "amcplus.com"
+    ]
+  },
+  {
+    "name": "Funimation",
+    "category": "video",
+    "domains": [
+      "funimation.com"
+    ]
+  },
+  {
+    "name": "eBay",
+    "category": "shopping",
+    "domains": [
+      "ebay.com"
+    ]
+  },
+  {
+    "name": "Walmart",
+    "category": "shopping",
+    "domains": [
+      "walmart.com"
+    ]
+  },
+  {
+    "name": "Target",
+    "category": "shopping",
+    "domains": [
+      "target.com"
+    ]
+  },
+  {
+    "name": "Etsy",
+    "category": "shopping",
+    "domains": [
+      "etsy.com"
+    ]
+  },
+  {
+    "name": "Shein",
+    "category": "shopping",
+    "domains": [
+      "shein.com"
+    ]
+  },
+  {
+    "name": "Temu",
+    "category": "shopping",
+    "domains": [
+      "temu.com"
+    ]
+  },
+  {
+    "name": "AliExpress",
+    "category": "shopping",
+    "domains": [
+      "aliexpress.com"
+    ]
+  },
+  {
+    "name": "Wish",
+    "category": "shopping",
+    "domains": [
+      "wish.com"
+    ]
+  },
+  {
+    "name": "Best Buy",
+    "category": "shopping",
+    "domains": [
+      "bestbuy.com"
+    ]
+  },
+  {
+    "name": "Costco",
+    "category": "shopping",
+    "domains": [
+      "costco.com"
+    ]
+  },
+  {
+    "name": "The Home Depot",
+    "category": "shopping",
+    "domains": [
+      "homedepot.com"
+    ]
+  },
+  {
+    "name": "Lowe's",
+    "category": "shopping",
+    "domains": [
+      "lowes.com"
+    ]
+  },
+  {
+    "name": "Wayfair",
+    "category": "shopping",
+    "domains": [
+      "wayfair.com"
+    ]
+  },
+  {
+    "name": "Macy's",
+    "category": "shopping",
+    "domains": [
+      "macys.com"
+    ]
+  },
+  {
+    "name": "Nordstrom",
+    "category": "shopping",
+    "domains": [
+      "nordstrom.com"
+    ]
+  },
+  {
+    "name": "Kohl's",
+    "category": "shopping",
+    "domains": [
+      "kohls.com"
+    ]
+  },
+  {
+    "name": "Nike",
+    "category": "shopping",
+    "domains": [
+      "nike.com"
+    ]
+  },
+  {
+    "name": "Adidas",
+    "category": "shopping",
+    "domains": [
+      "adidas.com"
+    ]
+  },
+  {
+    "name": "SHOP by Shopify",
+    "category": "shopping",
+    "domains": [
+      "shop.app"
+    ]
+  },
+  {
+    "name": "Poshmark",
+    "category": "shopping",
+    "domains": [
+      "poshmark.com"
+    ]
+  },
+  {
+    "name": "Depop",
+    "category": "shopping",
+    "domains": [
+      "depop.com"
+    ]
+  },
+  {
+    "name": "Mercari",
+    "category": "shopping",
+    "domains": [
+      "mercari.com"
+    ]
+  },
+  {
+    "name": "OfferUp",
+    "category": "shopping",
+    "domains": [
+      "offerup.com"
+    ]
+  },
+  {
+    "name": "StockX",
+    "category": "shopping",
+    "domains": [
+      "stockx.com"
+    ]
+  },
+  {
+    "name": "GOAT",
+    "category": "shopping",
+    "domains": [
+      "goat.com"
+    ]
+  },
+  {
+    "name": "Vinted",
+    "category": "shopping",
+    "domains": [
+      "vinted.com"
+    ]
+  },
+  {
+    "name": "The RealReal",
+    "category": "shopping",
+    "domains": [
+      "therealreal.com"
+    ]
+  },
+  {
+    "name": "ThredUp",
+    "category": "shopping",
+    "domains": [
+      "thredup.com"
+    ]
+  },
+  {
+    "name": "Chewy",
+    "category": "shopping",
+    "domains": [
+      "chewy.com"
+    ]
+  },
+  {
+    "name": "Sephora",
+    "category": "shopping",
+    "domains": [
+      "sephora.com"
+    ]
+  },
+  {
+    "name": "Ulta Beauty",
+    "category": "shopping",
+    "domains": [
+      "ulta.com"
+    ]
+  },
+  {
+    "name": "SHEIN",
+    "category": "shopping",
+    "domains": [
+      "us.shein.com"
+    ]
+  },
+  {
+    "name": "Zara",
+    "category": "shopping",
+    "domains": [
+      "zara.com"
+    ]
+  },
+  {
+    "name": "H&M",
+    "category": "shopping",
+    "domains": [
+      "hm.com"
+    ]
+  },
+  {
+    "name": "ASOS",
+    "category": "shopping",
+    "domains": [
+      "asos.com"
+    ]
+  },
+  {
+    "name": "Fashion Nova",
+    "category": "shopping",
+    "domains": [
+      "fashionnova.com"
+    ]
+  },
+  {
+    "name": "Shopee",
+    "category": "shopping",
+    "domains": [
+      "shopee.com"
+    ]
+  },
+  {
+    "name": "Newegg",
+    "category": "shopping",
+    "domains": [
+      "newegg.com"
+    ]
+  },
+  {
+    "name": "Groupon",
+    "category": "shopping",
+    "domains": [
+      "groupon.com"
+    ]
+  },
+  {
+    "name": "QVC",
+    "category": "shopping",
+    "domains": [
+      "qvc.com"
+    ]
+  },
+  {
+    "name": "Rakuten",
+    "category": "shopping",
+    "domains": [
+      "rakuten.com"
+    ]
+  },
+  {
+    "name": "Ebay Kleinanzeigen",
+    "category": "shopping",
+    "domains": [
+      "kleinanzeigen.de"
+    ]
+  },
+  {
+    "name": "Whatnot",
+    "category": "shopping",
+    "domains": [
+      "whatnot.com"
+    ]
+  },
+  {
+    "name": "IKEA",
+    "category": "shopping",
+    "domains": [
+      "ikea.com"
+    ]
+  },
+  {
+    "name": "Costco Wholesale",
+    "category": "shopping",
+    "domains": [
+      "sameday.costco.com"
+    ]
+  },
+  {
+    "name": "Shopify Inbox",
+    "category": "shopping",
+    "domains": [
+      "shopify.com"
+    ]
+  },
+  {
+    "name": "PayPal",
+    "category": "finance",
+    "domains": [
+      "paypal.com",
+      "paypal.me"
+    ]
+  },
+  {
+    "name": "Venmo",
+    "category": "finance",
+    "domains": [
+      "venmo.com",
+      "account.venmo.com"
+    ]
+  },
+  {
+    "name": "Cash App",
+    "category": "finance",
+    "domains": [
+      "cash.app"
+    ]
+  },
+  {
+    "name": "Zelle",
+    "category": "finance",
+    "domains": [
+      "zellepay.com"
+    ]
+  },
+  {
+    "name": "Chime",
+    "category": "finance",
+    "domains": [
+      "chime.com"
+    ]
+  },
+  {
+    "name": "Coinbase",
+    "category": "finance",
+    "domains": [
+      "coinbase.com"
+    ]
+  },
+  {
+    "name": "Binance",
+    "category": "finance",
+    "domains": [
+      "binance.com"
+    ]
+  },
+  {
+    "name": "Binance US",
+    "category": "finance",
+    "domains": [
+      "binance.us"
+    ]
+  },
+  {
+    "name": "Kraken",
+    "category": "finance",
+    "domains": [
+      "kraken.com"
+    ]
+  },
+  {
+    "name": "Crypto.com",
+    "category": "finance",
+    "domains": [
+      "crypto.com"
+    ]
+  },
+  {
+    "name": "Gemini",
+    "category": "finance",
+    "domains": [
+      "gemini.com"
+    ]
+  },
+  {
+    "name": "Robinhood",
+    "category": "finance",
+    "domains": [
+      "robinhood.com"
+    ]
+  },
+  {
+    "name": "Webull",
+    "category": "finance",
+    "domains": [
+      "webull.com"
+    ]
+  },
+  {
+    "name": "Fidelity",
+    "category": "finance",
+    "domains": [
+      "fidelity.com"
+    ]
+  },
+  {
+    "name": "Charles Schwab",
+    "category": "finance",
+    "domains": [
+      "schwab.com"
+    ]
+  },
+  {
+    "name": "E*TRADE",
+    "category": "finance",
+    "domains": [
+      "etrade.com"
+    ]
+  },
+  {
+    "name": "Vanguard",
+    "category": "finance",
+    "domains": [
+      "vanguard.com"
+    ]
+  },
+  {
+    "name": "SoFi",
+    "category": "finance",
+    "domains": [
+      "sofi.com"
+    ]
+  },
+  {
+    "name": "Chase",
+    "category": "finance",
+    "domains": [
+      "chase.com"
+    ]
+  },
+  {
+    "name": "Bank of America",
+    "category": "finance",
+    "domains": [
+      "bankofamerica.com"
+    ]
+  },
+  {
+    "name": "Wells Fargo",
+    "category": "finance",
+    "domains": [
+      "wellsfargo.com"
+    ]
+  },
+  {
+    "name": "Citi",
+    "category": "finance",
+    "domains": [
+      "citi.com"
+    ]
+  },
+  {
+    "name": "Capital One",
+    "category": "finance",
+    "domains": [
+      "capitalone.com"
+    ]
+  },
+  {
+    "name": "American Express",
+    "category": "finance",
+    "domains": [
+      "americanexpress.com"
+    ]
+  },
+  {
+    "name": "Discover",
+    "category": "finance",
+    "domains": [
+      "discover.com"
+    ]
+  },
+  {
+    "name": "US Bank",
+    "category": "finance",
+    "domains": [
+      "usbank.com"
+    ]
+  },
+  {
+    "name": "PNC",
+    "category": "finance",
+    "domains": [
+      "pnc.com"
+    ]
+  },
+  {
+    "name": "Ally",
+    "category": "finance",
+    "domains": [
+      "ally.com"
+    ]
+  },
+  {
+    "name": "Credit Karma",
+    "category": "finance",
+    "domains": [
+      "creditkarma.com"
+    ]
+  },
+  {
+    "name": "Affirm",
+    "category": "finance",
+    "domains": [
+      "affirm.com"
+    ]
+  },
+  {
+    "name": "Klarna",
+    "category": "finance",
+    "domains": [
+      "klarna.com"
+    ]
+  },
+  {
+    "name": "Afterpay",
+    "category": "finance",
+    "domains": [
+      "afterpay.com"
+    ]
+  },
+  {
+    "name": "Current",
+    "category": "finance",
+    "domains": [
+      "current.com"
+    ]
+  },
+  {
+    "name": "Varo",
+    "category": "finance",
+    "domains": [
+      "varomoney.com"
+    ]
+  },
+  {
+    "name": "Cash by Dave",
+    "category": "finance",
+    "domains": [
+      "dave.com"
+    ]
+  },
+  {
+    "name": "Acorns",
+    "category": "finance",
+    "domains": [
+      "acorns.com"
+    ]
+  },
+  {
+    "name": "Stash",
+    "category": "finance",
+    "domains": [
+      "stash.com"
+    ]
+  },
+  {
+    "name": "Wise",
+    "category": "finance",
+    "domains": [
+      "wise.com"
+    ]
+  },
+  {
+    "name": "Remitly",
+    "category": "finance",
+    "domains": [
+      "remitly.com"
+    ]
+  },
+  {
+    "name": "Western Union",
+    "category": "finance",
+    "domains": [
+      "westernunion.com"
+    ]
+  },
+  {
+    "name": "MoneyGram",
+    "category": "finance",
+    "domains": [
+      "moneygram.com"
+    ]
+  },
+  {
+    "name": "Revolut",
+    "category": "finance",
+    "domains": [
+      "revolut.com"
+    ]
+  },
+  {
+    "name": "Mint",
+    "category": "finance",
+    "domains": [
+      "mint.com"
+    ]
+  },
+  {
+    "name": "Rocket Money",
+    "category": "finance",
+    "domains": [
+      "rocketmoney.com"
+    ]
+  },
+  {
+    "name": "Empower",
+    "category": "finance",
+    "domains": [
+      "empower.com"
+    ]
+  },
+  {
+    "name": "MetaMask",
+    "category": "finance",
+    "domains": [
+      "metamask.io"
+    ]
+  },
+  {
+    "name": "Blockchain.com",
+    "category": "finance",
+    "domains": [
+      "blockchain.com"
+    ]
+  },
+  {
+    "name": "Uphold",
+    "category": "finance",
+    "domains": [
+      "uphold.com"
+    ]
+  },
+  {
+    "name": "eToro",
+    "category": "finance",
+    "domains": [
+      "etoro.com"
+    ]
+  },
+  {
+    "name": "Public",
+    "category": "finance",
+    "domains": [
+      "public.com"
+    ]
+  },
+  {
+    "name": "Moomoo",
+    "category": "finance",
+    "domains": [
+      "moomoo.com"
+    ]
+  },
+  {
+    "name": "TurboTax",
+    "category": "finance",
+    "domains": [
+      "turbotax.intuit.com"
+    ]
+  },
+  {
+    "name": "Intuit",
+    "category": "finance",
+    "domains": [
+      "intuit.com"
+    ]
+  },
+  {
+    "name": "DoorDash",
+    "category": "food",
+    "domains": [
+      "doordash.com"
+    ]
+  },
+  {
+    "name": "Uber Eats",
+    "category": "food",
+    "domains": [
+      "ubereats.com"
+    ]
+  },
+  {
+    "name": "Grubhub",
+    "category": "food",
+    "domains": [
+      "grubhub.com"
+    ]
+  },
+  {
+    "name": "Postmates",
+    "category": "food",
+    "domains": [
+      "postmates.com"
+    ]
+  },
+  {
+    "name": "Instacart",
+    "category": "food",
+    "domains": [
+      "instacart.com"
+    ]
+  },
+  {
+    "name": "Seamless",
+    "category": "food",
+    "domains": [
+      "seamless.com"
+    ]
+  },
+  {
+    "name": "Caviar",
+    "category": "food",
+    "domains": [
+      "trycaviar.com"
+    ]
+  },
+  {
+    "name": "Gopuff",
+    "category": "food",
+    "domains": [
+      "gopuff.com"
+    ]
+  },
+  {
+    "name": "McDonald's",
+    "category": "food",
+    "domains": [
+      "mcdonalds.com"
+    ]
+  },
+  {
+    "name": "Starbucks",
+    "category": "food",
+    "domains": [
+      "starbucks.com"
+    ]
+  },
+  {
+    "name": "Chick-fil-A",
+    "category": "food",
+    "domains": [
+      "chick-fil-a.com"
+    ]
+  },
+  {
+    "name": "Chipotle",
+    "category": "food",
+    "domains": [
+      "chipotle.com"
+    ]
+  },
+  {
+    "name": "Domino's",
+    "category": "food",
+    "domains": [
+      "dominos.com"
+    ]
+  },
+  {
+    "name": "Taco Bell",
+    "category": "food",
+    "domains": [
+      "tacobell.com"
+    ]
+  },
+  {
+    "name": "Wendy's",
+    "category": "food",
+    "domains": [
+      "wendys.com"
+    ]
+  },
+  {
+    "name": "Burger King",
+    "category": "food",
+    "domains": [
+      "bk.com"
+    ]
+  },
+  {
+    "name": "Panera Bread",
+    "category": "food",
+    "domains": [
+      "panerabread.com"
+    ]
+  },
+  {
+    "name": "Dunkin'",
+    "category": "food",
+    "domains": [
+      "dunkindonuts.com"
+    ]
+  },
+  {
+    "name": "Pizza Hut",
+    "category": "food",
+    "domains": [
+      "pizzahut.com"
+    ]
+  },
+  {
+    "name": "Papa Johns",
+    "category": "food",
+    "domains": [
+      "papajohns.com"
+    ]
+  },
+  {
+    "name": "Subway",
+    "category": "food",
+    "domains": [
+      "subway.com"
+    ]
+  },
+  {
+    "name": "KFC",
+    "category": "food",
+    "domains": [
+      "kfc.com"
+    ]
+  },
+  {
+    "name": "Popeyes",
+    "category": "food",
+    "domains": [
+      "popeyes.com"
+    ]
+  },
+  {
+    "name": "OpenTable",
+    "category": "food",
+    "domains": [
+      "opentable.com"
+    ]
+  },
+  {
+    "name": "Resy",
+    "category": "food",
+    "domains": [
+      "resy.com"
+    ]
+  },
+  {
+    "name": "Yelp",
+    "category": "food",
+    "domains": [
+      "yelp.com",
+      "yelp.to"
+    ]
+  },
+  {
+    "name": "Toast Tab",
+    "category": "food",
+    "domains": [
+      "toasttab.com"
+    ]
+  },
+  {
+    "name": "HelloFresh",
+    "category": "food",
+    "domains": [
+      "hellofresh.com"
+    ]
+  },
+  {
+    "name": "Factor",
+    "category": "food",
+    "domains": [
+      "factor75.com"
+    ]
+  },
+  {
+    "name": "Cook Unity",
+    "category": "food",
+    "domains": [
+      "cookunity.com"
+    ]
+  },
+  {
+    "name": "Uber",
+    "category": "travel",
+    "domains": [
+      "uber.com"
+    ]
+  },
+  {
+    "name": "Lyft",
+    "category": "travel",
+    "domains": [
+      "lyft.com"
+    ]
+  },
+  {
+    "name": "Airbnb",
+    "category": "travel",
+    "domains": [
+      "airbnb.com",
+      "abnb.me"
+    ]
+  },
+  {
+    "name": "Vrbo",
+    "category": "travel",
+    "domains": [
+      "vrbo.com"
+    ]
+  },
+  {
+    "name": "Booking.com",
+    "category": "travel",
+    "domains": [
+      "booking.com"
+    ]
+  },
+  {
+    "name": "Expedia",
+    "category": "travel",
+    "domains": [
+      "expedia.com"
+    ]
+  },
+  {
+    "name": "Hotels.com",
+    "category": "travel",
+    "domains": [
+      "hotels.com"
+    ]
+  },
+  {
+    "name": "Priceline",
+    "category": "travel",
+    "domains": [
+      "priceline.com"
+    ]
+  },
+  {
+    "name": "Kayak",
+    "category": "travel",
+    "domains": [
+      "kayak.com"
+    ]
+  },
+  {
+    "name": "Tripadvisor",
+    "category": "travel",
+    "domains": [
+      "tripadvisor.com"
+    ]
+  },
+  {
+    "name": "Trip.com",
+    "category": "travel",
+    "domains": [
+      "trip.com"
+    ]
+  },
+  {
+    "name": "Hopper",
+    "category": "travel",
+    "domains": [
+      "hopper.com"
+    ]
+  },
+  {
+    "name": "Skyscanner",
+    "category": "travel",
+    "domains": [
+      "skyscanner.com"
+    ]
+  },
+  {
+    "name": "Google Maps",
+    "category": "travel",
+    "domains": [
+      "google.com"
+    ]
+  },
+  {
+    "name": "Waze",
+    "category": "travel",
+    "domains": [
+      "waze.com"
+    ]
+  },
+  {
+    "name": "Citymapper",
+    "category": "travel",
+    "domains": [
+      "citymapper.com"
+    ]
+  },
+  {
+    "name": "Transit",
+    "category": "travel",
+    "domains": [
+      "transitapp.com"
+    ]
+  },
+  {
+    "name": "Delta",
+    "category": "travel",
+    "domains": [
+      "delta.com"
+    ]
+  },
+  {
+    "name": "United Airlines",
+    "category": "travel",
+    "domains": [
+      "united.com"
+    ]
+  },
+  {
+    "name": "American Airlines",
+    "category": "travel",
+    "domains": [
+      "aa.com"
+    ]
+  },
+  {
+    "name": "Southwest",
+    "category": "travel",
+    "domains": [
+      "southwest.com"
+    ]
+  },
+  {
+    "name": "JetBlue",
+    "category": "travel",
+    "domains": [
+      "jetblue.com"
+    ]
+  },
+  {
+    "name": "Alaska Airlines",
+    "category": "travel",
+    "domains": [
+      "alaskaair.com"
+    ]
+  },
+  {
+    "name": "Frontier",
+    "category": "travel",
+    "domains": [
+      "flyfrontier.com"
+    ]
+  },
+  {
+    "name": "Spirit",
+    "category": "travel",
+    "domains": [
+      "spirit.com"
+    ]
+  },
+  {
+    "name": "Marriott Bonvoy",
+    "category": "travel",
+    "domains": [
+      "marriott.com"
+    ]
+  },
+  {
+    "name": "Hilton Honors",
+    "category": "travel",
+    "domains": [
+      "hilton.com"
+    ]
+  },
+  {
+    "name": "Turo",
+    "category": "travel",
+    "domains": [
+      "turo.com"
+    ]
+  },
+  {
+    "name": "Hertz",
+    "category": "travel",
+    "domains": [
+      "hertz.com"
+    ]
+  },
+  {
+    "name": "Enterprise",
+    "category": "travel",
+    "domains": [
+      "enterprise.com"
+    ]
+  },
+  {
+    "name": "Rome2Rio",
+    "category": "travel",
+    "domains": [
+      "rome2rio.com"
+    ]
+  },
+  {
+    "name": "GetYourGuide",
+    "category": "travel",
+    "domains": [
+      "getyourguide.com"
+    ]
+  },
+  {
+    "name": "Viator",
+    "category": "travel",
+    "domains": [
+      "viator.com"
+    ]
+  },
+  {
+    "name": "Bolt",
+    "category": "travel",
+    "domains": [
+      "bolt.eu"
+    ]
+  },
+  {
+    "name": "Grab",
+    "category": "travel",
+    "domains": [
+      "grab.com"
+    ]
+  },
+  {
+    "name": "Lime",
+    "category": "travel",
+    "domains": [
+      "li.me"
+    ]
+  },
+  {
+    "name": "Amtrak",
+    "category": "travel",
+    "domains": [
+      "amtrak.com"
+    ]
+  },
+  {
+    "name": "Flighty",
+    "category": "travel",
+    "domains": [
+      "flighty.com"
+    ]
+  },
+  {
+    "name": "Tinder",
+    "category": "dating",
+    "domains": [
+      "tinder.com"
+    ]
+  },
+  {
+    "name": "Bumble",
+    "category": "dating",
+    "domains": [
+      "bumble.com"
+    ]
+  },
+  {
+    "name": "Hinge",
+    "category": "dating",
+    "domains": [
+      "hinge.co"
+    ]
+  },
+  {
+    "name": "Match",
+    "category": "dating",
+    "domains": [
+      "match.com"
+    ]
+  },
+  {
+    "name": "OkCupid",
+    "category": "dating",
+    "domains": [
+      "okcupid.com"
+    ]
+  },
+  {
+    "name": "Plenty of Fish",
+    "category": "dating",
+    "domains": [
+      "pof.com"
+    ]
+  },
+  {
+    "name": "Grindr",
+    "category": "dating",
+    "domains": [
+      "grindr.com"
+    ]
+  },
+  {
+    "name": "Coffee Meets Bagel",
+    "category": "dating",
+    "domains": [
+      "coffeemeetsbagel.com"
+    ]
+  },
+  {
+    "name": "eHarmony",
+    "category": "dating",
+    "domains": [
+      "eharmony.com"
+    ]
+  },
+  {
+    "name": "Feeld",
+    "category": "dating",
+    "domains": [
+      "feeld.co"
+    ]
+  },
+  {
+    "name": "Raya",
+    "category": "dating",
+    "domains": [
+      "rayatheapp.com"
+    ]
+  },
+  {
+    "name": "Her",
+    "category": "dating",
+    "domains": [
+      "weareher.com"
+    ]
+  },
+  {
+    "name": "Zoosk",
+    "category": "dating",
+    "domains": [
+      "zoosk.com"
+    ]
+  },
+  {
+    "name": "Badoo",
+    "category": "dating",
+    "domains": [
+      "badoo.com"
+    ]
+  },
+  {
+    "name": "Roblox",
+    "category": "gaming",
+    "domains": [
+      "roblox.com"
+    ]
+  },
+  {
+    "name": "Epic Games",
+    "category": "gaming",
+    "domains": [
+      "epicgames.com"
+    ]
+  },
+  {
+    "name": "Fortnite",
+    "category": "gaming",
+    "domains": [
+      "fortnite.com"
+    ]
+  },
+  {
+    "name": "Steam",
+    "category": "gaming",
+    "domains": [
+      "steampowered.com",
+      "steamcommunity.com"
+    ]
+  },
+  {
+    "name": "Supercell",
+    "category": "gaming",
+    "domains": [
+      "supercell.com"
+    ]
+  },
+  {
+    "name": "Clash of Clans",
+    "category": "gaming",
+    "domains": [
+      "clashofclans.com"
+    ]
+  },
+  {
+    "name": "Genshin Impact",
+    "category": "gaming",
+    "domains": [
+      "hoyoverse.com"
+    ]
+  },
+  {
+    "name": "PUBG Mobile",
+    "category": "gaming",
+    "domains": [
+      "pubgmobile.com"
+    ]
+  },
+  {
+    "name": "Call of Duty",
+    "category": "gaming",
+    "domains": [
+      "callofduty.com"
+    ]
+  },
+  {
+    "name": "EA",
+    "category": "gaming",
+    "domains": [
+      "ea.com"
+    ]
+  },
+  {
+    "name": "Riot Games",
+    "category": "gaming",
+    "domains": [
+      "riotgames.com"
+    ]
+  },
+  {
+    "name": "League of Legends",
+    "category": "gaming",
+    "domains": [
+      "leagueoflegends.com"
+    ]
+  },
+  {
+    "name": "Xbox",
+    "category": "gaming",
+    "domains": [
+      "xbox.com"
+    ]
+  },
+  {
+    "name": "PlayStation",
+    "category": "gaming",
+    "domains": [
+      "playstation.com"
+    ]
+  },
+  {
+    "name": "Nintendo",
+    "category": "gaming",
+    "domains": [
+      "nintendo.com"
+    ]
+  },
+  {
+    "name": "Chess.com",
+    "category": "gaming",
+    "domains": [
+      "chess.com"
+    ]
+  },
+  {
+    "name": "Minecraft",
+    "category": "gaming",
+    "domains": [
+      "minecraft.net"
+    ]
+  },
+  {
+    "name": "Rockstar Games",
+    "category": "gaming",
+    "domains": [
+      "rockstargames.com"
+    ]
+  },
+  {
+    "name": "Ubisoft",
+    "category": "gaming",
+    "domains": [
+      "ubisoft.com"
+    ]
+  },
+  {
+    "name": "Blizzard",
+    "category": "gaming",
+    "domains": [
+      "blizzard.com"
+    ]
+  },
+  {
+    "name": "Battle.net",
+    "category": "gaming",
+    "domains": [
+      "battle.net"
+    ]
+  },
+  {
+    "name": "Google News",
+    "category": "news",
+    "domains": [
+      "news.google.com"
+    ]
+  },
+  {
+    "name": "Apple News",
+    "category": "news",
+    "domains": [
+      "apple.news"
+    ]
+  },
+  {
+    "name": "The New York Times",
+    "category": "news",
+    "domains": [
+      "nytimes.com",
+      "nyti.ms"
+    ]
+  },
+  {
+    "name": "The Washington Post",
+    "category": "news",
+    "domains": [
+      "washingtonpost.com",
+      "wapo.st"
+    ]
+  },
+  {
+    "name": "The Wall Street Journal",
+    "category": "news",
+    "domains": [
+      "wsj.com",
+      "on.wsj.com"
+    ]
+  },
+  {
+    "name": "CNN",
+    "category": "news",
+    "domains": [
+      "cnn.com"
+    ]
+  },
+  {
+    "name": "Fox News",
+    "category": "news",
+    "domains": [
+      "foxnews.com"
+    ]
+  },
+  {
+    "name": "NBC News",
+    "category": "news",
+    "domains": [
+      "nbcnews.com"
+    ]
+  },
+  {
+    "name": "ABC News",
+    "category": "news",
+    "domains": [
+      "abcnews.go.com"
+    ]
+  },
+  {
+    "name": "CBS News",
+    "category": "news",
+    "domains": [
+      "cbsnews.com"
+    ]
+  },
+  {
+    "name": "USA Today",
+    "category": "news",
+    "domains": [
+      "usatoday.com"
+    ]
+  },
+  {
+    "name": "The Guardian",
+    "category": "news",
+    "domains": [
+      "theguardian.com"
+    ]
+  },
+  {
+    "name": "BBC News",
+    "category": "news",
+    "domains": [
+      "bbc.com",
+      "bbc.co.uk"
+    ]
+  },
+  {
+    "name": "Reuters",
+    "category": "news",
+    "domains": [
+      "reuters.com"
+    ]
+  },
+  {
+    "name": "Associated Press",
+    "category": "news",
+    "domains": [
+      "apnews.com"
+    ]
+  },
+  {
+    "name": "Bloomberg",
+    "category": "news",
+    "domains": [
+      "bloomberg.com"
+    ]
+  },
+  {
+    "name": "Politico",
+    "category": "news",
+    "domains": [
+      "politico.com"
+    ]
+  },
+  {
+    "name": "NPR",
+    "category": "news",
+    "domains": [
+      "npr.org"
+    ]
+  },
+  {
+    "name": "The Economist",
+    "category": "news",
+    "domains": [
+      "economist.com"
+    ]
+  },
+  {
+    "name": "Axios",
+    "category": "news",
+    "domains": [
+      "axios.com"
+    ]
+  },
+  {
+    "name": "The Atlantic",
+    "category": "news",
+    "domains": [
+      "theatlantic.com"
+    ]
+  },
+  {
+    "name": "Vox",
+    "category": "news",
+    "domains": [
+      "vox.com"
+    ]
+  },
+  {
+    "name": "BuzzFeed",
+    "category": "news",
+    "domains": [
+      "buzzfeed.com"
+    ]
+  },
+  {
+    "name": "HuffPost",
+    "category": "news",
+    "domains": [
+      "huffpost.com"
+    ]
+  },
+  {
+    "name": "Business Insider",
+    "category": "news",
+    "domains": [
+      "businessinsider.com"
+    ]
+  },
+  {
+    "name": "Forbes",
+    "category": "news",
+    "domains": [
+      "forbes.com"
+    ]
+  },
+  {
+    "name": "Newsmax",
+    "category": "news",
+    "domains": [
+      "newsmax.com"
+    ]
+  },
+  {
+    "name": "SmartNews",
+    "category": "news",
+    "domains": [
+      "smartnews.com"
+    ]
+  },
+  {
+    "name": "Flipboard",
+    "category": "news",
+    "domains": [
+      "flipboard.com"
+    ]
+  },
+  {
+    "name": "Substack",
+    "category": "news",
+    "domains": [
+      "substack.com"
+    ]
+  },
+  {
+    "name": "Medium",
+    "category": "news",
+    "domains": [
+      "medium.com"
+    ]
+  },
+  {
+    "name": "Ground News",
+    "category": "news",
+    "domains": [
+      "ground.news"
+    ]
+  },
+  {
+    "name": "The Hill",
+    "category": "news",
+    "domains": [
+      "thehill.com"
+    ]
+  },
+  {
+    "name": "ESPN Fantasy",
+    "category": "sports",
+    "domains": [
+      "fantasy.espn.com"
+    ]
+  },
+  {
+    "name": "The Athletic",
+    "category": "sports",
+    "domains": [
+      "theathletic.com"
+    ]
+  },
+  {
+    "name": "Bleacher Report",
+    "category": "sports",
+    "domains": [
+      "bleacherreport.com"
+    ]
+  },
+  {
+    "name": "Yahoo Sports",
+    "category": "sports",
+    "domains": [
+      "sports.yahoo.com"
+    ]
+  },
+  {
+    "name": "CBS Sports",
+    "category": "sports",
+    "domains": [
+      "cbssports.com"
+    ]
+  },
+  {
+    "name": "NBA",
+    "category": "sports",
+    "domains": [
+      "nba.com"
+    ]
+  },
+  {
+    "name": "NFL",
+    "category": "sports",
+    "domains": [
+      "nfl.com"
+    ]
+  },
+  {
+    "name": "MLB",
+    "category": "sports",
+    "domains": [
+      "mlb.com"
+    ]
+  },
+  {
+    "name": "NHL",
+    "category": "sports",
+    "domains": [
+      "nhl.com"
+    ]
+  },
+  {
+    "name": "FOX Sports",
+    "category": "sports",
+    "domains": [
+      "foxsports.com"
+    ]
+  },
+  {
+    "name": "DraftKings",
+    "category": "sports",
+    "domains": [
+      "draftkings.com"
+    ]
+  },
+  {
+    "name": "FanDuel",
+    "category": "sports",
+    "domains": [
+      "fanduel.com"
+    ]
+  },
+  {
+    "name": "BetMGM",
+    "category": "sports",
+    "domains": [
+      "betmgm.com"
+    ]
+  },
+  {
+    "name": "Caesars Sportsbook",
+    "category": "sports",
+    "domains": [
+      "caesars.com"
+    ]
+  },
+  {
+    "name": "PrizePicks",
+    "category": "sports",
+    "domains": [
+      "prizepicks.com"
+    ]
+  },
+  {
+    "name": "Underdog Fantasy",
+    "category": "sports",
+    "domains": [
+      "underdogfantasy.com"
+    ]
+  },
+  {
+    "name": "Sleeper",
+    "category": "sports",
+    "domains": [
+      "sleeper.com"
+    ]
+  },
+  {
+    "name": "Fanatics",
+    "category": "sports",
+    "domains": [
+      "fanatics.com"
+    ]
+  },
+  {
+    "name": "Bet365",
+    "category": "sports",
+    "domains": [
+      "bet365.com"
+    ]
+  },
+  {
+    "name": "Hard Rock Bet",
+    "category": "sports",
+    "domains": [
+      "hardrock.bet"
+    ]
+  },
+  {
+    "name": "theScore",
+    "category": "sports",
+    "domains": [
+      "thescore.com"
+    ]
+  },
+  {
+    "name": "Strava",
+    "category": "sports",
+    "domains": [
+      "strava.com",
+      "strava.app.link"
+    ]
+  },
+  {
+    "name": "OnX Hunt",
+    "category": "sports",
+    "domains": [
+      "onxmaps.com"
+    ]
+  },
+  {
+    "name": "MyFitnessPal",
+    "category": "fitness",
+    "domains": [
+      "myfitnesspal.com"
+    ]
+  },
+  {
+    "name": "Peloton",
+    "category": "fitness",
+    "domains": [
+      "onepeloton.com"
+    ]
+  },
+  {
+    "name": "Fitbit",
+    "category": "fitness",
+    "domains": [
+      "fitbit.com"
+    ]
+  },
+  {
+    "name": "Whoop",
+    "category": "fitness",
+    "domains": [
+      "whoop.com"
+    ]
+  },
+  {
+    "name": "Oura",
+    "category": "fitness",
+    "domains": [
+      "ouraring.com"
+    ]
+  },
+  {
+    "name": "Calm",
+    "category": "fitness",
+    "domains": [
+      "calm.com"
+    ]
+  },
+  {
+    "name": "Headspace",
+    "category": "fitness",
+    "domains": [
+      "headspace.com"
+    ]
+  },
+  {
+    "name": "BetterHelp",
+    "category": "fitness",
+    "domains": [
+      "betterhelp.com"
+    ]
+  },
+  {
+    "name": "Noom",
+    "category": "fitness",
+    "domains": [
+      "noom.com"
+    ]
+  },
+  {
+    "name": "WeightWatchers",
+    "category": "fitness",
+    "domains": [
+      "weightwatchers.com"
+    ]
+  },
+  {
+    "name": "Fitbod",
+    "category": "fitness",
+    "domains": [
+      "fitbod.me"
+    ]
+  },
+  {
+    "name": "Strong",
+    "category": "fitness",
+    "domains": [
+      "strong.app"
+    ]
+  },
+  {
+    "name": "Flo",
+    "category": "fitness",
+    "domains": [
+      "flo.health"
+    ]
+  },
+  {
+    "name": "Clue",
+    "category": "fitness",
+    "domains": [
+      "helloclue.com"
+    ]
+  },
+  {
+    "name": "ClassPass",
+    "category": "fitness",
+    "domains": [
+      "classpass.com"
+    ]
+  },
+  {
+    "name": "Alo Moves",
+    "category": "fitness",
+    "domains": [
+      "alomoves.com"
+    ]
+  },
+  {
+    "name": "Zwift",
+    "category": "fitness",
+    "domains": [
+      "zwift.com"
+    ]
+  },
+  {
+    "name": "Garmin Connect",
+    "category": "fitness",
+    "domains": [
+      "garmin.com"
+    ]
+  },
+  {
+    "name": "Apple Health",
+    "category": "fitness",
+    "domains": [
+      "apple.com"
+    ]
+  },
+  {
+    "name": "Sweatcoin",
+    "category": "fitness",
+    "domains": [
+      "sweatco.in"
+    ]
+  },
+  {
+    "name": "GoodRx",
+    "category": "fitness",
+    "domains": [
+      "goodrx.com"
+    ]
+  },
+  {
+    "name": "Teladoc",
+    "category": "fitness",
+    "domains": [
+      "teladoc.com"
+    ]
+  },
+  {
+    "name": "Hims",
+    "category": "fitness",
+    "domains": [
+      "forhims.com"
+    ]
+  },
+  {
+    "name": "Ro",
+    "category": "fitness",
+    "domains": [
+      "ro.co"
+    ]
+  },
+  {
+    "name": "Cronometer",
+    "category": "fitness",
+    "domains": [
+      "cronometer.com"
+    ]
+  },
+  {
+    "name": "Insight Timer",
+    "category": "fitness",
+    "domains": [
+      "insighttimer.com"
+    ]
+  },
+  {
+    "name": "Canva",
+    "category": "photo",
+    "domains": [
+      "canva.com"
+    ]
+  },
+  {
+    "name": "Adobe Lightroom",
+    "category": "photo",
+    "domains": [
+      "lightroom.adobe.com"
+    ]
+  },
+  {
+    "name": "Adobe Express",
+    "category": "photo",
+    "domains": [
+      "adobe.com"
+    ]
+  },
+  {
+    "name": "Photoshop Express",
+    "category": "photo",
+    "domains": [
+      "photoshop.com"
+    ]
+  },
+  {
+    "name": "CapCut",
+    "category": "photo",
+    "domains": [
+      "capcut.com"
+    ]
+  },
+  {
+    "name": "PicsArt",
+    "category": "photo",
+    "domains": [
+      "picsart.com"
+    ]
+  },
+  {
+    "name": "Facetune",
+    "category": "photo",
+    "domains": [
+      "facetuneapp.com"
+    ]
+  },
+  {
+    "name": "Lightricks",
+    "category": "photo",
+    "domains": [
+      "lightricks.com"
+    ]
+  },
+  {
+    "name": "InShot",
+    "category": "photo",
+    "domains": [
+      "inshot.com"
+    ]
+  },
+  {
+    "name": "VN Video Editor",
+    "category": "photo",
+    "domains": [
+      "vlognow.me"
+    ]
+  },
+  {
+    "name": "Splice",
+    "category": "photo",
+    "domains": [
+      "spliceapp.com"
+    ]
+  },
+  {
+    "name": "Prisma",
+    "category": "photo",
+    "domains": [
+      "prisma-ai.com"
+    ]
+  },
+  {
+    "name": "Photoroom",
+    "category": "photo",
+    "domains": [
+      "photoroom.com"
+    ]
+  },
+  {
+    "name": "Remini",
+    "category": "photo",
+    "domains": [
+      "remini.ai"
+    ]
+  },
+  {
+    "name": "Snapseed",
+    "category": "photo",
+    "domains": [
+      "snapseed.online"
+    ]
+  },
+  {
+    "name": "Pixlr",
+    "category": "photo",
+    "domains": [
+      "pixlr.com"
+    ]
+  },
+  {
+    "name": "Figma",
+    "category": "photo",
+    "domains": [
+      "figma.com"
+    ]
+  },
+  {
+    "name": "Unfold",
+    "category": "photo",
+    "domains": [
+      "unfold.com"
+    ]
+  },
+  {
+    "name": "Over",
+    "category": "photo",
+    "domains": [
+      "madewithover.com"
+    ]
+  },
+  {
+    "name": "Notion",
+    "category": "productivity",
+    "domains": [
+      "notion.so",
+      "notion.com"
+    ]
+  },
+  {
+    "name": "Evernote",
+    "category": "productivity",
+    "domains": [
+      "evernote.com"
+    ]
+  },
+  {
+    "name": "Google Drive",
+    "category": "productivity",
+    "domains": [
+      "drive.google.com"
+    ]
+  },
+  {
+    "name": "Google Docs",
+    "category": "productivity",
+    "domains": [
+      "docs.google.com"
+    ]
+  },
+  {
+    "name": "Dropbox",
+    "category": "productivity",
+    "domains": [
+      "dropbox.com",
+      "db.tt"
+    ]
+  },
+  {
+    "name": "OneDrive",
+    "category": "productivity",
+    "domains": [
+      "onedrive.live.com"
+    ]
+  },
+  {
+    "name": "Box",
+    "category": "productivity",
+    "domains": [
+      "box.com"
+    ]
+  },
+  {
+    "name": "Microsoft OneNote",
+    "category": "productivity",
+    "domains": [
+      "onenote.com"
+    ]
+  },
+  {
+    "name": "Trello",
+    "category": "productivity",
+    "domains": [
+      "trello.com"
+    ]
+  },
+  {
+    "name": "Asana",
+    "category": "productivity",
+    "domains": [
+      "asana.com"
+    ]
+  },
+  {
+    "name": "Todoist",
+    "category": "productivity",
+    "domains": [
+      "todoist.com"
+    ]
+  },
+  {
+    "name": "ClickUp",
+    "category": "productivity",
+    "domains": [
+      "clickup.com"
+    ]
+  },
+  {
+    "name": "Monday.com",
+    "category": "productivity",
+    "domains": [
+      "monday.com"
+    ]
+  },
+  {
+    "name": "Airtable",
+    "category": "productivity",
+    "domains": [
+      "airtable.com"
+    ]
+  },
+  {
+    "name": "Obsidian",
+    "category": "productivity",
+    "domains": [
+      "obsidian.md"
+    ]
+  },
+  {
+    "name": "Bear",
+    "category": "productivity",
+    "domains": [
+      "bear.app"
+    ]
+  },
+  {
+    "name": "Google Calendar",
+    "category": "productivity",
+    "domains": [
+      "calendar.google.com"
+    ]
+  },
+  {
+    "name": "Calendly",
+    "category": "productivity",
+    "domains": [
+      "calendly.com"
+    ]
+  },
+  {
+    "name": "Gmail",
+    "category": "productivity",
+    "domains": [
+      "mail.google.com",
+      "gmail.com"
+    ]
+  },
+  {
+    "name": "Outlook",
+    "category": "productivity",
+    "domains": [
+      "outlook.com",
+      "outlook.live.com"
+    ]
+  },
+  {
+    "name": "Proton Mail",
+    "category": "productivity",
+    "domains": [
+      "proton.me"
+    ]
+  },
+  {
+    "name": "Spark",
+    "category": "productivity",
+    "domains": [
+      "sparkmailapp.com"
+    ]
+  },
+  {
+    "name": "Grammarly",
+    "category": "productivity",
+    "domains": [
+      "grammarly.com"
+    ]
+  },
+  {
+    "name": "ChatGPT",
+    "category": "productivity",
+    "domains": [
+      "chatgpt.com",
+      "chat.openai.com"
+    ]
+  },
+  {
+    "name": "Claude",
+    "category": "productivity",
+    "domains": [
+      "claude.ai"
+    ]
+  },
+  {
+    "name": "Google Gemini",
+    "category": "productivity",
+    "domains": [
+      "gemini.google.com"
+    ]
+  },
+  {
+    "name": "Perplexity",
+    "category": "productivity",
+    "domains": [
+      "perplexity.ai"
+    ]
+  },
+  {
+    "name": "Microsoft Copilot",
+    "category": "productivity",
+    "domains": [
+      "copilot.microsoft.com"
+    ]
+  },
+  {
+    "name": "1Password",
+    "category": "productivity",
+    "domains": [
+      "1password.com"
+    ]
+  },
+  {
+    "name": "LastPass",
+    "category": "productivity",
+    "domains": [
+      "lastpass.com"
+    ]
+  },
+  {
+    "name": "Google Keep",
+    "category": "productivity",
+    "domains": [
+      "keep.google.com"
+    ]
+  },
+  {
+    "name": "DocuSign",
+    "category": "productivity",
+    "domains": [
+      "docusign.com"
+    ]
+  },
+  {
+    "name": "Adobe Acrobat",
+    "category": "productivity",
+    "domains": [
+      "acrobat.adobe.com"
+    ]
+  },
+  {
+    "name": "WeTransfer",
+    "category": "productivity",
+    "domains": [
+      "wetransfer.com",
+      "we.tl"
+    ]
+  },
+  {
+    "name": "Google Photos",
+    "category": "productivity",
+    "domains": [
+      "photos.google.com"
+    ]
+  },
+  {
+    "name": "iCloud",
+    "category": "productivity",
+    "domains": [
+      "icloud.com"
+    ]
+  },
+  {
+    "name": "Duolingo",
+    "category": "education",
+    "domains": [
+      "duolingo.com"
+    ]
+  },
+  {
+    "name": "Babbel",
+    "category": "education",
+    "domains": [
+      "babbel.com"
+    ]
+  },
+  {
+    "name": "Rosetta Stone",
+    "category": "education",
+    "domains": [
+      "rosettastone.com"
+    ]
+  },
+  {
+    "name": "Busuu",
+    "category": "education",
+    "domains": [
+      "busuu.com"
+    ]
+  },
+  {
+    "name": "Memrise",
+    "category": "education",
+    "domains": [
+      "memrise.com"
+    ]
+  },
+  {
+    "name": "Khan Academy",
+    "category": "education",
+    "domains": [
+      "khanacademy.org"
+    ]
+  },
+  {
+    "name": "Coursera",
+    "category": "education",
+    "domains": [
+      "coursera.org"
+    ]
+  },
+  {
+    "name": "Udemy",
+    "category": "education",
+    "domains": [
+      "udemy.com"
+    ]
+  },
+  {
+    "name": "edX",
+    "category": "education",
+    "domains": [
+      "edx.org"
+    ]
+  },
+  {
+    "name": "Skillshare",
+    "category": "education",
+    "domains": [
+      "skillshare.com"
+    ]
+  },
+  {
+    "name": "Quizlet",
+    "category": "education",
+    "domains": [
+      "quizlet.com"
+    ]
+  },
+  {
+    "name": "Photomath",
+    "category": "education",
+    "domains": [
+      "photomath.com"
+    ]
+  },
+  {
+    "name": "Brilliant",
+    "category": "education",
+    "domains": [
+      "brilliant.org"
+    ]
+  },
+  {
+    "name": "Chegg",
+    "category": "education",
+    "domains": [
+      "chegg.com"
+    ]
+  },
+  {
+    "name": "Google Classroom",
+    "category": "education",
+    "domains": [
+      "classroom.google.com"
+    ]
+  },
+  {
+    "name": "Canvas Student",
+    "category": "education",
+    "domains": [
+      "instructure.com"
+    ]
+  },
+  {
+    "name": "Blackboard",
+    "category": "education",
+    "domains": [
+      "blackboard.com"
+    ]
+  },
+  {
+    "name": "Kahoot",
+    "category": "education",
+    "domains": [
+      "kahoot.com",
+      "kahoot.it"
+    ]
+  },
+  {
+    "name": "Anki",
+    "category": "education",
+    "domains": [
+      "ankiweb.net"
+    ]
+  },
+  {
+    "name": "Preply",
+    "category": "education",
+    "domains": [
+      "preply.com"
+    ]
+  },
+  {
+    "name": "Wordtune",
+    "category": "education",
+    "domains": [
+      "wordtune.com"
+    ]
+  },
+  {
+    "name": "Elsa Speak",
+    "category": "education",
+    "domains": [
+      "elsaspeak.com"
+    ]
+  },
+  {
+    "name": "Pimsleur",
+    "category": "education",
+    "domains": [
+      "pimsleur.com"
+    ]
+  },
+  {
+    "name": "The Weather Channel",
+    "category": "weather",
+    "domains": [
+      "weather.com"
+    ]
+  },
+  {
+    "name": "AccuWeather",
+    "category": "weather",
+    "domains": [
+      "accuweather.com"
+    ]
+  },
+  {
+    "name": "Weather Underground",
+    "category": "weather",
+    "domains": [
+      "wunderground.com"
+    ]
+  },
+  {
+    "name": "Windy",
+    "category": "weather",
+    "domains": [
+      "windy.com"
+    ]
+  },
+  {
+    "name": "Carrot Weather",
+    "category": "weather",
+    "domains": [
+      "meetcarrot.com"
+    ]
+  },
+  {
+    "name": "MyRadar",
+    "category": "weather",
+    "domains": [
+      "myradar.com"
+    ]
+  },
+  {
+    "name": "Weather Bug",
+    "category": "weather",
+    "domains": [
+      "weatherbug.com"
+    ]
+  },
+  {
+    "name": "Ventusky",
+    "category": "weather",
+    "domains": [
+      "ventusky.com"
+    ]
+  },
+  {
+    "name": "Kindle",
+    "category": "books",
+    "domains": [
+      "read.amazon.com"
+    ]
+  },
+  {
+    "name": "Goodreads",
+    "category": "books",
+    "domains": [
+      "goodreads.com"
+    ]
+  },
+  {
+    "name": "Wattpad",
+    "category": "books",
+    "domains": [
+      "wattpad.com"
+    ]
+  },
+  {
+    "name": "Libby",
+    "category": "books",
+    "domains": [
+      "libbyapp.com"
+    ]
+  },
+  {
+    "name": "Scribd",
+    "category": "books",
+    "domains": [
+      "scribd.com"
+    ]
+  },
+  {
+    "name": "Kobo",
+    "category": "books",
+    "domains": [
+      "kobo.com"
+    ]
+  },
+  {
+    "name": "Barnes & Noble",
+    "category": "books",
+    "domains": [
+      "barnesandnoble.com"
+    ]
+  },
+  {
+    "name": "Storygraph",
+    "category": "books",
+    "domains": [
+      "thestorygraph.com"
+    ]
+  },
+  {
+    "name": "Blinkist",
+    "category": "books",
+    "domains": [
+      "blinkist.com"
+    ]
+  },
+  {
+    "name": "Webtoon",
+    "category": "books",
+    "domains": [
+      "webtoons.com"
+    ]
+  },
+  {
+    "name": "Radish",
+    "category": "books",
+    "domains": [
+      "radishfiction.com"
+    ]
+  },
+  {
+    "name": "AllTrails",
+    "category": "books",
+    "domains": [
+      "alltrails.com"
+    ]
+  },
+  {
+    "name": "OnlyFans",
+    "category": "livestreaming",
+    "domains": [
+      "onlyfans.com"
+    ]
+  },
+  {
+    "name": "Bigo Live",
+    "category": "livestreaming",
+    "domains": [
+      "bigo.tv"
+    ]
+  },
+  {
+    "name": "Fansly",
+    "category": "livestreaming",
+    "domains": [
+      "fansly.com"
+    ]
+  },
+  {
+    "name": "Patreon",
+    "category": "livestreaming",
+    "domains": [
+      "patreon.com"
+    ]
+  },
+  {
+    "name": "Cameo",
+    "category": "livestreaming",
+    "domains": [
+      "cameo.com"
+    ]
+  },
+  {
+    "name": "StreamYard",
+    "category": "livestreaming",
+    "domains": [
+      "streamyard.com"
+    ]
+  },
+  {
+    "name": "Ko-fi",
+    "category": "livestreaming",
+    "domains": [
+      "ko-fi.com"
+    ]
+  },
+  {
+    "name": "Buy Me a Coffee",
+    "category": "livestreaming",
+    "domains": [
+      "buymeacoffee.com"
+    ]
+  },
+  {
+    "name": "Zillow",
+    "category": "realestate",
+    "domains": [
+      "zillow.com"
+    ]
+  },
+  {
+    "name": "Realtor.com",
+    "category": "realestate",
+    "domains": [
+      "realtor.com"
+    ]
+  },
+  {
+    "name": "Redfin",
+    "category": "realestate",
+    "domains": [
+      "redfin.com"
+    ]
+  },
+  {
+    "name": "Trulia",
+    "category": "realestate",
+    "domains": [
+      "trulia.com"
+    ]
+  },
+  {
+    "name": "Apartments.com",
+    "category": "realestate",
+    "domains": [
+      "apartments.com"
+    ]
+  },
+  {
+    "name": "Zumper",
+    "category": "realestate",
+    "domains": [
+      "zumper.com"
+    ]
+  },
+  {
+    "name": "Compass",
+    "category": "realestate",
+    "domains": [
+      "compass.com"
+    ]
+  },
+  {
+    "name": "HotPads",
+    "category": "realestate",
+    "domains": [
+      "hotpads.com"
+    ]
+  },
+  {
+    "name": "Homes.com",
+    "category": "realestate",
+    "domains": [
+      "homes.com"
+    ]
+  },
+  {
+    "name": "Indeed",
+    "category": "jobs",
+    "domains": [
+      "indeed.com"
+    ]
+  },
+  {
+    "name": "ZipRecruiter",
+    "category": "jobs",
+    "domains": [
+      "ziprecruiter.com"
+    ]
+  },
+  {
+    "name": "Glassdoor",
+    "category": "jobs",
+    "domains": [
+      "glassdoor.com"
+    ]
+  },
+  {
+    "name": "Monster",
+    "category": "jobs",
+    "domains": [
+      "monster.com"
+    ]
+  },
+  {
+    "name": "Handshake",
+    "category": "jobs",
+    "domains": [
+      "joinhandshake.com"
+    ]
+  },
+  {
+    "name": "Snagajob",
+    "category": "jobs",
+    "domains": [
+      "snagajob.com"
+    ]
+  },
+  {
+    "name": "Upwork",
+    "category": "jobs",
+    "domains": [
+      "upwork.com"
+    ]
+  },
+  {
+    "name": "Fiverr",
+    "category": "jobs",
+    "domains": [
+      "fiverr.com"
+    ]
+  },
+  {
+    "name": "Wellfound",
+    "category": "jobs",
+    "domains": [
+      "wellfound.com"
+    ]
+  },
+  {
+    "name": "Instawork",
+    "category": "jobs",
+    "domains": [
+      "instawork.com"
+    ]
+  },
+  {
+    "name": "TaskRabbit",
+    "category": "jobs",
+    "domains": [
+      "taskrabbit.com"
+    ]
+  },
+  {
+    "name": "Thumbtack",
+    "category": "jobs",
+    "domains": [
+      "thumbtack.com"
+    ]
+  },
+  {
+    "name": "Angi",
+    "category": "jobs",
+    "domains": [
+      "angi.com"
+    ]
+  },
+  {
+    "name": "Ticketmaster",
+    "category": "tickets",
+    "domains": [
+      "ticketmaster.com"
+    ]
+  },
+  {
+    "name": "StubHub",
+    "category": "tickets",
+    "domains": [
+      "stubhub.com"
+    ]
+  },
+  {
+    "name": "SeatGeek",
+    "category": "tickets",
+    "domains": [
+      "seatgeek.com"
+    ]
+  },
+  {
+    "name": "Vivid Seats",
+    "category": "tickets",
+    "domains": [
+      "vividseats.com"
+    ]
+  },
+  {
+    "name": "Eventbrite",
+    "category": "tickets",
+    "domains": [
+      "eventbrite.com"
+    ]
+  },
+  {
+    "name": "AXS",
+    "category": "tickets",
+    "domains": [
+      "axs.com"
+    ]
+  },
+  {
+    "name": "Fandango",
+    "category": "tickets",
+    "domains": [
+      "fandango.com"
+    ]
+  },
+  {
+    "name": "Atom Tickets",
+    "category": "tickets",
+    "domains": [
+      "atomtickets.com"
+    ]
+  },
+  {
+    "name": "DICE",
+    "category": "tickets",
+    "domains": [
+      "dice.fm"
+    ]
+  },
+  {
+    "name": "Gametime",
+    "category": "tickets",
+    "domains": [
+      "gametime.co"
+    ]
+  },
+  {
+    "name": "TodayTix",
+    "category": "tickets",
+    "domains": [
+      "todaytix.com"
+    ]
+  },
+  {
+    "name": "Partiful",
+    "category": "tickets",
+    "domains": [
+      "partiful.com"
+    ]
+  },
+  {
+    "name": "Luma",
+    "category": "tickets",
+    "domains": [
+      "lu.ma"
+    ]
+  },
+  {
+    "name": "IMDb",
+    "category": "movies",
+    "domains": [
+      "imdb.com"
+    ]
+  },
+  {
+    "name": "Letterboxd",
+    "category": "movies",
+    "domains": [
+      "letterboxd.com",
+      "boxd.it"
+    ]
+  },
+  {
+    "name": "Rotten Tomatoes",
+    "category": "movies",
+    "domains": [
+      "rottentomatoes.com"
+    ]
+  },
+  {
+    "name": "TV Time",
+    "category": "movies",
+    "domains": [
+      "tvtime.com"
+    ]
+  },
+  {
+    "name": "JustWatch",
+    "category": "movies",
+    "domains": [
+      "justwatch.com"
+    ]
+  },
+  {
+    "name": "Trakt",
+    "category": "movies",
+    "domains": [
+      "trakt.tv"
+    ]
+  },
+  {
+    "name": "Metacritic",
+    "category": "movies",
+    "domains": [
+      "metacritic.com"
+    ]
+  },
+  {
+    "name": "YouTube Kids",
+    "category": "kids",
+    "domains": [
+      "youtubekids.com"
+    ]
+  },
+  {
+    "name": "PBS Kids",
+    "category": "kids",
+    "domains": [
+      "pbskids.org"
+    ]
+  },
+  {
+    "name": "ABCmouse",
+    "category": "kids",
+    "domains": [
+      "abcmouse.com"
+    ]
+  },
+  {
+    "name": "Khan Academy Kids",
+    "category": "kids",
+    "domains": [
+      "learn.khanacademy.org"
+    ]
+  },
+  {
+    "name": "Prodigy",
+    "category": "kids",
+    "domains": [
+      "prodigygame.com"
+    ]
+  },
+  {
+    "name": "Epic Kids Books",
+    "category": "kids",
+    "domains": [
+      "getepic.com"
+    ]
+  },
+  {
+    "name": "Toca Boca",
+    "category": "kids",
+    "domains": [
+      "tocaboca.com"
+    ]
+  },
+  {
+    "name": "Life360",
+    "category": "kids",
+    "domains": [
+      "life360.com"
+    ]
+  },
+  {
+    "name": "Google Chrome",
+    "category": "browsers",
+    "domains": [
+      "chrome.google.com"
+    ]
+  },
+  {
+    "name": "Firefox",
+    "category": "browsers",
+    "domains": [
+      "mozilla.org"
+    ]
+  },
+  {
+    "name": "Microsoft Edge",
+    "category": "browsers",
+    "domains": [
+      "microsoft.com"
+    ]
+  },
+  {
+    "name": "Brave",
+    "category": "browsers",
+    "domains": [
+      "brave.com"
+    ]
+  },
+  {
+    "name": "Opera",
+    "category": "browsers",
+    "domains": [
+      "opera.com"
+    ]
+  },
+  {
+    "name": "DuckDuckGo",
+    "category": "browsers",
+    "domains": [
+      "duckduckgo.com"
+    ]
+  },
+  {
+    "name": "Arc",
+    "category": "browsers",
+    "domains": [
+      "arc.net"
+    ]
+  },
+  {
+    "name": "Bing",
+    "category": "browsers",
+    "domains": [
+      "bing.com"
+    ]
+  },
+  {
+    "name": "Speedtest",
+    "category": "browsers",
+    "domains": [
+      "speedtest.net"
+    ]
+  },
+  {
+    "name": "NordVPN",
+    "category": "browsers",
+    "domains": [
+      "nordvpn.com"
+    ]
+  },
+  {
+    "name": "ExpressVPN",
+    "category": "browsers",
+    "domains": [
+      "expressvpn.com"
+    ]
+  },
+  {
+    "name": "Google Translate",
+    "category": "browsers",
+    "domains": [
+      "translate.google.com"
+    ]
+  },
+  {
+    "name": "Google Lens",
+    "category": "browsers",
+    "domains": [
+      "lens.google.com"
+    ]
+  },
+  {
+    "name": "Google Pay",
+    "category": "finance",
+    "domains": [
+      "pay.google.com"
+    ]
+  },
+  {
+    "name": "Samsung Pay",
+    "category": "finance",
+    "domains": [
+      "samsung.com"
+    ]
+  },
+  {
+    "name": "Square",
+    "category": "finance",
+    "domains": [
+      "squareup.com"
+    ]
+  },
+  {
+    "name": "GoFundMe",
+    "category": "finance",
+    "domains": [
+      "gofundme.com",
+      "gofund.me"
+    ]
+  },
+  {
+    "name": "Nextdoor Business",
+    "category": "shopping",
+    "domains": [
+      "kroger.com"
+    ]
+  },
+  {
+    "name": "Walgreens",
+    "category": "shopping",
+    "domains": [
+      "walgreens.com"
+    ]
+  },
+  {
+    "name": "CVS",
+    "category": "shopping",
+    "domains": [
+      "cvs.com"
+    ]
+  },
+  {
+    "name": "Rite Aid",
+    "category": "shopping",
+    "domains": [
+      "riteaid.com"
+    ]
+  },
+  {
+    "name": "Sam's Club",
+    "category": "shopping",
+    "domains": [
+      "samsclub.com"
+    ]
+  },
+  {
+    "name": "Aldi",
+    "category": "shopping",
+    "domains": [
+      "aldi.us"
+    ]
+  },
+  {
+    "name": "Publix",
+    "category": "shopping",
+    "domains": [
+      "publix.com"
+    ]
+  },
+  {
+    "name": "Trader Joe's",
+    "category": "shopping",
+    "domains": [
+      "traderjoes.com"
+    ]
+  },
+  {
+    "name": "Shipt",
+    "category": "shopping",
+    "domains": [
+      "shipt.com"
+    ]
+  },
+  {
+    "name": "Fetch Rewards",
+    "category": "shopping",
+    "domains": [
+      "fetchrewards.com"
+    ]
+  },
+  {
+    "name": "Ibotta",
+    "category": "shopping",
+    "domains": [
+      "ibotta.com"
+    ]
+  },
+  {
+    "name": "Honey",
+    "category": "shopping",
+    "domains": [
+      "joinhoney.com"
+    ]
+  },
+  {
+    "name": "Capital One Shopping",
+    "category": "shopping",
+    "domains": [
+      "capitaloneshopping.com"
+    ]
+  },
+  {
+    "name": "Upside",
+    "category": "shopping",
+    "domains": [
+      "upside.com"
+    ]
+  },
+  {
+    "name": "GetUpside",
+    "category": "shopping",
+    "domains": [
+      "getupside.com"
+    ]
+  },
+  {
+    "name": "Vinted US",
+    "category": "shopping",
+    "domains": [
+      "us.vinted.com"
+    ]
+  },
+  {
+    "name": "Grailed",
+    "category": "shopping",
+    "domains": [
+      "grailed.com"
+    ]
+  },
+  {
+    "name": "Vestiaire Collective",
+    "category": "shopping",
+    "domains": [
+      "vestiairecollective.com"
+    ]
+  },
+  {
+    "name": "Carvana",
+    "category": "shopping",
+    "domains": [
+      "carvana.com"
+    ]
+  },
+  {
+    "name": "CarMax",
+    "category": "shopping",
+    "domains": [
+      "carmax.com"
+    ]
+  },
+  {
+    "name": "AutoTrader",
+    "category": "shopping",
+    "domains": [
+      "autotrader.com"
+    ]
+  },
+  {
+    "name": "Cars.com",
+    "category": "shopping",
+    "domains": [
+      "cars.com"
+    ]
+  },
+  {
+    "name": "CarGurus",
+    "category": "shopping",
+    "domains": [
+      "cargurus.com"
+    ]
+  },
+  {
+    "name": "Peacock Sports",
+    "category": "sports",
+    "domains": [
+      "golfnow.com"
+    ]
+  },
+  {
+    "name": "GameChanger",
+    "category": "sports",
+    "domains": [
+      "gc.com"
+    ]
+  },
+  {
+    "name": "TeamSnap",
+    "category": "sports",
+    "domains": [
+      "teamsnap.com"
+    ]
+  },
+  {
+    "name": "Flashscore",
+    "category": "sports",
+    "domains": [
+      "flashscore.com"
+    ]
+  },
+  {
+    "name": "Sofascore",
+    "category": "sports",
+    "domains": [
+      "sofascore.com"
+    ]
+  },
+  {
+    "name": "Onefootball",
+    "category": "sports",
+    "domains": [
+      "onefootball.com"
+    ]
+  },
+  {
+    "name": "WatchESPN",
+    "category": "sports",
+    "domains": [
+      "plus.espn.com"
+    ]
+  },
+  {
+    "name": "Marco Polo",
+    "category": "messaging",
+    "domains": [
+      "marcopolo.me"
+    ]
+  },
+  {
+    "name": "Telegram Web",
+    "category": "messaging",
+    "domains": [
+      "telegram.org"
+    ]
+  },
+  {
+    "name": "Discord Invite",
+    "category": "messaging",
+    "domains": [
+      "discord.gg"
+    ]
+  },
+  {
+    "name": "Yahoo Mail",
+    "category": "productivity",
+    "domains": [
+      "mail.yahoo.com"
+    ]
+  },
+  {
+    "name": "Yahoo",
+    "category": "news",
+    "domains": [
+      "yahoo.com"
+    ]
+  },
+  {
+    "name": "Yahoo Finance",
+    "category": "finance",
+    "domains": [
+      "finance.yahoo.com"
+    ]
+  },
+  {
+    "name": "Etsy Seller",
+    "category": "shopping",
+    "domains": [
+      "etsy.me"
+    ]
+  },
+  {
+    "name": "Bandsintown",
+    "category": "tickets",
+    "domains": [
+      "bandsintown.com"
+    ]
+  },
+  {
+    "name": "Songkick",
+    "category": "tickets",
+    "domains": [
+      "songkick.com"
+    ]
+  },
+  {
+    "name": "Snapchat Spotlight",
+    "category": "social",
+    "domains": [
+      "snap.com"
+    ]
+  },
+  {
+    "name": "Triller",
+    "category": "social",
+    "domains": [
+      "triller.co"
+    ]
+  },
+  {
+    "name": "Likee",
+    "category": "social",
+    "domains": [
+      "likee.video"
+    ]
+  },
+  {
+    "name": "Kwai",
+    "category": "social",
+    "domains": [
+      "kwai.com"
+    ]
+  },
+  {
+    "name": "Poe",
+    "category": "productivity",
+    "domains": [
+      "poe.com"
+    ]
+  },
+  {
+    "name": "Character.AI",
+    "category": "productivity",
+    "domains": [
+      "character.ai"
+    ]
+  },
+  {
+    "name": "Replika",
+    "category": "productivity",
+    "domains": [
+      "replika.com"
+    ]
+  },
+  {
+    "name": "DeepSeek",
+    "category": "productivity",
+    "domains": [
+      "deepseek.com"
+    ]
+  },
+  {
+    "name": "Grok",
+    "category": "productivity",
+    "domains": [
+      "grok.com"
+    ]
+  },
+  {
+    "name": "Nebula",
+    "category": "video",
+    "domains": [
+      "nebula.tv"
+    ]
+  },
+  {
+    "name": "BET+",
+    "category": "video",
+    "domains": [
+      "bet.plus"
+    ]
+  },
+  {
+    "name": "MLB.TV",
+    "category": "video",
+    "domains": [
+      "mlb.tv"
+    ]
+  },
+  {
+    "name": "NBA League Pass",
+    "category": "video",
+    "domains": [
+      "watch.nba.com"
+    ]
+  },
+  {
+    "name": "WWE Network",
+    "category": "video",
+    "domains": [
+      "wwe.com"
+    ]
+  },
+  {
+    "name": "Philo",
+    "category": "video",
+    "domains": [
+      "philo.com"
+    ]
+  },
+  {
+    "name": "Frndly TV",
+    "category": "video",
+    "domains": [
+      "frndlytv.com"
+    ]
+  },
+  {
+    "name": "Cash App Bitcoin",
+    "category": "finance",
+    "domains": [
+      "cash.me"
+    ]
+  },
+  {
+    "name": "Step",
+    "category": "finance",
+    "domains": [
+      "step.com"
+    ]
+  },
+  {
+    "name": "Greenlight",
+    "category": "finance",
+    "domains": [
+      "greenlight.com"
+    ]
+  },
+  {
+    "name": "GoHenry",
+    "category": "finance",
+    "domains": [
+      "gohenry.com"
+    ]
+  },
+  {
+    "name": "Reelshort",
+    "category": "video",
+    "domains": [
+      "reelshort.com"
+    ]
+  },
+  {
+    "name": "DramaBox",
+    "category": "video",
+    "domains": [
+      "dramaboxapp.com"
+    ]
+  },
+  {
+    "name": "GoodShort",
+    "category": "video",
+    "domains": [
+      "goodshort.com"
+    ]
+  },
+  {
+    "name": "Temu Deals",
+    "category": "shopping",
+    "domains": [
+      "temu.to"
+    ]
+  },
+  {
+    "name": "Alibaba",
+    "category": "shopping",
+    "domains": [
+      "alibaba.com"
+    ]
+  },
+  {
+    "name": "DHgate",
+    "category": "shopping",
+    "domains": [
+      "dhgate.com"
+    ]
+  },
+  {
+    "name": "Lululemon",
+    "category": "shopping",
+    "domains": [
+      "lululemon.com"
+    ]
+  },
+  {
+    "name": "Gymshark",
+    "category": "shopping",
+    "domains": [
+      "gymshark.com"
+    ]
+  },
+  {
+    "name": "Shein Marketplace",
+    "category": "shopping",
+    "domains": [
+      "m.shein.com"
+    ]
+  },
+  {
+    "name": "Booking Rentalcars",
+    "category": "travel",
+    "domains": [
+      "rentalcars.com"
+    ]
+  },
+  {
+    "name": "Agoda",
+    "category": "travel",
+    "domains": [
+      "agoda.com"
+    ]
+  },
+  {
+    "name": "Hostelworld",
+    "category": "travel",
+    "domains": [
+      "hostelworld.com"
+    ]
+  },
+  {
+    "name": "Wanderlog",
+    "category": "travel",
+    "domains": [
+      "wanderlog.com"
+    ]
+  },
+  {
+    "name": "TripIt",
+    "category": "travel",
+    "domains": [
+      "tripit.com"
+    ]
+  },
+  {
+    "name": "Roadtrippers",
+    "category": "travel",
+    "domains": [
+      "roadtrippers.com"
+    ]
+  },
+  {
+    "name": "Gasbuddy",
+    "category": "travel",
+    "domains": [
+      "gasbuddy.com"
+    ]
+  },
+  {
+    "name": "ParkMobile",
+    "category": "travel",
+    "domains": [
+      "parkmobile.io"
+    ]
+  },
+  {
+    "name": "SpotHero",
+    "category": "travel",
+    "domains": [
+      "spothero.com"
+    ]
+  },
+  {
+    "name": "Flixbus",
+    "category": "travel",
+    "domains": [
+      "flixbus.com"
+    ]
+  },
+  {
+    "name": "Rover",
+    "category": "jobs",
+    "domains": [
+      "rover.com"
+    ]
+  },
+  {
+    "name": "Wag",
+    "category": "jobs",
+    "domains": [
+      "wagwalking.com"
+    ]
+  },
+  {
+    "name": "Care.com",
+    "category": "jobs",
+    "domains": [
+      "care.com"
+    ]
+  },
+  {
+    "name": "UrbanSitter",
+    "category": "jobs",
+    "domains": [
+      "urbansitter.com"
+    ]
+  },
+  {
+    "name": "Nextdoor Neighbors",
+    "category": "social",
+    "domains": [
+      "nextdoor.co.uk"
+    ]
+  },
+  {
+    "name": "Discord Status",
+    "category": "messaging",
+    "domains": [
+      "discordapp.com"
+    ]
+  },
+  {
+    "name": "Wikipedia",
+    "category": "news",
+    "domains": [
+      "wikipedia.org",
+      "en.wikipedia.org"
+    ]
+  },
+  {
+    "name": "Wikihow",
+    "category": "news",
+    "domains": [
+      "wikihow.com"
+    ]
+  },
+  {
+    "name": "Fandom",
+    "category": "news",
+    "domains": [
+      "fandom.com"
+    ]
+  },
+  {
+    "name": "Ancestry",
+    "category": "productivity",
+    "domains": [
+      "ancestry.com"
+    ]
+  },
+  {
+    "name": "23andMe",
+    "category": "fitness",
+    "domains": [
+      "23andme.com"
+    ]
+  },
+  {
+    "name": "OpenSea",
+    "category": "finance",
+    "domains": [
+      "opensea.io"
+    ]
+  },
+  {
+    "name": "Phantom",
+    "category": "finance",
+    "domains": [
+      "phantom.app"
+    ]
+  },
+  {
+    "name": "Trust Wallet",
+    "category": "finance",
+    "domains": [
+      "trustwallet.com"
+    ]
+  },
+  {
+    "name": "Ledger Live",
+    "category": "finance",
+    "domains": [
+      "ledger.com"
+    ]
+  },
+  {
+    "name": "KuCoin",
+    "category": "finance",
+    "domains": [
+      "kucoin.com"
+    ]
+  },
+  {
+    "name": "OKX",
+    "category": "finance",
+    "domains": [
+      "okx.com"
+    ]
+  },
+  {
+    "name": "Bybit",
+    "category": "finance",
+    "domains": [
+      "bybit.com"
+    ]
+  },
+  {
+    "name": "Freeletics",
+    "category": "fitness",
+    "domains": [
+      "freeletics.com"
+    ]
+  },
+  {
+    "name": "Centr",
+    "category": "fitness",
+    "domains": [
+      "centr.com"
+    ]
+  },
+  {
+    "name": "Future",
+    "category": "fitness",
+    "domains": [
+      "future.co"
+    ]
+  },
+  {
+    "name": "Ladder",
+    "category": "fitness",
+    "domains": [
+      "ladder.sport"
+    ]
+  },
+  {
+    "name": "Hevy",
+    "category": "fitness",
+    "domains": [
+      "hevyapp.com"
+    ]
+  },
+  {
+    "name": "Cal AI",
+    "category": "fitness",
+    "domains": [
+      "calai.app"
+    ]
+  },
+  {
+    "name": "Lose It",
+    "category": "fitness",
+    "domains": [
+      "loseit.com"
+    ]
+  },
+  {
+    "name": "Fastic",
+    "category": "fitness",
+    "domains": [
+      "fastic.com"
+    ]
+  },
+  {
+    "name": "Zero",
+    "category": "fitness",
+    "domains": [
+      "zerolongevity.com"
+    ]
+  },
+  {
+    "name": "Sleep Cycle",
+    "category": "fitness",
+    "domains": [
+      "sleepcycle.com"
+    ]
+  },
+  {
+    "name": "Sofia Health",
+    "category": "fitness",
+    "domains": [
+      "sofia.health"
+    ]
+  },
+  {
+    "name": "Reelgood",
+    "category": "movies",
+    "domains": [
+      "reelgood.com"
+    ]
+  },
+  {
+    "name": "TVMaze",
+    "category": "movies",
+    "domains": [
+      "tvmaze.com"
+    ]
+  },
+  {
+    "name": "Splitwise",
+    "category": "finance",
+    "domains": [
+      "splitwise.com"
+    ]
+  },
+  {
+    "name": "YNAB",
+    "category": "finance",
+    "domains": [
+      "ynab.com"
+    ]
+  },
+  {
+    "name": "Copilot Money",
+    "category": "finance",
+    "domains": [
+      "copilot.money"
+    ]
+  },
+  {
+    "name": "Monarch Money",
+    "category": "finance",
+    "domains": [
+      "monarchmoney.com"
+    ]
+  },
+  {
+    "name": "Shop Premium Outlets",
+    "category": "shopping",
+    "domains": [
+      "shoppremiumoutlets.com"
+    ]
+  },
+  {
+    "name": "Yelp Reservations",
+    "category": "food",
+    "domains": [
+      "yelpreservations.com"
+    ]
+  },
+  {
+    "name": "Tock",
+    "category": "food",
+    "domains": [
+      "exploretock.com"
+    ]
+  },
+  {
+    "name": "Chowbus",
+    "category": "food",
+    "domains": [
+      "chowbus.com"
+    ]
+  },
+  {
+    "name": "Slice",
+    "category": "food",
+    "domains": [
+      "slicelife.com"
+    ]
+  },
+  {
+    "name": "EZ Cater",
+    "category": "food",
+    "domains": [
+      "ezcater.com"
+    ]
+  },
+  {
+    "name": "Sweetgreen",
+    "category": "food",
+    "domains": [
+      "sweetgreen.com"
+    ]
+  },
+  {
+    "name": "Cava",
+    "category": "food",
+    "domains": [
+      "cava.com"
+    ]
+  },
+  {
+    "name": "Raising Cane's",
+    "category": "food",
+    "domains": [
+      "raisingcanes.com"
+    ]
+  },
+  {
+    "name": "Five Guys",
+    "category": "food",
+    "domains": [
+      "fiveguys.com"
+    ]
+  },
+  {
+    "name": "In-N-Out",
+    "category": "food",
+    "domains": [
+      "in-n-out.com"
+    ]
+  },
+  {
+    "name": "Shake Shack",
+    "category": "food",
+    "domains": [
+      "shakeshack.com"
+    ]
+  },
+  {
+    "name": "Crumbl",
+    "category": "food",
+    "domains": [
+      "crumblcookies.com"
+    ]
+  },
+  {
+    "name": "Jersey Mike's",
+    "category": "food",
+    "domains": [
+      "jerseymikes.com"
+    ]
+  },
+  {
+    "name": "Wingstop",
+    "category": "food",
+    "domains": [
+      "wingstop.com"
+    ]
+  },
+  {
+    "name": "Sonic",
+    "category": "food",
+    "domains": [
+      "sonicdrivein.com"
+    ]
+  },
+  {
+    "name": "Culver's",
+    "category": "food",
+    "domains": [
+      "culvers.com"
+    ]
+  },
+  {
+    "name": "Whataburger",
+    "category": "food",
+    "domains": [
+      "whataburger.com"
+    ]
+  },
+  {
+    "name": "Fliff",
+    "category": "sports",
+    "domains": [
+      "getfliff.com"
+    ]
+  },
+  {
+    "name": "Fanatics Sportsbook",
+    "category": "sports",
+    "domains": [
+      "sportsbook.fanatics.com"
+    ]
+  },
+  {
+    "name": "ESPN Bet",
+    "category": "sports",
+    "domains": [
+      "espnbet.com"
+    ]
+  },
+  {
+    "name": "Stake",
+    "category": "sports",
+    "domains": [
+      "stake.com"
+    ]
+  },
+  {
+    "name": "Chumba Casino",
+    "category": "sports",
+    "domains": [
+      "chumbacasino.com"
+    ]
+  },
+  {
+    "name": "Pulsz",
+    "category": "sports",
+    "domains": [
+      "pulsz.com"
+    ]
+  },
+  {
+    "name": "High 5 Casino",
+    "category": "sports",
+    "domains": [
+      "high5casino.com"
+    ]
+  },
+  {
+    "name": "McLuck",
+    "category": "sports",
+    "domains": [
+      "mcluck.com"
+    ]
+  },
+  {
+    "name": "Kalshi",
+    "category": "sports",
+    "domains": [
+      "kalshi.com"
+    ]
+  },
+  {
+    "name": "Polymarket",
+    "category": "sports",
+    "domains": [
+      "polymarket.com"
+    ]
+  },
+  {
+    "name": "Poshmark Canada",
+    "category": "shopping",
+    "domains": [
+      "poshmark.ca"
+    ]
+  },
+  {
+    "name": "SoundHound",
+    "category": "music",
+    "domains": [
+      "soundhound.com"
+    ]
+  },
+  {
+    "name": "Musixmatch",
+    "category": "music",
+    "domains": [
+      "musixmatch.com"
+    ]
+  },
+  {
+    "name": "Smule",
+    "category": "music",
+    "domains": [
+      "smule.com"
+    ]
+  },
+  {
+    "name": "StarMaker",
+    "category": "music",
+    "domains": [
+      "starmakerstudios.com"
+    ]
+  },
+  {
+    "name": "Moises",
+    "category": "music",
+    "domains": [
+      "moises.ai"
+    ]
+  },
+  {
+    "name": "Suno",
+    "category": "music",
+    "domains": [
+      "suno.com"
+    ]
+  },
+  {
+    "name": "Udio",
+    "category": "music",
+    "domains": [
+      "udio.com"
+    ]
+  },
+  {
+    "name": "PadMapper",
+    "category": "realestate",
+    "domains": [
+      "padmapper.com"
+    ]
+  },
+  {
+    "name": "Rent.com",
+    "category": "realestate",
+    "domains": [
+      "rent.com"
+    ]
+  },
+  {
+    "name": "LoopNet",
+    "category": "realestate",
+    "domains": [
+      "loopnet.com"
+    ]
+  },
+  {
+    "name": "TikTok Shop",
+    "category": "shopping",
+    "domains": [
+      "tiktokshop.com"
+    ]
+  },
+  {
+    "name": "Flip",
+    "category": "shopping",
+    "domains": [
+      "flip.shop"
+    ]
+  },
+  {
+    "name": "LTK",
+    "category": "shopping",
+    "domains": [
+      "shopltk.com",
+      "liketoknow.it"
+    ]
+  },
+  {
+    "name": "ShopMy",
+    "category": "shopping",
+    "domains": [
+      "shopmy.us"
+    ]
+  },
+  {
+    "name": "Linktree",
+    "category": "social",
+    "domains": [
+      "linktr.ee"
+    ]
+  },
+  {
+    "name": "Beacons",
+    "category": "social",
+    "domains": [
+      "beacons.ai"
+    ]
+  },
+  {
+    "name": "Carrd",
+    "category": "social",
+    "domains": [
+      "carrd.co"
+    ]
+  },
+  {
+    "name": "Bio.link",
+    "category": "social",
+    "domains": [
+      "bio.link"
+    ]
+  },
+  {
+    "name": "Stan Store",
+    "category": "social",
+    "domains": [
+      "stan.store"
+    ]
+  },
+  {
+    "name": "Google Forms",
+    "category": "productivity",
+    "domains": [
+      "forms.google.com"
+    ]
+  },
+  {
+    "name": "Typeform",
+    "category": "productivity",
+    "domains": [
+      "typeform.com"
+    ]
+  },
+  {
+    "name": "SurveyMonkey",
+    "category": "productivity",
+    "domains": [
+      "surveymonkey.com"
+    ]
+  },
+  {
+    "name": "Mailchimp",
+    "category": "productivity",
+    "domains": [
+      "mailchimp.com"
+    ]
+  },
+  {
+    "name": "Loom",
+    "category": "productivity",
+    "domains": [
+      "loom.com"
+    ]
+  },
+  {
+    "name": "Miro",
+    "category": "productivity",
+    "domains": [
+      "miro.com"
+    ]
+  },
+  {
+    "name": "Zapier",
+    "category": "productivity",
+    "domains": [
+      "zapier.com"
+    ]
+  },
+  {
+    "name": "Nike Run",
+    "category": "sports",
+    "domains": [
+      "runna.com"
+    ]
+  },
+  {
+    "name": "Meetup Events",
+    "category": "tickets",
+    "domains": [
+      "nightout.com"
+    ]
+  },
+  {
+    "name": "Posh",
+    "category": "tickets",
+    "domains": [
+      "posh.vip"
+    ]
+  },
+  {
+    "name": "Fever",
+    "category": "tickets",
+    "domains": [
+      "feverup.com"
+    ]
+  },
+  {
+    "name": "Goldstar",
+    "category": "tickets",
+    "domains": [
+      "goldstar.com"
+    ]
+  },
+  {
+    "name": "The Infatuation",
+    "category": "food",
+    "domains": [
+      "theinfatuation.com"
+    ]
+  },
+  {
+    "name": "Beli",
+    "category": "food",
+    "domains": [
+      "beliapp.com"
+    ]
+  },
+  {
+    "name": "Newsbreak",
+    "category": "news",
+    "domains": [
+      "newsbreak.com"
+    ]
+  },
+  {
+    "name": "The Information",
+    "category": "news",
+    "domains": [
+      "theinformation.com"
+    ]
+  },
+  {
+    "name": "Semafor",
+    "category": "news",
+    "domains": [
+      "semafor.com"
+    ]
+  },
+  {
+    "name": "The Free Press",
+    "category": "news",
+    "domains": [
+      "thefp.com"
+    ]
+  },
+  {
+    "name": "Puck",
+    "category": "news",
+    "domains": [
+      "puck.news"
+    ]
+  },
+  {
+    "name": "Notability",
+    "category": "productivity",
+    "domains": [
+      "notability.com"
+    ]
+  },
+  {
+    "name": "GoodNotes",
+    "category": "productivity",
+    "domains": [
+      "goodnotes.com"
+    ]
+  },
+  {
+    "name": "Notesnook",
+    "category": "productivity",
+    "domains": [
+      "notesnook.com"
+    ]
+  },
+  {
+    "name": "Craft",
+    "category": "productivity",
+    "domains": [
+      "craft.do"
+    ]
+  },
+  {
+    "name": "Hily",
+    "category": "dating",
+    "domains": [
+      "hily.com"
+    ]
+  },
+  {
+    "name": "Boo",
+    "category": "dating",
+    "domains": [
+      "boo.world"
+    ]
+  },
+  {
+    "name": "Lex",
+    "category": "dating",
+    "domains": [
+      "thisislex.app"
+    ]
+  },
+  {
+    "name": "Photomyne",
+    "category": "photo",
+    "domains": [
+      "photomyne.com"
+    ]
+  },
+  {
+    "name": "VivaVideo",
+    "category": "photo",
+    "domains": [
+      "vivavideo.tv"
+    ]
+  },
+  {
+    "name": "Videoleap",
+    "category": "photo",
+    "domains": [
+      "videoleapapp.com"
+    ]
+  },
+  {
+    "name": "Motionleap",
+    "category": "photo",
+    "domains": [
+      "motionleapapp.com"
+    ]
+  },
+  {
+    "name": "YouCam",
+    "category": "photo",
+    "domains": [
+      "perfectcorp.com"
+    ]
+  },
+  {
+    "name": "BeautyPlus",
+    "category": "photo",
+    "domains": [
+      "beautyplus.com"
+    ]
+  },
+  {
+    "name": "B612",
+    "category": "photo",
+    "domains": [
+      "b612.com"
+    ]
+  },
+  {
+    "name": "Kids A-Z",
+    "category": "kids",
+    "domains": [
+      "kidsa-z.com"
+    ]
+  },
+  {
+    "name": "Starfall",
+    "category": "kids",
+    "domains": [
+      "starfall.com"
+    ]
+  },
+  {
+    "name": "Noggin",
+    "category": "kids",
+    "domains": [
+      "noggin.com"
+    ]
+  },
+  {
+    "name": "Sago Mini",
+    "category": "kids",
+    "domains": [
+      "sagomini.com"
+    ]
+  },
+  {
+    "name": "PlayStation Store",
+    "category": "gaming",
+    "domains": [
+      "store.playstation.com"
+    ]
+  },
+  {
+    "name": "GeForce Now",
+    "category": "gaming",
+    "domains": [
+      "nvidia.com"
+    ]
+  },
+  {
+    "name": "Discord Nitro",
+    "category": "gaming",
+    "domains": [
+      "discord.new"
+    ]
+  },
+  {
+    "name": "Pokemon GO",
+    "category": "gaming",
+    "domains": [
+      "pokemongolive.com"
+    ]
+  },
+  {
+    "name": "Niantic",
+    "category": "gaming",
+    "domains": [
+      "nianticlabs.com"
+    ]
+  },
+  {
+    "name": "Monopoly GO",
+    "category": "gaming",
+    "domains": [
+      "monopolygo.com"
+    ]
+  },
+  {
+    "name": "Scopely",
+    "category": "gaming",
+    "domains": [
+      "scopely.com"
+    ]
+  },
+  {
+    "name": "Candy Crush",
+    "category": "gaming",
+    "domains": [
+      "king.com"
+    ]
+  },
+  {
+    "name": "Coin Master",
+    "category": "gaming",
+    "domains": [
+      "moonactive.com"
+    ]
+  },
+  {
+    "name": "Royal Match",
+    "category": "gaming",
+    "domains": [
+      "dreamgames.com"
+    ]
+  },
+  {
+    "name": "Brawl Stars",
+    "category": "gaming",
+    "domains": [
+      "brawlstars.com"
+    ]
+  },
+  {
+    "name": "Ring",
+    "category": "browsers",
+    "domains": [
+      "ring.com"
+    ]
+  },
+  {
+    "name": "Nest",
+    "category": "browsers",
+    "domains": [
+      "nest.com"
+    ]
+  },
+  {
+    "name": "Google Home",
+    "category": "browsers",
+    "domains": [
+      "home.google.com"
+    ]
+  },
+  {
+    "name": "SmartThings",
+    "category": "browsers",
+    "domains": [
+      "smartthings.com"
+    ]
+  },
+  {
+    "name": "Tesla",
+    "category": "browsers",
+    "domains": [
+      "tesla.com"
+    ]
+  },
+  {
+    "name": "Wyze",
+    "category": "browsers",
+    "domains": [
+      "wyze.com"
+    ]
+  },
+  {
+    "name": "TP-Link Tapo",
+    "category": "browsers",
+    "domains": [
+      "tapo.com"
+    ]
+  },
+  {
+    "name": "Verizon",
+    "category": "browsers",
+    "domains": [
+      "verizon.com"
+    ]
+  },
+  {
+    "name": "AT&T",
+    "category": "browsers",
+    "domains": [
+      "att.com"
+    ]
+  },
+  {
+    "name": "T-Mobile",
+    "category": "browsers",
+    "domains": [
+      "t-mobile.com"
+    ]
+  },
+  {
+    "name": "Xfinity",
+    "category": "browsers",
+    "domains": [
+      "xfinity.com"
+    ]
+  },
+  {
+    "name": "Spectrum",
+    "category": "browsers",
+    "domains": [
+      "spectrum.net"
+    ]
+  },
+  {
+    "name": "USPS",
+    "category": "productivity",
+    "domains": [
+      "usps.com"
+    ]
+  },
+  {
+    "name": "UPS",
+    "category": "productivity",
+    "domains": [
+      "ups.com"
+    ]
+  },
+  {
+    "name": "FedEx",
+    "category": "productivity",
+    "domains": [
+      "fedex.com"
+    ]
+  },
+  {
+    "name": "Shop Tracking",
+    "category": "productivity",
+    "domains": [
+      "route.com"
+    ]
+  },
+  {
+    "name": "Waitr",
+    "category": "food",
+    "domains": [
+      "waitrapp.com"
+    ]
+  },
+  {
+    "name": "ChowNow",
+    "category": "food",
+    "domains": [
+      "chownow.com"
+    ]
+  },
+  {
+    "name": "Snackpass",
+    "category": "food",
+    "domains": [
+      "snackpass.co"
+    ]
+  },
+  {
+    "name": "Zocdoc",
+    "category": "fitness",
+    "domains": [
+      "zocdoc.com"
+    ]
+  },
+  {
+    "name": "MyChart",
+    "category": "fitness",
+    "domains": [
+      "mychart.com"
+    ]
+  },
+  {
+    "name": "Sesame",
+    "category": "fitness",
+    "domains": [
+      "sesamecare.com"
+    ]
+  },
+  {
+    "name": "K Health",
+    "category": "fitness",
+    "domains": [
+      "khealth.com"
+    ]
+  },
+  {
+    "name": "Cerebral",
+    "category": "fitness",
+    "domains": [
+      "cerebral.com"
+    ]
+  },
+  {
+    "name": "Talkspace",
+    "category": "fitness",
+    "domains": [
+      "talkspace.com"
+    ]
+  }
+]

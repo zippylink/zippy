@@ -373,18 +373,25 @@ export const PLATFORMS: Platform[] = [
   },
 ];
 
-function buildMatch(p: Platform, url: URL): PlatformMatch {
+function buildMatch(p: Platform, url: URL, fallbackUrl?: string): PlatformMatch {
   const path = p.path(url);
   const web = url.toString();
-  const intentBody = `intent://${path}#Intent;scheme=${p.scheme};package=${p.androidPackage};S.browser_fallback_url=${encodeURIComponent(web)};end`;
+  // browser_fallback_url is where Chrome sends the visitor when the intent finds no app.
+  // Aimed at the DESTINATION (the default) that hop never touches us, so a failed open and
+  // a successful one are indistinguishable from here — which is why Android is unmeasured.
+  // A caller that passes a URL IT serves gets the failure hop delivered to itself instead,
+  // and can record it as an OBSERVED `browser` outcome. See index.ts's fb= short-circuit.
+  const intentBody = `intent://${path}#Intent;scheme=${p.scheme};package=${p.androidPackage};S.browser_fallback_url=${encodeURIComponent(fallbackUrl ?? web)};end`;
   return { key: p.key, ios: `${p.scheme}://${path}`, android: intentBody, web };
 }
 
 /**
  * Match a destination URL against the deeplink table.
  * Returns the platform's iOS / Android / web link forms, or null if no platform owns it.
+ * `fallbackUrl` overrides the Android intent's browser_fallback_url; omitted, it stays the
+ * destination (the historical behaviour).
  */
-export function matchPlatform(destination: string): PlatformMatch | null {
+export function matchPlatform(destination: string, fallbackUrl?: string): PlatformMatch | null {
   let url: URL;
   try {
     url = new URL(destination);
@@ -394,5 +401,5 @@ export function matchPlatform(destination: string): PlatformMatch | null {
   if (url.protocol !== "http:" && url.protocol !== "https:") return null;
   const host = url.hostname.replace(/^www\./, "").toLowerCase();
   const platform = PLATFORMS.find((p) => p.hosts.includes(host));
-  return platform ? buildMatch(platform, url) : null;
+  return platform ? buildMatch(platform, url, fallbackUrl) : null;
 }

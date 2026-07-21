@@ -6,11 +6,13 @@
 //
 // KV-only. No D1, no Durable Objects, no analytics. Serverless, ~$0 to run.
 import { matchPlatform } from "./platforms.js";
+import { bestEffortMatch } from "./best-effort.js";
 import {
   renderInterstitial,
   render404,
   renderPasswordGate,
   renderPixelPage,
+  inAppWebview,
   type PixelTag,
 } from "./interstitial.js";
 import { renderOgPage, type OgMeta } from "./og.js";
@@ -32,6 +34,17 @@ export interface Env {
   EVENTS_URL?: string;
   /** Bearer token sent on each forwarded event. Only used when EVENTS_URL is set. */
   EVENTS_TOKEN?: string;
+  /** FLAG "1" = point the Android intent's browser_fallback_url at OUR /:slug?fb=1 instead
+   *  of the destination, so a failed app-open is delivered to us and recorded as an
+   *  observed `browser`. OFF BY DEFAULT (any other value / unset): Android stays
+   *  `unmeasured`. Flip only after a real device confirms the fallback hop lands. */
+  ANDROID_FALLBACK_MEASURE?: string;
+  /** FLAG "1" = best-effort Android app-open for hosts NOT in the hand-verified table but whose
+   *  published /.well-known/assetlinks.json gives an Android package (see best-effort.ts +
+   *  well-known-map.json). Android only; iOS/desktop are untouched. The open is UNMEASURED by
+   *  construction (its intent falls back to the DESTINATION, never our fb=1 hop). OFF BY DEFAULT
+   *  (any other value / unset). Exact-match "1", like ANDROID_FALLBACK_MEASURE. */
+  BEST_EFFORT_ANDROID?: string;
 }
 
 const SLUG_RE = /^[a-zA-Z0-9-_]{1,32}$/;
@@ -46,7 +59,33 @@ const html = (body: string, status: number) =>
 const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
 
+/** Query marker on the Android intent's browser_fallback_url. `?fb=1` on a slug means
+ *  "the intent found no app and Chrome bounced the visitor back to us". */
+const FB_PARAM = "fb";
+/** `?v=` carries the A/B variant index across the fallback hop (see handleRedirect). */
+const FB_AB_PARAM = "v";
+
+/** Origin the short link was actually served from — BASE_URL for the default host, the
+ *  tenant's own host on a custom domain (whose bare-slug key wouldn't resolve under
+ *  BASE_URL). Never a hardcoded domain; the only sources are env + the request. */
+function shortOrigin(hostname: string, env: Env): string {
+  let defaultHost = hostname;
+  try {
+    defaultHost = new URL(env.BASE_URL).hostname;
+  } catch {
+    /* malformed BASE_URL → treat the request host as canonical */
+  }
+  return hostname === defaultHost ? env.BASE_URL.replace(/\/$/, "") : `https://${hostname}`;
+}
+
 const isMobile = (ua: string): boolean => /Android|iPhone|iPad|iPod/i.test(ua);
+/** Coarse device bucket for outcome rows. Server-derived; never client-supplied. */
+const deviceOf = (ua: string): string =>
+  /iPad|Tablet/i.test(ua)
+    ? "tablet"
+    : /Android|iPhone|iPod|Mobile/i.test(ua)
+      ? "mobile"
+      : "desktop";
 
 // OS bucket — the single most useful dimension for a DEEPLINK product (iOS vs Android
 // decide which scheme fires, which store, which app behaviour). Coarse on purpose: no
@@ -210,6 +249,11 @@ type LinkValue = {
   branded: boolean;
   og?: OgMeta;
   orgId?: string;
+  /** Unclaimed anonymous link (no-signup door). While true, every human redirect fires a
+   *  fire-and-forget first-click ping to the cloud (starts the 7-day claim window there,
+   *  idempotently). The cloud clears this flag on claim via the normal KV sync — see
+   *  zippy-cloud libs/billing/src/kv.ts ("KEEP IN SYNC WITH THE ENGINE"). */
+  anon?: boolean;
   routing?: RoutingRules;
   /** SHA-256 hash of the link's password (the cloud denormalizes the HASH, never the
    *  plaintext). Present = the link is gated: the engine shows a password form until the
@@ -376,6 +420,7 @@ function parseLinkValue(raw: string): LinkValue | null {
       branded?: unknown;
       og?: unknown;
       orgId?: unknown;
+      anon?: unknown;
       routing?: unknown;
       pw?: unknown;
       fbu?: unknown;
@@ -392,6 +437,7 @@ function parseLinkValue(raw: string): LinkValue | null {
       // Opaque tenant tag the cloud denormalizes in — the engine never interprets it,
       // only stamps it on the click data point so the cloud can roll up per-org.
       orgId: typeof o.orgId === "string" ? o.orgId : undefined,
+      anon: o.anon === true ? true : undefined,
       routing,
       // Password hash (never plaintext) — a gate the engine enforces before any redirect.
       pw: typeof o.pw === "string" && o.pw ? o.pw : undefined,
@@ -412,6 +458,7 @@ async function handleRedirect(
   hostname: string,
   req: Request,
   env: Env,
+  ctx?: ExecutionContext,
 ): Promise<Response> {
   const key = await resolveKey(hostname, slug, env);
   if (key === null) return html(render404(homeUrl(env)), 404);
@@ -446,16 +493,7 @@ async function handleRedirect(
     // The card must advertise the URL the crawler actually fetched — on a tenant
     // custom domain that's the tenant's host, not BASE_URL (whose bare-slug key
     // wouldn't even resolve for a t:<tenantId>:<slug> record).
-    const defaultHost = (() => {
-      try {
-        return new URL(env.BASE_URL).hostname;
-      } catch {
-        return hostname;
-      }
-    })();
-    const origin =
-      hostname === defaultHost ? env.BASE_URL.replace(/\/$/, "") : `https://${hostname}`;
-    const shortUrl = `${origin}/${slug}`;
+    const shortUrl = `${shortOrigin(hostname, env)}/${slug}`;
     return new Response(renderOgPage(shortUrl, link.url, link.og ?? {}), {
       status: 200,
       headers: {
@@ -487,9 +525,19 @@ async function handleRedirect(
   // variant still springs the store.
   // The picked index rides on to the interstitial's outcome beacon, so an A/B report can
   // say "variant B OPENED THE APP more often", not just "got more clicks".
+  const url = new URL(req.url);
+  // Is this the Android intent's fallback hop? (Chrome found no app and came back to us.)
+  const isFallbackHop = url.searchParams.get(FB_PARAM) === "1";
   let abIndex: number | undefined;
   if (link.ab) {
-    const i = pickAb(link.ab);
+    // On the fallback hop the variant is CARRIED, not re-picked: the intent that failed was
+    // built for one specific variant, so the visitor must land on THAT variant's
+    // destination and the `browser` row must be attributed to it. Client-supplied, so
+    // validated as an in-range index into this link's own splits — the worst a forged `v`
+    // can do is pick another of the link's own destinations. Missing/bogus → normal pick.
+    const raw = isFallbackHop ? url.searchParams.get(FB_AB_PARAM) : null;
+    const carried = raw !== null && /^\d+$/.test(raw) ? Number(raw) : -1;
+    const i = carried >= 0 && carried < link.ab.length ? carried : pickAb(link.ab);
     const v = link.ab[i];
     if (v) {
       dest = v.u;
@@ -497,7 +545,54 @@ async function handleRedirect(
     }
   }
   const abVariant = abIndex === undefined ? "" : String(abIndex);
-  const match = matchPlatform(dest);
+  // FLAG ANDROID_FALLBACK_MEASURE: aim the intent's browser_fallback_url at a URL WE serve
+  // (this same slug, marked) instead of the destination. Off → matchPlatform keeps the
+  // legacy destination fallback and Android stays `unmeasured`.
+  const fbUrl =
+    env.ANDROID_FALLBACK_MEASURE === "1"
+      ? `${shortOrigin(hostname, env)}/${encodeURIComponent(slug)}?${FB_PARAM}=1` +
+        (abIndex === undefined ? "" : `&${FB_AB_PARAM}=${abIndex}`)
+      : undefined;
+  const match = matchPlatform(dest, fbUrl);
+
+  // LOOP GUARD + the measurement itself. When the flag is ON this hop MUST short-circuit
+  // here: /:slug?fb=1 is the same handler, so rendering the interstitial again would re-fire
+  // the intent, fail again, bounce back here — an infinite loop on visitors already having
+  // the worst time. Nothing below this line runs on the hop: no interstitial, and no second
+  // REDIRECTS click row (the click was counted when the interstitial was served).
+  // no-store + 302: a CDN caching this would swallow the very hits we are counting.
+  //
+  // GATED on the flag (DEFECT A — dark-launch law: flag OFF must be byte-identical to HEAD).
+  // Flag OFF → ?fb=1 is treated as an ordinary request: interstitial served, click counted,
+  // no outcome row. The flip-off transition is safe: an intent built while the flag was ON
+  // points its fallback at ?fb=1, but with the flag now OFF fbUrl is undefined, so the
+  // re-served interstitial's intent falls back to the DESTINATION — one extra hop, no loop.
+  if (isFallbackHop && env.ANDROID_FALLBACK_MEASURE === "1") {
+    // The `browser` outcome is OBSERVED, not inferred — the app provably did not open — but
+    // record it ONLY for an Android mobile UA, the flow this intent was built for (DEFECT B).
+    // Anyone can craft /:slug?fb=1 (bots expand fallback URLs straight out of the interstitial
+    // HTML), and a phantom `browser` row deflates the creator's headline app-open rate, so a
+    // desktop UA, a crawler, or a bare curl must 302 WITHOUT recording. The redirect is for
+    // everyone; only the RECORDING is gated. No KV dedup — see task #69 decision note.
+    if (osOf(ua) === "android") {
+      recordOutcome(env, ctx, {
+        slug,
+        host: hostname,
+        outcome: "browser",
+        sourceApp: inAppWebview(ua) ?? "",
+        platformKey: match?.key ?? "",
+        country: cf.country ?? "",
+        city: cf.city ?? "",
+        device: deviceOf(ua),
+        abVariant: abIndex,
+        ts: Date.now(),
+      });
+    }
+    return new Response(null, {
+      status: 302,
+      headers: { location: dest, "cache-control": "no-store" },
+    });
+  }
 
   // Click data point — one row per HUMAN redirect (crawlers returned above). Geo, device,
   // os, campaign derive server-side; nothing client-supplied is trusted. Dataset contract
@@ -529,11 +624,33 @@ async function handleRedirect(
         hostname,
         osOf(ua),
         cf.city ?? "",
-        campaignOf(new URL(req.url)),
+        campaignOf(url),
         abVariant,
       ],
       doubles: [1],
     });
+  }
+
+  // ANON FIRST-CLICK PING (no-signup door). For an unclaimed anonymous link, tell the
+  // cloud a real visitor arrived — this is what starts the 7-day claim window. Contract
+  // (cloud POST /api/events/click, always 204): fire on EVERY anon redirect, no engine
+  // state — the cloud stamps firstClickAt once via conditional UPDATE, so duplicates are
+  // free. Fail-safe by design: a lost ping only ever means the creator keeps MORE time
+  // to claim, never less. Crawlers never reach this line (the OG branch returned above).
+  // URL derives from EVENTS_URL (same cloud, same bearer as the outcome-beacon forward).
+  if (link.anon && env.EVENTS_URL) {
+    ctx?.waitUntil(
+      fetch(env.EVENTS_URL.replace(/\/ingest$/, "/click"), {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          ...(env.EVENTS_TOKEN ? { authorization: `Bearer ${env.EVENTS_TOKEN}` } : {}),
+        },
+        body: JSON.stringify({ slug, host: hostname }),
+      }).catch(() => {
+        /* fire-and-forget: a lost ping is safe (window just starts later) */
+      }),
+    );
   }
 
   if (match && isMobile(ua)) {
@@ -550,6 +667,31 @@ async function handleRedirect(
       }),
       200,
     );
+  }
+  // Best-effort Android tier (flag-gated, Wave 13). No hand-verified platform owns this host,
+  // but its published assetlinks yields the Android package (well-known-map.json). ANDROID ONLY —
+  // iOS/desktop fall through to the normal redirect below (iOS app-open stays manual, never a
+  // guessed scheme). UNMEASURED by construction: bestEffortMatch's intent falls back to the
+  // DESTINATION, never the measured fb=1 hop, so it never enters the app-open funnel — the
+  // interstitial's Android path records one `unmeasured` row and nothing else. A miss (host not in
+  // the map) falls straight through to today's behaviour.
+  if (!match && env.BEST_EFFORT_ANDROID === "1" && osOf(ua) === "android") {
+    const be = bestEffortMatch(dest);
+    if (be) {
+      return html(
+        renderInterstitial(be, {
+          branded: link.branded,
+          homeUrl: homeUrl(env),
+          ua,
+          slug,
+          host: hostname,
+          fbu: link.fbu,
+          px: link.px,
+          abVariant: abIndex,
+        }),
+        200,
+      );
+    }
   }
   // A link with pixels can't plain-30x — the pixel JS needs a page to run in. Serve the
   // minimal pixel page instead: fire the tags, then client-side bounce to the resolved
@@ -624,7 +766,10 @@ async function handlePasswordSubmit(
   });
 }
 
-const OUTCOMES = new Set(["opened", "browser", "broken"]);
+// `unmeasured` = the tap was dispatched to the OS and its fate is structurally
+// unobservable (Android intent://; see interstitial.ts). It is a real row so the blind
+// spot is COUNTABLE — never in the numerator or denominator of an app-open rate.
+const OUTCOMES = new Set(["opened", "browser", "broken", "unmeasured"]);
 
 /**
  * POST /t — outcome telemetry beacon (navigator.sendBeacon from the interstitial).
@@ -651,11 +796,7 @@ async function handleBeacon(req: Request, env: Env, ctx?: ExecutionContext): Pro
   if (!slug || !outcome) return noContent; // nothing worth recording
 
   const ua = req.headers.get("user-agent") ?? "";
-  const device = /iPad|Tablet/i.test(ua)
-    ? "tablet"
-    : /Android|iPhone|iPod|Mobile/i.test(ua)
-      ? "mobile"
-      : "desktop";
+  const device = deviceOf(ua);
   const cf = (req as unknown as { cf?: Record<string, unknown> }).cf ?? {};
   const country = typeof cf.country === "string" ? cf.country : "";
   const city = typeof cf.city === "string" ? cf.city : "";
@@ -670,26 +811,61 @@ async function handleBeacon(req: Request, env: Env, ctx?: ExecutionContext): Pro
   const abVariant =
     typeof av === "number" && Number.isInteger(av) && av >= 0 && av < AB_MAX ? av : undefined;
 
+  recordOutcome(env, ctx, {
+    slug,
+    host,
+    outcome,
+    sourceApp,
+    platformKey,
+    country,
+    city,
+    device,
+    abVariant,
+    ts: typeof body.ts === "number" ? body.ts : undefined,
+  });
+  return noContent;
+}
+
+type OutcomeRow = {
+  slug: string;
+  host: string;
+  outcome: string;
+  sourceApp: string;
+  platformKey: string;
+  country: string;
+  city: string;
+  device: string;
+  abVariant?: number;
+  ts?: number;
+};
+
+/**
+ * Write ONE outcome row. The single writer for the CLICKS dataset — the client beacon
+ * (POST /t) and the server-observed Android fallback hop both land here, so both produce
+ * byte-identical row shapes and the cloud reader has one contract to follow. Callers own
+ * sanitation: every field here is already server-derived or validated.
+ */
+function recordOutcome(env: Env, ctx: ExecutionContext | undefined, o: OutcomeRow): void {
   env.CLICKS?.writeDataPoint({
-    indexes: [slug],
+    indexes: [o.slug],
     // Append-only, positionally read by the cloud: abVariant(9) is "" when the link has no
     // split, which is nearly every link.
     blobs: [
-      slug,
-      host,
-      outcome,
-      sourceApp,
-      platformKey,
-      country,
-      city,
-      device,
-      abVariant === undefined ? "" : String(abVariant),
+      o.slug,
+      o.host,
+      o.outcome,
+      o.sourceApp,
+      o.platformKey,
+      o.country,
+      o.city,
+      o.device,
+      o.abVariant === undefined ? "" : String(o.abVariant),
     ],
     doubles: [1],
   });
 
   // Wave 2.9: real-time app-open event stream. Forward the SAME sanitized, server-derived
-  // event to the cloud — fire-and-forget: the beacon 204s immediately and a dead cloud
+  // event to the cloud — fire-and-forget: the caller responds immediately and a dead cloud
   // endpoint (or missing ctx in tests) must never surface an error.
   if (env.EVENTS_URL) {
     ctx?.waitUntil(
@@ -700,23 +876,22 @@ async function handleBeacon(req: Request, env: Env, ctx?: ExecutionContext): Pro
           authorization: `Bearer ${env.EVENTS_TOKEN ?? ""}`,
         },
         body: JSON.stringify({
-          slug,
-          host,
-          outcome,
-          sourceApp,
-          platformKey,
-          country,
-          city,
-          device,
+          slug: o.slug,
+          host: o.host,
+          outcome: o.outcome,
+          sourceApp: o.sourceApp,
+          platformKey: o.platformKey,
+          country: o.country,
+          city: o.city,
+          device: o.device,
           // Omitted (JSON.stringify drops undefined) on every non-A/B link, so the
           // overwhelming-majority payload is byte-identical to before this field existed.
-          abVariant,
-          ts: typeof body.ts === "number" ? body.ts : undefined,
+          abVariant: o.abVariant,
+          ts: o.ts,
         }),
       }).catch(() => {}),
     );
   }
-  return noContent;
 }
 
 async function createLink(req: Request, env: Env): Promise<Response> {
@@ -825,6 +1000,6 @@ export default {
       if (env.LANDING_URL) return Response.redirect(new URL(env.LANDING_URL).toString(), 301);
       return html(render404(homeUrl(env)), 404);
     }
-    return handleRedirect(slug, url.hostname, req, env);
+    return handleRedirect(slug, url.hostname, req, env, ctx);
   },
 };
