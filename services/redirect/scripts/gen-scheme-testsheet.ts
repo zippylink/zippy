@@ -46,6 +46,7 @@ const cardHtml = cards
       <button data-v="content">✅ content</button>
       <button data-v="home">🏠 home only</button>
       <button data-v="nothing">❌ nothing</button>
+      <button data-v="not-installed">⬜ not installed</button>
     </div>
   </div>`,
   )
@@ -65,7 +66,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><title>Zippy iOS 
  #export{padding:8px 14px;border:2px solid #1A1033;border-radius:999px;background:#EEFF00;font-weight:bold;cursor:pointer}
 </style></head><body>
 <h1>⚡ Zippy iOS scheme test — scan each QR with the iPhone camera</h1>
-<p>Tap the banner iOS shows. Then record: did the app open <b>with the content</b>, only to its <b>home screen</b>, or <b>nothing</b> happened? Results save locally; export when done.</p>
+<p><b>Only test apps you actually have installed.</b> A scheme for a missing app does nothing on iOS — that looks identical to a wrong scheme, so mark those <b>⬜ not installed</b> (it means "untested", never "broken"). For the rest: did the app open <b>with the content</b>, only to its <b>home screen</b>, or <b>nothing</b> at all? Results save locally; export when done.</p>
 <div id="bar"><button id="export">Export results JSON</button><span id="count"></span></div>
 <div class="grid">${cardHtml}</div>
 <script>
