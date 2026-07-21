@@ -4,13 +4,13 @@
  * Look: fat Bungee display, Space Mono micro-labels, volt highlights, hard offset
  * shadows on CTAs. ⚡ is the mascot. Light only — the brand is a light system.
  */
-@import "fumadocs-ui/style.css";
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+/* Emit the utility classes fumadocs-ui components use (path relative to this file). */
+@source "../../../node_modules/fumadocs-ui/dist/**/*.js";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Fumadocs reads HSL triplets for its design tokens. Map them onto the Zippy palette. */
+/* Fumadocs 16 reads full color values on --color-fd-* tokens. Map them onto the Zippy palette. */
 :root,
 .light,
 [data-theme="light"] {
@@ -20,23 +20,22 @@
   --color-magenta: #ff3e8a;
   --color-cyan: #22d8ff;
 
-  --background: 40 33% 96%; /* paper */
-  --foreground: 257 52% 13%; /* ink */
-  --card: 40 33% 98%;
-  --card-foreground: 257 52% 13%;
-  --popover: 40 33% 98%;
-  --popover-foreground: 257 52% 13%;
-  --primary: 336 100% 62%; /* magenta */
-  --primary-foreground: 40 33% 96%;
-  --secondary: 255 30% 92%;
-  --secondary-foreground: 257 52% 13%;
-  --muted: 255 30% 93%;
-  --muted-foreground: 257 20% 38%;
-  --accent: 191 100% 90%; /* pale cyan */
-  --accent-foreground: 257 52% 13%;
-  --border: 255 25% 88%;
-  --input: 255 25% 88%;
-  --ring: 336 100% 62%;
+  --color-fd-background: hsl(40 33% 96%); /* paper */
+  --color-fd-foreground: hsl(257 52% 13%); /* ink */
+  --color-fd-card: hsl(40 33% 98%);
+  --color-fd-card-foreground: hsl(257 52% 13%);
+  --color-fd-popover: hsl(40 33% 98%);
+  --color-fd-popover-foreground: hsl(257 52% 13%);
+  --color-fd-primary: hsl(336 100% 62%); /* magenta */
+  --color-fd-primary-foreground: hsl(40 33% 96%);
+  --color-fd-secondary: hsl(255 30% 92%);
+  --color-fd-secondary-foreground: hsl(257 52% 13%);
+  --color-fd-muted: hsl(255 30% 93%);
+  --color-fd-muted-foreground: hsl(257 20% 38%);
+  --color-fd-accent: hsl(191 100% 90%); /* pale cyan */
+  --color-fd-accent-foreground: hsl(257 52% 13%);
+  --color-fd-border: hsl(255 25% 88%);
+  --color-fd-ring: hsl(336 100% 62%);
   --radius: 0.35rem;
 
   --font-sans: var(--font-body), system-ui, sans-serif;
@@ -66,7 +65,7 @@ h3 {
   text-transform: uppercase;
   letter-spacing: 0.2em;
   font-size: 0.7rem;
-  color: hsl(var(--muted-foreground));
+  color: var(--color-fd-muted-foreground);
 }
 
 /* Zippy CTA — volt fill, ink hard offset shadow (no blur). */
