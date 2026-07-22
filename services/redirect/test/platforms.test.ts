@@ -43,6 +43,21 @@ const cases: Array<{ name: string; url: string; key: string; ios: string; pkg: s
     pkg: "com.linkedin.android",
   },
   {
+    // The "copy link" share URL (device-verified: share urn opens the post).
+    name: "linkedin post (share URL)",
+    url: "https://www.linkedin.com/posts/shaisnir_slug-share-7475895728721182721-EUw9/",
+    key: "linkedin",
+    ios: "linkedin://feed/update/urn:li:share:7475895728721182721",
+    pkg: "com.linkedin.android",
+  },
+  {
+    name: "linkedin post (explicit share urn)",
+    url: "https://www.linkedin.com/feed/update/urn:li:share:7475895728721182721/",
+    key: "linkedin",
+    ios: "linkedin://feed/update/urn:li:share:7475895728721182721",
+    pkg: "com.linkedin.android",
+  },
+  {
     name: "instagram profile",
     url: "https://instagram.com/nasa",
     key: "instagram",
