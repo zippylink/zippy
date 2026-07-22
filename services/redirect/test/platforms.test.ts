@@ -58,6 +58,21 @@ const cases: Array<{ name: string; url: string; key: string; ios: string; pkg: s
     pkg: "com.linkedin.android",
   },
   {
+    // The OTHER copy-link flavor: an ACTIVITY id (…-activity-<ID>-…). URN type matches id type.
+    name: "linkedin post (activity URL)",
+    url: "https://www.linkedin.com/posts/shaisnir_%D7%A2-activity-7474754371180879872-4L68?utm_medium=ios_app",
+    key: "linkedin",
+    ios: "linkedin://feed/update/urn:li:activity:7474754371180879872",
+    pkg: "com.linkedin.android",
+  },
+  {
+    name: "linkedin post (explicit activity urn)",
+    url: "https://www.linkedin.com/feed/update/urn:li:activity:7474754371180879872/",
+    key: "linkedin",
+    ios: "linkedin://feed/update/urn:li:activity:7474754371180879872",
+    pkg: "com.linkedin.android",
+  },
+  {
     name: "instagram profile",
     url: "https://instagram.com/nasa",
     key: "instagram",

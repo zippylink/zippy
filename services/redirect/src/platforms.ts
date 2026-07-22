@@ -77,17 +77,21 @@ export const PLATFORMS: Platform[] = [
       const s = seg(url);
       if (s[0] === "in" && s[1]) return `in/${s[1]}`;
       if (s[0] === "company" && s[1]) return `company/${s[1]}`;
-      // Posts. The "copy link" URL is /posts/<author>_<slug>-share-<ID>-<suffix>/, whose ID
-      // is a SHARE id. Device-verified 2026-07-22: `linkedin://feed/update/urn:li:share:<ID>`
-      // opened the post; the urn:li:ACTIVITY form, a flat /post/<ID>, the host-preserving
-      // shape, AND the https Universal Link all landed on the app HOME. So a share id is the
-      // only thing that resolves — match it here (and an explicit urn:li:share:<ID> too).
+      // Posts. Copy-link URLs come in TWO flavors — /posts/…-share-<ID>-… (a SHARE id) and
+      // /posts/…-activity-<ID>-… (an ACTIVITY id) — and the URN TYPE must match the id type.
+      // Device-verified 2026-07-22: `linkedin://feed/update/urn:li:share:<shareID>` opened the
+      // post (a flat /post/<id>, the host-preserving shape and the https Universal Link all
+      // landed on HOME; the activity-urn test that "failed" had been fed a SHARE id — a type
+      // mismatch, so it proved nothing about real activity ids). The activity mapping below is
+      // the symmetric best-effort: worst case it opens the app home, exactly what falling
+      // through to bare `linkedin://` does today — zero regression, real upside.
       const share =
         /-share-(\d+)/.exec(url.pathname)?.[1] ?? /urn:li:share:(\d+)/.exec(url.pathname)?.[1];
       if (share) return `feed/update/urn:li:share:${share}`;
-      // Other LinkedIn URLs (a bare /feed/update/urn:li:activity:<ID>, unknown shapes) have no
-      // verified post-opening scheme — leave them to open the app (no regression vs. before).
-      // Activity-form posts want their own device test before we guess a scheme for them.
+      const activity =
+        /-activity-(\d+)/.exec(url.pathname)?.[1] ??
+        /urn:li:activity:(\d+)/.exec(url.pathname)?.[1];
+      if (activity) return `feed/update/urn:li:activity:${activity}`;
       return "";
     },
   },
