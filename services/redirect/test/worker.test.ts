@@ -266,6 +266,16 @@ describe("Zippy mascot chrome", () => {
     expect(bytes(body)).toBeLessThan(6144);
   });
 
+  it("LANDING_URL set → interstitial mascot is the approved sticker PNG, swappable to sad", async () => {
+    const e = env({ tw: "https://x.com/nasa/status/999" });
+    e.LANDING_URL = "https://www.zipthe.link";
+    const res = await worker.fetch(req("/tw", { headers: { "user-agent": IPHONE } }), e);
+    const body = await res.text();
+    expect(body).toContain('src="https://www.zipthe.link/brand/zippy-sticker-zoom.png"'); // the good mascot
+    expect(body).toContain("zippy-sad.png"); // the welp swap target rides in the copy timer
+    expect(body).not.toContain("<svg"); // the off-model sketch is gone from the hosted path
+  });
+
   it("404 shows the sad bolt + a link home, under 6KB", async () => {
     const res = await worker.fetch(req("/nope"), env());
     expect(res.status).toBe(404);
@@ -491,6 +501,26 @@ describe("crawler-OG unfurl", () => {
     const body = await res.text();
     expect(body).toContain('content="example.com"');
     expect(body).toContain('name="twitter:card" content="summary"'); // no image → small card
+  });
+
+  it("no stored image + DEFAULT_OG_IMAGE configured → the branded default card", async () => {
+    const e = env({ p: "https://example.com/page" });
+    e.DEFAULT_OG_IMAGE = "https://www.zipthe.link/brand/og-default.png";
+    const res = await worker.fetch(req("/p", { headers: { "user-agent": TWBOT } }), e);
+    const body = await res.text();
+    expect(body).toContain(
+      'property="og:image" content="https://www.zipthe.link/brand/og-default.png"',
+    );
+    expect(body).toContain('name="twitter:card" content="summary_large_image"');
+  });
+
+  it("a stored image always beats the configured default", async () => {
+    const e = env({ p: withOg("https://x.com/nasa/status/1") });
+    e.DEFAULT_OG_IMAGE = "https://www.zipthe.link/brand/og-default.png";
+    const res = await worker.fetch(req("/p", { headers: { "user-agent": FBBOT } }), e);
+    const body = await res.text();
+    expect(body).toContain('property="og:image" content="https://cdn/x.png"');
+    expect(body).not.toContain("og-default.png");
   });
 
   it("a human UA still redirects (crawler path never breaks a real click)", async () => {

@@ -23,6 +23,8 @@ export interface Env {
   /** Marketing site origin. Optional — when set, GET / 301s there and the 404
    *  page's "back to Zippy" points at it. Unset (self-host): / renders the 404. */
   LANDING_URL?: string;
+  /** Default og:image for links with no stored card (a paste is never naked). Optional. */
+  DEFAULT_OG_IMAGE?: string;
   API_TOKEN?: string;
   /** Outcome telemetry sink (Analytics Engine). Optional — unbound in local dev /
    *  self-host, in which case /t is a silent no-op and the cloud shows no data. */
@@ -461,11 +463,11 @@ async function handleRedirect(
   ctx?: ExecutionContext,
 ): Promise<Response> {
   const key = await resolveKey(hostname, slug, env);
-  if (key === null) return html(render404(homeUrl(env)), 404);
+  if (key === null) return html(render404(homeUrl(env), env.LANDING_URL), 404);
   const raw = await env.LINKS.get(key);
-  if (!raw) return html(render404(homeUrl(env)), 404);
+  if (!raw) return html(render404(homeUrl(env), env.LANDING_URL), 404);
   const link = parseLinkValue(raw);
-  if (!link) return html(render404(homeUrl(env)), 404);
+  if (!link) return html(render404(homeUrl(env), env.LANDING_URL), 404);
   const ua = req.headers.get("user-agent") ?? "";
 
   // Password gate — a protected link reveals NOTHING (not the destination, not the OG
@@ -477,7 +479,12 @@ async function handleRedirect(
     const expected = await gateToken(link.pw, slug);
     if (!token || !constEq(token, expected)) {
       return new Response(
-        renderPasswordGate({ slug, branded: link.branded, homeUrl: homeUrl(env) }),
+        renderPasswordGate({
+          slug,
+          branded: link.branded,
+          homeUrl: homeUrl(env),
+          assetBase: env.LANDING_URL,
+        }),
         {
           status: 200,
           headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" },
@@ -494,7 +501,7 @@ async function handleRedirect(
     // custom domain that's the tenant's host, not BASE_URL (whose bare-slug key
     // wouldn't even resolve for a t:<tenantId>:<slug> record).
     const shortUrl = `${shortOrigin(hostname, env)}/${slug}`;
-    return new Response(renderOgPage(shortUrl, link.url, link.og ?? {}), {
+    return new Response(renderOgPage(shortUrl, link.url, link.og ?? {}, env.DEFAULT_OG_IMAGE), {
       status: 200,
       headers: {
         "content-type": "text/html; charset=utf-8",
@@ -658,6 +665,7 @@ async function handleRedirect(
       renderInterstitial(match, {
         branded: link.branded,
         homeUrl: homeUrl(env),
+        assetBase: env.LANDING_URL,
         ua,
         slug,
         host: hostname,
@@ -682,6 +690,7 @@ async function handleRedirect(
         renderInterstitial(be, {
           branded: link.branded,
           homeUrl: homeUrl(env),
+          assetBase: env.LANDING_URL,
           ua,
           slug,
           host: hostname,
@@ -731,11 +740,11 @@ async function handlePasswordSubmit(
   env: Env,
 ): Promise<Response> {
   const key = await resolveKey(hostname, slug, env);
-  if (key === null) return html(render404(homeUrl(env)), 404);
+  if (key === null) return html(render404(homeUrl(env), env.LANDING_URL), 404);
   const raw = await env.LINKS.get(key);
-  if (!raw) return html(render404(homeUrl(env)), 404);
+  if (!raw) return html(render404(homeUrl(env), env.LANDING_URL), 404);
   const link = parseLinkValue(raw);
-  if (!link || !link.pw) return html(render404(homeUrl(env)), 404); // nothing gated here
+  if (!link || !link.pw) return html(render404(homeUrl(env), env.LANDING_URL), 404); // nothing gated here
 
   let password = "";
   try {
@@ -749,7 +758,13 @@ async function handlePasswordSubmit(
   const gateHeaders = { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" };
   if (!password || !(await verifyPassword(password, link.pw))) {
     return new Response(
-      renderPasswordGate({ slug, error: true, branded: link.branded, homeUrl: homeUrl(env) }),
+      renderPasswordGate({
+        slug,
+        error: true,
+        branded: link.branded,
+        homeUrl: homeUrl(env),
+        assetBase: env.LANDING_URL,
+      }),
       { status: 200, headers: gateHeaders },
     );
   }
@@ -998,7 +1013,7 @@ export default {
       // site when one is configured, else the branded 404.
       // new URL() so the location is normalized identically on every runtime
       if (env.LANDING_URL) return Response.redirect(new URL(env.LANDING_URL).toString(), 301);
-      return html(render404(homeUrl(env)), 404);
+      return html(render404(homeUrl(env), env.LANDING_URL), 404);
     }
     return handleRedirect(slug, url.hostname, req, env, ctx);
   },

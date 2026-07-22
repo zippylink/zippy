@@ -13,22 +13,30 @@ const esc = (s: string): string =>
 // A crawler that follows meta refresh / JS won't; but some (Slack, Telegram) fetch
 // the final URL too — so we still point a <meta http-equiv> + canonical at the
 // destination. Humans never reach this branch (see isSocialCrawler in index.ts).
-export function renderOgPage(shortUrl: string, destination: string, og: OgMeta): string {
+export function renderOgPage(
+  shortUrl: string,
+  destination: string,
+  og: OgMeta,
+  /** Operator-configured default card image (DEFAULT_OG_IMAGE) — a paste should never be
+   *  naked. Content is still never fabricated; only this configured image fills in. */
+  defaultImage?: string,
+): string {
   const title = og.title ?? new URL(destination).hostname.replace(/^www\./, "");
+  const image = og.image ?? defaultImage;
   const tags: string[] = [
     `<meta property="og:type" content="website">`,
     `<meta property="og:url" content="${esc(shortUrl)}">`,
     `<meta property="og:title" content="${esc(title)}">`,
     `<meta name="twitter:title" content="${esc(title)}">`,
-    `<meta name="twitter:card" content="${og.image ? "summary_large_image" : "summary"}">`,
+    `<meta name="twitter:card" content="${image ? "summary_large_image" : "summary"}">`,
   ];
   if (og.description) {
     tags.push(`<meta property="og:description" content="${esc(og.description)}">`);
     tags.push(`<meta name="twitter:description" content="${esc(og.description)}">`);
   }
-  if (og.image) {
-    tags.push(`<meta property="og:image" content="${esc(og.image)}">`);
-    tags.push(`<meta name="twitter:image" content="${esc(og.image)}">`);
+  if (image) {
+    tags.push(`<meta property="og:image" content="${esc(image)}">`);
+    tags.push(`<meta name="twitter:image" content="${esc(image)}">`);
   }
   return `<!doctype html>
 <html lang="en">

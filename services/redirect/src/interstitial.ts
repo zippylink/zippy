@@ -176,11 +176,34 @@ function zippyBolt(sad = false): string {
   );
 }
 
+// The mascot. FOUNDER CALL 2026-07-22: wherever an asset base is configured (LANDING_URL —
+// the hosted product), the approved 3D-sticker PNGs from the landing's /brand replace the
+// code-drawn SVG sketch, which the founder ruled off-model for user-facing surfaces. The
+// SVG stays ONLY as the dependency-free fallback for self-hosters with no LANDING_URL —
+// their interstitial keeps working with zero external requests, exactly as before.
+type MascotMood = "zoom" | "happy" | "sad" | "detective";
+const MASCOT_FILE: Record<MascotMood, string> = {
+  zoom: "zippy-sticker-zoom.png", //   "opening…" — Zippy zooming to the app
+  happy: "zippy-sticker-happy.png", // password gate
+  sad: "zippy-sad.png", //             the welp state (app didn't open)
+  detective: "zippy-detective.png", // 404 — hunting the missing link
+};
+/** PNG url for a mood, or null when no asset base is configured (SVG fallback). */
+const mascotSrc = (assetBase: string | undefined, mood: MascotMood): string | null =>
+  assetBase ? `${assetBase.replace(/\/$/, "")}/brand/${MASCOT_FILE[mood]}` : null;
+function mascot(assetBase: string | undefined, mood: MascotMood, id?: string): string {
+  const src = mascotSrc(assetBase, mood);
+  if (!src) return zippyBolt(mood === "sad" || mood === "detective");
+  return `<img${id ? ` id="${id}"` : ""} class="z" src="${esc(src)}" alt="" width="128" height="128" style="object-fit:contain">`;
+}
+
 export function renderInterstitial(
   match: PlatformMatch,
   opts?: {
     branded?: boolean;
     homeUrl?: string;
+    /** Base URL serving /brand sticker PNGs (the landing). Unset → inline-SVG mascot. */
+    assetBase?: string;
     ua?: string;
     slug?: string;
     host?: string;
@@ -248,7 +271,7 @@ ${pixelSnippets(opts?.px)}
 </head>
 <body>
 <main>
-  ${zippyBolt()}
+  ${mascot(opts?.assetBase, "zoom", "zm")}
   <p id="status">Opening the ${esc(match.key)} app<span class="dot"></span><span class="dot"></span><span class="dot"></span></p>
   ${escapeBtn}
   <p><a id="fallback" href="${esc(fallbackHref)}">Continue in browser</a></p>
@@ -279,6 +302,8 @@ ${pixelSnippets(opts?.px)}
     if(document.visibilityState !== "visible") return;
     var s = document.getElementById("status");
     if(s) s.textContent = ${jsLit(noAppMsg)}; // textContent also drops the "…" dots
+    var zm = document.getElementById("zm"), sad = ${jsLit(mascotSrc(opts?.assetBase, "sad"))};
+    if(zm && zm.tagName === "IMG" && sad) zm.setAttribute("src", sad);
   }, ${COPY_SWAP_MS});
   // Android: one unmeasured row, hand off, register NOTHING. File header says why.
   var isAndroid = /Android/i.test(navigator.userAgent);
@@ -309,6 +334,8 @@ export function renderPasswordGate(opts: {
   error?: boolean;
   branded?: boolean;
   homeUrl?: string;
+  /** Base URL serving /brand sticker PNGs (the landing). Unset → inline-SVG mascot. */
+  assetBase?: string;
 }): string {
   const err = opts.error
     ? `<p style="margin:.25rem 0 0;color:#FF3E8A;font-weight:700">Nope — wrong password. Try again.</p>`
@@ -339,7 +366,7 @@ export function renderPasswordGate(opts: {
 </head>
 <body>
 <main>
-  ${zippyBolt()}
+  ${mascot(opts.assetBase, "happy")}
   <h1>This link is locked</h1>
   <p>Enter the password to keep going.</p>
   <form method="POST" action="/${esc(opts.slug)}">
@@ -353,7 +380,7 @@ export function renderPasswordGate(opts: {
 </html>`;
 }
 
-export function render404(homeUrl?: string): string {
+export function render404(homeUrl?: string, assetBase?: string): string {
   const home = homeUrl
     ? `<p style="margin-top:1.25rem;font-size:.8rem"><a href="${esc(homeUrl)}">← back to Zippy</a></p>`
     : "";
@@ -371,6 +398,6 @@ export function render404(homeUrl?: string): string {
   a{color:#FF3E8A}
 </style>
 </head>
-<body><main>${zippyBolt(true)}<h1>404</h1><p>This link doesn't live here.</p>${home}</main></body>
+<body><main>${mascot(assetBase, "detective")}<h1>404</h1><p>This link doesn't live here.</p>${home}</main></body>
 </html>`;
 }

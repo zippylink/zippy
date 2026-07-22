@@ -13,6 +13,8 @@ routes = [
 [vars]
 BASE_URL = "https://zipthe.link"
 LANDING_URL = "https://www.zipthe.link"
+# Card image for links with no stored OG — a paste is never naked (served by the landing).
+DEFAULT_OG_IMAGE = "https://www.zipthe.link/brand/og-default.png"
 # ANDROID_FALLBACK_MEASURE = "1" points the Android intent's browser_fallback_url at our
 # own /:slug?fb=1 instead of the destination, so a failed app-open comes back to US and is
 # recorded as an OBSERVED "browser" outcome. UNSET = OFF: Android stays "unmeasured".
